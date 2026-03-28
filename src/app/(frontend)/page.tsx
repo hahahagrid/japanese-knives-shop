@@ -92,11 +92,14 @@ export default async function HomePage() {
       <section className="relative h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white">
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
-            src="/images/hero_knife.png"
+          <Image
+            src="/images/hero_knife-1920.webp"
             alt="Premium Japanese Knife"
-            className="object-cover w-full h-full opacity-55 animate-slow-zoom"
+            fill
+            priority
+            className="object-cover opacity-55 animate-slow-zoom"
             style={{ objectPosition: 'center 40%' }}
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
         </div>
@@ -318,22 +321,20 @@ export default async function HomePage() {
 
             <div className="lg:col-span-6 lg:col-start-7 relative w-full group">
               <AnimatedSection variant="fade-in" delay={0.4} className="h-full">
-                <div className="aspect-[4/5] md:aspect-[5/6] h-full min-h-[420px] bg-[#F6F5F2] w-full relative overflow-hidden border border-black/6">
-                  <div className="absolute inset-0 bg-grain"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/[0.02] to-black/[0.04]"></div>
-
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 text-black/28 group-hover:text-black/40 transition-colors duration-700">
-                    <div className="w-16 h-[1px] bg-black/10 mb-6 group-hover:w-24 transition-all duration-700"></div>
-                    <span className="text-[10px] tracking-[0.4em] uppercase font-mono mb-2">
-                      Ref. Image 01
-                    </span>
-                    <span className="text-[11px] tracking-[0.08em] uppercase opacity-70">
-                      Hand-forging in progress
-                    </span>
-                  </div>
-
-                  <div className="absolute top-0 right-0 w-20 h-20 border-t border-r border-black/10 m-6 pointer-events-none"></div>
-                  <div className="absolute bottom-0 left-0 w-20 h-20 border-b border-l border-black/10 m-6 pointer-events-none"></div>
+                <div className="relative aspect-[4/5] md:aspect-[5/6] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
+                  <Image
+                    src="/images/phil1-1200.webp"
+                    alt="Hand-forging Process"
+                    fill
+                    className="object-cover transition-transform duration-1000"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  {/* Internal Editorial Border */}
+                  <div className="absolute inset-0 border-[1px] border-white/20 m-6 pointer-events-none z-20" />
+                  {/* Bottom Shadow Gradient */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/30 to-transparent z-10" />
+                  {/* Texture Overlay */}
+                  <div className="absolute inset-0 bg-grain opacity-10 pointer-events-none z-30"></div>
                 </div>
               </AnimatedSection>
 
@@ -357,18 +358,20 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-8 items-stretch">
             <div className="lg:col-span-7 order-2 lg:order-1 relative w-full group">
               <AnimatedSection variant="fade-in" className="h-full">
-                <div className="aspect-[5/4] h-full min-h-[360px] bg-[#F6F5F2] w-full relative overflow-hidden border border-black/6 shadow-2xl shadow-black/[0.02]">
-                  <div className="absolute inset-0 bg-grain"></div>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/[0.03] to-transparent"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 text-black/20 group-hover:text-black/40 transition-colors duration-700">
-                    <div className="w-20 h-[1px] bg-black/10 mb-6 group-hover:scale-x-125 transition-transform duration-700"></div>
-                    <span className="text-[10px] tracking-[0.4em] uppercase font-mono mb-2">
-                      Ref. Image 02
-                    </span>
-                    <span className="text-[11px] tracking-[0.08em] uppercase opacity-70">
-                      The Japanese Quality Commission
-                    </span>
-                  </div>
+                <div className="relative aspect-[5/4] h-full min-h-[360px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
+                  <Image
+                    src="/images/phil2-1200.webp"
+                    alt="Japanese Quality Commission Standards"
+                    fill
+                    className="object-cover transition-transform duration-1000"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  {/* Internal Editorial Border */}
+                  <div className="absolute inset-0 border-[1px] border-white/20 m-6 pointer-events-none z-20" />
+                  {/* Bottom Shadow Gradient */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/30 to-transparent z-10" />
+                  {/* Texture Overlay */}
+                  <div className="absolute inset-0 bg-grain opacity-10 pointer-events-none z-30"></div>
                 </div>
               </AnimatedSection>
             </div>
