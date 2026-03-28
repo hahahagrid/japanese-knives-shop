@@ -6,8 +6,24 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   auth: true,
+  access: {
+    read: () => true,
+    create: ({ req: { user } }) => user?.roles?.includes('admin') || false,
+    update: ({ req: { user } }) => user?.roles?.includes('admin') || false,
+    delete: ({ req: { user } }) => user?.roles?.includes('admin') || false,
+  },
   fields: [
-    // Email added by default
-    // Add more fields as needed
+    {
+      name: 'roles',
+      type: 'select',
+      hasMany: true,
+      options: ['admin', 'editor'],
+      defaultValue: ['admin'],
+      required: true,
+      saveToJWT: true,
+      access: {
+        update: ({ req: { user } }) => user?.roles?.includes('admin') || false,
+      },
+    },
   ],
 }

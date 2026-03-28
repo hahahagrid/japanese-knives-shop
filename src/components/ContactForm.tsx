@@ -1,0 +1,173 @@
+'use client'
+
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
+
+export function ContactForm() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setStatus('loading')
+
+    const formData = new FormData(e.currentTarget)
+    const data = {
+      name: formData.get('name'),
+      phone: formData.get('phone'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+    }
+
+    try {
+      const res = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+
+      if (!res.ok) {
+        const err = await res.json()
+        throw new Error(err.error || 'Failed to submit')
+      }
+
+      setStatus('success')
+    } catch (err: any) {
+      setErrorMessage(err.message)
+      setStatus('error')
+    }
+  }
+
+  if (status === 'success') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white border border-[var(--border)] p-12 text-center flex flex-col items-center justify-center min-h-[400px]"
+      >
+        <CheckCircle2 className="h-16 w-16 text-green-600 mb-6" />
+        <h2 className="text-2xl font-serif font-bold mb-4">Дякуємо!</h2>
+        <p className="text-neutral-500 max-w-sm">
+          Ваше повідомлення отримано. Ми зв&apos;яжемося з вами найближчим часом.
+        </p>
+        <button
+          onClick={() => setStatus('idle')}
+          className="mt-8 text-xs tracking-widest uppercase border-b border-black pb-1 hover:opacity-50 transition-opacity"
+        >
+          Надіслати ще раз
+        </button>
+      </motion.div>
+    )
+  }
+
+  return (
+    <div className="bg-white border border-neutral-100 p-8 md:p-12 shadow-sm rounded-sm relative overflow-hidden group/form">
+      <h2 className="text-2xl font-serif font-bold mb-10 tracking-tight">Напишіть нам</h2>
+      
+      <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
+        <div className="relative group">
+          <label htmlFor="name" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+            Ваше ім&apos;я
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            minLength={2}
+            maxLength={50}
+            pattern="^[A-Za-zА-Яа-яІіЇїЄєҐґ\s\-]+$"
+            title="Ім'я може містити лише літери, пробіли та дефіси"
+            className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
+            placeholder="Іван Іванов"
+          />
+        </div>
+        
+        <div className="relative group">
+          <label htmlFor="phone" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+             Телефон *
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            required
+            minLength={10}
+            maxLength={20}
+            pattern="^\+?[0-9\s\-\(\)]+$"
+            title="Введіть коректний номер телефону"
+            className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
+            placeholder="+380..."
+          />
+        </div>
+        
+        <div className="relative group">
+          <label htmlFor="email" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+             Email (необов'язково)
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            maxLength={100}
+            pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
+            title="Введіть коректний email (наприклад: example@mail.com)"
+            className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
+            placeholder="example@mail.com"
+          />
+        </div>
+        
+        <div className="relative group">
+          <label htmlFor="message" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+            Ваше запитання
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows={4}
+            className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base resize-none placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
+            placeholder="Опишіть ваше питання чи деталі замовлення..."
+          />
+        </div>
+
+        <AnimatePresence>
+          {status === 'error' && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex items-center gap-3 text-red-500 text-xs font-medium bg-red-50 p-4 rounded-sm"
+            >
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              <p>{errorMessage}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="pt-4">
+          <button
+            type="submit"
+            disabled={status === 'loading'}
+            className="w-full bg-black text-white py-6 font-bold uppercase tracking-[0.3em] text-[11px] transition-all disabled:bg-neutral-300 disabled:cursor-not-allowed flex items-center justify-center gap-4 group/btn overflow-hidden relative shadow-lg shadow-black/5"
+          >
+            <span className="relative z-10">
+              {status === 'loading' ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                'Надіслати запит'
+              )}
+            </span>
+            <div className="absolute inset-0 bg-[#BC002D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
+          </button>
+        </div>
+      </form>
+
+      {/* Decorative Japanese Character */}
+      <div className="absolute -bottom-6 -right-6 opacity-[0.05] pointer-events-none select-none group-hover/form:scale-110 transition-transform duration-1000">
+        <span className="font-serif text-[240px] leading-none text-white">信</span>
+      </div>
+    </div>
+  )
+}

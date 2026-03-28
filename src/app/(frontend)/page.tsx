@@ -1,59 +1,477 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import { getPayload } from 'payload'
-import React from 'react'
-import { fileURLToPath } from 'url'
+export const dynamic = 'force-dynamic'
 
-import config from '@/payload.config'
-import './styles.css'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import Image from 'next/image'
+import Link from 'next/link'
+import { KnifeCard } from '@/components/KnifeCard'
+import { AnimatedSection } from '@/components/AnimatedSection'
+import { ReviewsMarquee } from '@/components/ReviewsMarquee'
+import { ArrowDown } from 'lucide-react'
+import { ManufacturerCard } from '@/components/ManufacturerCard'
+import { ScrollToTop } from '@/components/ScrollToTop'
+import { ChevronUp } from 'lucide-react'
+
+const manufacturers = [
+  { en: 'Yoshimi Kato', jp: '加藤 義実' },
+  { en: 'Shigeki Tanaka', jp: '田中 誠貴' },
+  { en: 'Moritaka Hamono', jp: '盛高 刃物' },
+  { en: 'Kei Kobayashi', jp: '小林 圭' },
+  { en: 'Yoshihiro', jp: '義弘' },
+  { en: 'Takamura Hamono', jp: '高村 刃物' },
+  { en: 'Ichiro Hattori', jp: '服部 一郎' },
+  { en: 'Yuji Kurosaki', jp: '黒崎 優' },
+  { en: 'Anryu Hamono', jp: '安立 刃物' },
+  { en: 'Koutetsu Hamono', jp: '硬鉄 刃物' },
+  { en: 'Takeshi Saji', jp: '佐治 武士' },
+  { en: 'Matsubara Hamono', jp: '松原 刃物' },
+  { en: 'Sakai Takayuki', jp: '堺 孝行' },
+  { en: 'Takeda', jp: '武田' },
+  { en: 'Shiro Kamo', jp: '加茂 志朗' },
+  { en: 'Tsutomu Kajiwara', jp: '梶原 勉' },
+  { en: 'Yuta Katayama', jp: '片山 雄太' },
+  { en: 'Toshitaka', jp: '俊隆' },
+  { en: 'Sukenari', jp: '祐成' },
+  { en: 'Masanobu Okada', jp: '岡田 正信' },
+]
+
+const advantages = [
+  {
+    num: '01',
+    title: '100% Оригінал',
+    text: 'Прямі поставки від майстрів із Японії. Сертифікати автентичності на кожен ніж.',
+  },
+  {
+    num: '02',
+    title: 'Ручна робота',
+    text: 'Унікальний процес кування та заточки. Кожен виріб — результат багаторічного досвіду.',
+  },
+  {
+    num: '03',
+    title: 'Преміум сталь',
+    text: 'VG-10, Aogami Super, Shirogami, авторський дамаск. Матеріали, що витримують час.',
+  },
+]
 
 export default async function HomePage() {
-  const headers = await getHeaders()
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
+  console.log('[DEBUG] HomePage start')
+  const payload = await getPayload({ config })
+  console.log('[DEBUG] Payload instance received')
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+  const { docs: inStockKnives } = await payload.find({
+    collection: 'knives',
+    where: { status: { equals: 'in_stock' } },
+    limit: 4,
+    overrideAccess: false,
+    depth: 1,
+  })
+
+  const { docs: customKnives } = await payload.find({
+    collection: 'knives',
+    where: { status: { equals: 'custom_order' } },
+    limit: 4,
+    overrideAccess: false,
+    depth: 1,
+  })
+
+  // Fetch Reviews
+  const homepageReviews = await payload.findGlobal({
+    slug: 'homepage-reviews',
+    overrideAccess: false,
+    depth: 1,
+  })
+
+  const rawReviews = homepageReviews?.images || []
+  const reviewUrls = rawReviews
+    .map((img: any) => (typeof img === 'object' && img?.url ? img.url : null))
+    .filter(Boolean) as string[]
 
   return (
-    <div className="home">
-      <div className="content">
-        <picture>
-          <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
-            alt="Payload Logo"
-            height={65}
-            src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
-            width={65}
+    <div className="flex flex-col">
+      {/* ── Hero ──────────────────────────────────── */}
+      <section className="relative h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <img
+            src="/images/hero_knife.png"
+            alt="Premium Japanese Knife"
+            className="object-cover w-full h-full opacity-55 animate-slow-zoom"
+            style={{ objectPosition: 'center 40%' }}
           />
-        </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-        <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
         </div>
-      </div>
-      <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
-      </div>
+
+        <div className="relative z-10 w-full pb-16 md:pb-24">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl animate-fade-up" style={{ animationDelay: '100ms' }}>
+              <p className="text-[10px] tracking-[0.4em] uppercase text-neutral-400 mb-5">
+                Японські клинки ручної роботи
+              </p>
+              <h1 className="heading-display text-5xl md:text-7xl lg:text-8xl text-white mb-8">
+                Мистецтво
+                <br />
+                Ідеального
+                <br />
+                Різу
+              </h1>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/in-stock"
+                  className="inline-block bg-white text-black px-8 py-3.5 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-neutral-200 transition-colors duration-200"
+                >
+                  Каталог в наявності
+                </Link>
+                <Link
+                  href="/custom-order"
+                  className="inline-block bg-transparent border border-white/50 text-white px-8 py-3.5 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-white/10 transition-colors duration-200"
+                >
+                  Під замовлення
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="absolute bottom-8 right-8 z-10 flex flex-col items-center gap-2 text-white/40 animate-fade-in"
+          style={{ animationDelay: '800ms' }}
+        >
+          <span className="text-[9px] tracking-[0.3em] uppercase rotate-90 origin-center mb-2">
+            Scroll
+          </span>
+          <ArrowDown className="h-4 w-4 animate-scroll-bounce" />
+        </div>
+      </section>
+
+      {/* ── 2. In Stock Section ────────────────────────── */}
+      {inStockKnives.length > 0 && (
+        <section className="bg-[#FAFAF9] pt-16 md:pt-24 pb-12 md:pb-16 border-b border-black/[0.03]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <AnimatedSection className="flex justify-between items-end mb-10">
+              <div>
+                <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-2">
+                  Колекція
+                </p>
+                <h2 className="heading-display text-3xl md:text-4xl">В наявності</h2>
+              </div>
+              <Link
+                href="/in-stock"
+                className="hidden sm:inline-flex text-xs tracking-widest uppercase items-center gap-2 border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
+              >
+                Всі ножі
+              </Link>
+            </AnimatedSection>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-8">
+              {inStockKnives.map((knife) => {
+                const firstImage = knife.images?.[0]
+                const imgUrl =
+                  typeof firstImage === 'object' && firstImage !== null
+                    ? (firstImage as { url?: string }).url
+                    : null
+                return (
+                  <div key={knife.id}>
+                    <KnifeCard
+                      slug={knife.slug ?? ''}
+                      title={knife.title}
+                      price={knife.price}
+                      status={knife.status ?? 'in_stock'}
+                      imageUrl={imgUrl}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 3. Custom Order Section ────────────────────── */}
+      {customKnives.length > 0 && (
+        <section className="bg-[#FAFAF9] pt-12 md:pt-16 pb-16 md:pb-24 border-b border-black/[0.03]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <AnimatedSection className="flex justify-between items-end mb-10">
+              <div>
+                <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-2">
+                  Bespoke
+                </p>
+                <h2 className="heading-display text-3xl md:text-4xl">Під замовлення</h2>
+              </div>
+              <Link
+                href="/custom-order"
+                className="hidden sm:inline-flex text-xs tracking-widest uppercase items-center gap-2 border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
+              >
+                Дізнатись більше
+              </Link>
+            </AnimatedSection>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-8">
+              {customKnives.map((knife) => {
+                const firstImage = knife.images?.[0]
+                const imgUrl =
+                  typeof firstImage === 'object' && firstImage !== null
+                    ? (firstImage as { url?: string }).url
+                    : null
+                return (
+                  <div key={knife.id}>
+                    <KnifeCard
+                      slug={knife.slug ?? ''}
+                      title={knife.title}
+                      price={knife.price}
+                      status={knife.status ?? 'custom'}
+                      imageUrl={imgUrl}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── 4. Featured Manufacturers ──────────────────────── */}
+      <section className="bg-white py-20 border-b border-black/[0.03]">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <AnimatedSection className="mb-14">
+            <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
+              Клинки цих та багатьох інших майстрів ви маєте можливість замовити у нас
+            </p>
+            <h2 className="heading-display text-2xl md:text-4xl mb-4 text-left">
+              Які виробники входять в топ нашого магазину?
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+            {manufacturers.map((master, i) => (
+              <ManufacturerCard key={i} en={master.en} jp={master.jp} delay={i * 0.02} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. User Reviews ─────────────────────────────── */}
+      <ReviewsMarquee reviews={reviewUrls} />
+
+      {/* ── 6. Philosophy & Heritage (Immersive Editorial) ─────────── */}
+      <section className="bg-white py-16 md:py-20 lg:py-24 flex flex-col gap-14 lg:gap-16 border-t border-[var(--border)] overflow-hidden relative">
+        {/* Heritage Watermark 01: 锻 (Forging) */}
+        <div className="absolute left-[-5%] top-[10%] text-[40vw] font-serif opacity-[0.03] select-none pointer-events-none text-black leading-none">
+          锻
+        </div>
+
+        {/* Section Header */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20 mb-4 md:mb-6">
+          <AnimatedSection>
+            <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
+              Можливо тому наші покупці обирають саме нас :)
+            </p>
+            <h2 className="heading-display text-4xl md:text-4xl">
+              Філософія вибору ножів в нашому магазині
+            </h2>
+          </AnimatedSection>
+        </div>
+
+        {/* Intro & Definition */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-8 items-stretch">
+            <div className="lg:col-span-5 flex flex-col pt-4 md:pt-8">
+              <AnimatedSection variant="fade-in">
+                <div className="flex items-center gap-4 mb-10 overflow-hidden">
+                  <div className="w-12 h-[1px] bg-[var(--gold)] origin-left animate-width-reveal"></div>
+                  <p className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-mono">
+                    章 01 / Витоки
+                  </p>
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.1}>
+                <h2 className="font-serif text-5xl md:text-5xl lg:text-7xl mb-10 leading-[0.92] tracking-tighter text-black">
+                  Почнемо <br />з початку.
+                </h2>
+              </AnimatedSection>
+
+              <div className="space-y-10 font-serif text-lg md:text-[22px] leading-relaxed text-black/80 text-justify">
+                <AnimatedSection delay={0.2}>
+                  <div className="relative pl-14 md:pl-16">
+                    <span className="absolute left-0 top-[6px] w-10 h-[1px] bg-[var(--gold)]"></span>
+                    <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans font-bold">
+                      Коваль
+                    </strong>
+                    Майстер, який створює ніж від початку і до кінця. Формування, кування,
+                    шліфування, нанесення ієрогліфів — кожен етап проходить через його руки. Це не
+                    просто процес, а цілісна робота однієї людини, в яку вкладено досвід, характер і
+                    власний підхід.
+                  </div>
+                </AnimatedSection>
+                <AnimatedSection delay={0.3}>
+                  <div className="relative pl-14 md:pl-16">
+                    <span className="absolute left-0 top-[6px] w-10 h-[1px] bg-black/20"></span>
+                    <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans font-bold">
+                      Фабрика
+                    </strong>
+                    На фабриці ніж проходить через багато рук — кожен відповідає за окремий етап. Це
+                    інший підхід: швидший, стандартизований і передбачуваний за результатом.
+                  </div>
+                </AnimatedSection>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6 lg:col-start-7 relative w-full group">
+              <AnimatedSection variant="fade-in" delay={0.4} className="h-full">
+                <div className="aspect-[4/5] md:aspect-[5/6] h-full min-h-[420px] bg-[#F6F5F2] w-full relative overflow-hidden border border-black/6">
+                  <div className="absolute inset-0 bg-grain"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/[0.02] to-black/[0.04]"></div>
+
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 text-black/28 group-hover:text-black/40 transition-colors duration-700">
+                    <div className="w-16 h-[1px] bg-black/10 mb-6 group-hover:w-24 transition-all duration-700"></div>
+                    <span className="text-[10px] tracking-[0.4em] uppercase font-mono mb-2">
+                      Ref. Image 01
+                    </span>
+                    <span className="text-[11px] tracking-[0.08em] uppercase opacity-70">
+                      Hand-forging in progress
+                    </span>
+                  </div>
+
+                  <div className="absolute top-0 right-0 w-20 h-20 border-t border-r border-black/10 m-6 pointer-events-none"></div>
+                  <div className="absolute bottom-0 left-0 w-20 h-20 border-b border-l border-black/10 m-6 pointer-events-none"></div>
+                </div>
+              </AnimatedSection>
+
+              {/* Floating label */}
+              <div className="absolute -right-8 top-1/2 -rotate-90 hidden lg:block">
+                <span className="text-[9px] tracking-[0.5em] uppercase text-black/20 font-mono">
+                  Precision Heritage / 1000m altitude
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Heritage Watermark 02: 精 (Precision) */}
+        <div className="absolute right-[-10%] top-[40%] text-[50vw] font-serif opacity-[0.02] select-none pointer-events-none text-black leading-none pt-40">
+          精
+        </div>
+
+        {/* Quality Commission - Cinematic Offset */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10 pt-10 md:pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-8 items-stretch">
+            <div className="lg:col-span-7 order-2 lg:order-1 relative w-full group">
+              <AnimatedSection variant="fade-in" className="h-full">
+                <div className="aspect-[5/4] h-full min-h-[360px] bg-[#F6F5F2] w-full relative overflow-hidden border border-black/6 shadow-2xl shadow-black/[0.02]">
+                  <div className="absolute inset-0 bg-grain"></div>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-black/[0.03] to-transparent"></div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 text-black/20 group-hover:text-black/40 transition-colors duration-700">
+                    <div className="w-20 h-[1px] bg-black/10 mb-6 group-hover:scale-x-125 transition-transform duration-700"></div>
+                    <span className="text-[10px] tracking-[0.4em] uppercase font-mono mb-2">
+                      Ref. Image 02
+                    </span>
+                    <span className="text-[11px] tracking-[0.08em] uppercase opacity-70">
+                      The Japanese Quality Commission
+                    </span>
+                  </div>
+                </div>
+              </AnimatedSection>
+            </div>
+
+            <div className="lg:col-span-4 lg:col-start-9 order-1 lg:order-2 flex flex-col justify-center">
+              <AnimatedSection delay={0.2}>
+                <div className="flex items-center gap-4 mb-8">
+                  <p className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-mono">
+                    章 02 / Якість
+                  </p>
+                </div>
+                <div className="w-16 h-[1px] bg-black/20 mb-10"></div>
+                <div className="font-serif text-lg md:text-[22px] leading-relaxed text-black/80 space-y-8 text-justify">
+                  <p>
+                    В Японії існує комісія, яка контролює якість клинків незалежно від майстерні.
+                    Вона задає стандарти, яким має відповідати ніж перед тим, як потрапити до
+                    покупця.
+                  </p>
+
+                  <p>
+                    Це означає, що і фабричні, і авторські ножі проходять контроль та відповідають
+                    високим вимогам. Різниця не в якості як такій, а в самому підході до створення.
+                  </p>
+
+                  <p>
+                    Фабричне виробництво дає стабільність і повторюваність результату. Ручна робота
+                    — це індивідуальність і особистий почерк майстра.
+                  </p>
+                </div>
+              </AnimatedSection>
+            </div>
+          </div>
+        </div>
+
+        {/* Heritage Watermark 03: 匠 (Master) */}
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-[10%] text-[60vw] font-serif opacity-[0.015] select-none pointer-events-none text-black leading-none">
+          匠
+        </div>
+
+        {/* Uniqueness & Art Quotes - Immersive focus */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl text-center relative z-10 pt-4">
+          <AnimatedSection delay={0.3}>
+            <div className="flex flex-col items-center mb-8">
+              <div className="w-[1px] h-20 bg-gradient-to-b from-black/0 via-black/20 to-black/0 mb-8"></div>
+              <p className="text-[10px] tracking-[0.6em] uppercase text-black/30 font-mono mb-8">
+                章 03 / Унікальність
+              </p>
+            </div>
+
+            <div className="max-w-6xl mx-auto mb-16 relative">
+              <h3 className="font-serif italic text-3xl md:text-4xl lg:text-6xl leading-[1.15] text-black mb-8 px-4 tracking-tight">
+                "На мою думку, кожен ніж — унікальний.
+                <br className="hidden md:block" />
+                Кожен коваль — винятковий."
+              </h3>
+              <div className="flex justify-end pr-4 md:pr-10">
+                <p className="text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-black/40 font-sans font-bold translate-y-[-20px]">
+                  — Засновник Japanese Kitchen Knives
+                </p>
+              </div>
+            </div>
+
+            <p className="font-serif text-lg md:text-[22px] leading-relaxed text-black/80 mb-16 max-w-3xl mx-auto">
+              Кожен майстер застосовує власні знання та техніки, що передаються поколіннями. Саме
+              тому кожен ніж має свій характер і не повторюється повністю.
+            </p>
+
+            <div className="flex items-center justify-center gap-6 mb-14">
+              <div className="w-16 h-[1px] bg-black/10 origin-right transition-transform hover:scale-x-150 duration-700"></div>
+              <div className="w-2 h-2 border border-[var(--gold)] rotate-45 group-hover:bg-[var(--gold)] transition-colors duration-700"></div>
+              <div className="w-16 h-[1px] bg-black/10 origin-left transition-transform hover:scale-x-150 duration-700"></div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── 8. Red Hinomaru CTA Line ────────────────────── */}
+      <section className="bg-[#BC002D] text-white py-8 md:py-10 text-center relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
+          <AnimatedSection>
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 justify-center items-center">
+              <h2 className="heading-display text-2xl md:text-3xl tracking-tight text-white whitespace-nowrap">
+                Кожен ніж має свого власника
+              </h2>
+
+              <div className="flex flex-col sm:flex-row gap-4 items-center">
+                <Link
+                  href="/in-stock"
+                  className="group relative px-8 py-3 bg-white text-[#BC002D] font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-all duration-300 hover:scale-[1.05] active:scale-[0.98] shadow-lg shadow-black/10"
+                >
+                  Обрати ніж
+                </Link>
+                <Link
+                  href="/custom-order"
+                  className="group border border-white/40 text-white px-8 py-3 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-all duration-300 hover:bg-white hover:text-[#BC002D] shadow-lg shadow-black/5"
+                >
+                  Під замовлення
+                </Link>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
     </div>
   )
 }

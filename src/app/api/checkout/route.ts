@@ -1,0 +1,46 @@
+import { NextResponse } from 'next/server'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+
+export async function POST(req: Request) {
+  try {
+    const data = await req.json()
+    const { name, phone, email, deliveryInfo, message, items, total } = data
+
+    if (!name || !phone || !items || !items.length) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+
+    const payload = await getPayload({ config })
+
+    // Build data object, carefully omitting empty email to avoid CMS validation errors
+    const orderData: any = {
+      name,
+      phone,
+      deliveryInfo,
+      message: message || '',
+      items,
+      total: Number(total),
+      status: 'new',
+      source: 'checkout',
+    }
+
+    if (email && email.trim() !== '') {
+      orderData.email = email.trim()
+    }
+
+    // Create the order in Payload CMS
+    const order = await payload.create({
+      collection: 'orders',
+      data: orderData,
+    })
+
+    return NextResponse.json({ success: true, orderId: order.id }, { status: 201 })
+  } catch (err: any) {
+    console.error('Checkout error:', err)
+    return NextResponse.json(
+      { error: err.message || 'Failed to process checkout' },
+      { status: 500 }
+    )
+  }
+}

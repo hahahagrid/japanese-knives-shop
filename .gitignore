@@ -48,3 +48,17 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Custom scratch files and logs
+*.log
+*.pid
+*.sql
+*_backup/
+backup_script.ts
+final-optimize.ts
+fix-rotation.ts
+migrate-images.ts
+sync-media-metadata.ts
+test-payload.ts
+dev.log
+dev.pid
