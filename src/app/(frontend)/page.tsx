@@ -451,7 +451,7 @@ export default async function HomePage() {
           <AnimatedSection>
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 justify-center items-center">
               <h2 className="heading-display text-2xl md:text-3xl tracking-tight text-white whitespace-nowrap">
-                Подорож у світ японських ножів разом з нами
+                Подорож у світ японських ножів разом
               </h2>
 
               <div className="flex flex-col sm:flex-row gap-4 items-center">
