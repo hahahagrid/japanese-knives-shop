@@ -35,7 +35,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
-    // push: true,
+    push: process.env.NODE_ENV === 'development' || !!process.env.RAILWAY_ENVIRONMENT_NAME?.toLowerCase().includes('dev'),
   }),
   sharp,
   plugins: [],
