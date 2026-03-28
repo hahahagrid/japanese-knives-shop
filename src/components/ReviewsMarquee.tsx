@@ -29,12 +29,16 @@ export function ReviewsMarquee({ reviews = [] }: { reviews?: string[] }) {
   // Calculate the width of one single sequence (baseWidth)
   useEffect(() => {
     const calculateWidth = () => {
-      // The container holds child divs representing items.
-      // We know there are 4 sets of the base items.
       if (containerRef.current) {
-        setBaseWidth(containerRef.current.scrollWidth / 4)
-        // Instantly snap to the middle section (-baseWidth) so we have space to drag left/right
-        x.set(-(containerRef.current.scrollWidth / 4))
+        const newBaseWidth = containerRef.current.scrollWidth / 4
+        setBaseWidth(newBaseWidth)
+        
+        // Only set the initial position once or if we are wildly out of range.
+        // This prevents the "jump to start" when mobile URL bars hide/show (triggering resize).
+        const currentX = x.get()
+        if (currentX === 0) {
+          x.set(-newBaseWidth)
+        }
       }
     }
 
@@ -101,11 +105,13 @@ export function ReviewsMarquee({ reviews = [] }: { reviews?: string[] }) {
             return (
               <div
                 key={i}
-                // Removed gaps, borders, paddings. Touches edge-to-edge.
-                className="w-[280px] h-[450px] sm:w-[350px] sm:h-[600px] shrink-0 relative"
+                // Added ml-[-1px] to overlap 1px and hide sub-pixel gaps/flicker
+                // Added transform-gpu to force hardware acceleration on mobile
+                className="w-[280px] h-[450px] sm:w-[350px] sm:h-[600px] shrink-0 relative ml-[-1px] transform-gpu"
+                style={{ backfaceVisibility: 'hidden' }}
               >
                 <div
-                  className="w-full h-full flex flex-col items-center justify-center text-white/50 text-sm font-medium select-none pointer-events-none overflow-hidden relative"
+                  className="w-full h-full flex flex-col items-center justify-center text-white/50 text-sm font-medium select-none pointer-events-none overflow-hidden relative bg-[#1c1917]"
                   style={{ backgroundColor: isImage ? undefined : srcOrColor }}
                 >
                   {isImage ? (

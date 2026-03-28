@@ -13,7 +13,6 @@ import { Posts } from './collections/Posts'
 import { Orders } from './collections/Orders'
 import { SiteSettings } from './globals/SiteSettings'
 import { HomepageReviews } from './globals/HomepageReviews'
-import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)

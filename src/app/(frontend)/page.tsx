@@ -256,14 +256,14 @@ export default async function HomePage() {
       <ReviewsMarquee reviews={reviewUrls} />
 
       {/* ── 6. Philosophy & Heritage (Immersive Editorial) ─────────── */}
-      <section className="bg-white py-16 md:py-20 lg:py-24 flex flex-col gap-16 border-t border-[var(--border)] overflow-hidden relative">
+      <section className="bg-white pt-32 md:pt-40 pb-16 md:pb-24 flex flex-col gap-10 border-t border-[var(--border)] overflow-hidden relative">
         {/* Heritage Watermark 01: 锻 (Forging) */}
         <div className="absolute left-[-5%] top-[10%] text-[40vw] font-serif opacity-[0.03] select-none pointer-events-none text-black leading-none">
           锻
         </div>
 
         {/* Section Header */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20 mb-4 md:mb-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
           <AnimatedSection>
             <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
               Можливо тому наші покупці обирають саме нас :)
