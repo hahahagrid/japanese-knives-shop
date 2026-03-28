@@ -13,6 +13,7 @@ import { Posts } from './collections/Posts'
 import { Orders } from './collections/Orders'
 import { SiteSettings } from './globals/SiteSettings'
 import { HomepageReviews } from './globals/HomepageReviews'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,6 +37,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
     push: process.env.NODE_ENV === 'development' || !!process.env.RAILWAY_ENVIRONMENT_NAME?.toLowerCase().includes('dev'),
+    migrationDir: path.resolve(dirname, 'migrations'),
   }),
   sharp,
   plugins: [],
