@@ -22,23 +22,30 @@
 
   html {
     scroll-behavior: smooth;
-    height: 100%;
-    overflow-x: hidden;
-    /* Optional: fix for in-app browsers jitter with smooth scroll */
-    -webkit-overflow-scrolling: touch;
+    /* Prevent layout jitter on mobile chrome shift */
+    min-height: 100%;
+    min-height: -webkit-fill-available;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: clip; 
   }
 
   /* Disable smooth scroll for mobile to prevent jitter when browser chrome shifts */
-  @media (max-width: 768px) {
+  @media (max-width: 768px), (pointer: coarse) {
     html {
-      scroll-behavior: auto;
+      scroll-behavior: auto !important;
     }
   }
 
   body {
-    min-height: 100%;
-    /* Skip dvh on body to avoid resizing during scroll */
-    overflow-x: hidden;
+    min-height: 100vh;
+    min-height: 100svh; /* Smallest viewport height, stable on mobile bar shifts */
+    min-height: -webkit-fill-available;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: clip;
     position: relative;
     display: flex;
     flex-direction: column;

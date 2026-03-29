@@ -10,7 +10,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', onClick }) => {
   return (
     <Link
       href="/"
-      className={`inline-block group transition-all duration-300 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.06)] rounded-sm overflow-hidden ${className}`}
+      className={`inline-block group transition-[transform,shadow] duration-300 bg-white shadow-[0_2px_10px_rgba(0,0,0,0.06)] rounded-sm overflow-hidden ${className}`}
       onClick={onClick}
     >
       <Image
