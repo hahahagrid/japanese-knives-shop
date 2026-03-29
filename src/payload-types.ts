@@ -301,6 +301,7 @@ export interface Post {
  */
 export interface Order {
   id: number;
+  orderNumber?: string | null;
   name: string;
   phone: string;
   email?: string | null;
@@ -558,6 +559,7 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "orders_select".
  */
 export interface OrdersSelect<T extends boolean = true> {
+  orderNumber?: T;
   name?: T;
   phone?: T;
   email?: T;
@@ -626,8 +628,18 @@ export interface SiteSetting {
   id: number;
   contactEmail?: string | null;
   contactPhone?: string | null;
+  /**
+   * Повне посилання на ваш Instagram (н.п. https://instagram.com/user)
+   */
   instagramUrl?: string | null;
+  /**
+   * Повне посилання на ваш Telegram (н.п. https://t.me/user)
+   */
   telegramUrl?: string | null;
+  /**
+   * Повне посилання на ваш YouTube (н.п. https://youtube.com/@user)
+   */
+  youtubeUrl?: string | null;
   /**
    * Наприклад: Пн-Пт 10:00-19:00
    */
@@ -655,6 +667,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   contactPhone?: T;
   instagramUrl?: T;
   telegramUrl?: T;
+  youtubeUrl?: T;
   workHours?: T;
   address?: T;
   updatedAt?: T;

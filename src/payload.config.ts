@@ -36,6 +36,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
     push: process.env.NODE_ENV === 'development' || !!process.env.RAILWAY_ENVIRONMENT_NAME?.toLowerCase().includes('dev'),
+    migrationDir: path.resolve(dirname, 'migrations'),
   }),
   sharp,
   plugins: [],

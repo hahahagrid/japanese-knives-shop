@@ -92,11 +92,14 @@ export default async function HomePage() {
       <section className="relative h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white">
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
-            src="/images/hero_knife.png"
+          <Image
+            src="/images/hero_knife-1920.webp"
             alt="Premium Japanese Knife"
-            className="object-cover w-full h-full opacity-55 animate-slow-zoom"
+            fill
+            priority
+            className="object-cover opacity-55 animate-slow-zoom"
             style={{ objectPosition: 'center 40%' }}
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
         </div>
@@ -104,7 +107,7 @@ export default async function HomePage() {
         <div className="relative z-10 w-full pb-16 md:pb-24">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl animate-fade-up" style={{ animationDelay: '100ms' }}>
-              <p className="text-[10px] tracking-[0.4em] uppercase text-neutral-400 mb-5">
+              <p className="text-[10px] tracking-[0.4em] uppercase text-neutral-400 mb-6">
                 Японські клинки ручної роботи
               </p>
               <h1 className="heading-display text-5xl md:text-7xl lg:text-8xl text-white mb-8">
@@ -114,16 +117,16 @@ export default async function HomePage() {
                 <br />
                 Різу
               </h1>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/in-stock"
-                  className="inline-block bg-white text-black px-8 py-3.5 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-neutral-200 transition-colors duration-200"
+                  className="inline-block bg-white text-black px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-neutral-200 transition-colors duration-200"
                 >
                   Каталог в наявності
                 </Link>
                 <Link
                   href="/custom-order"
-                  className="inline-block bg-transparent border border-white/50 text-white px-8 py-3.5 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-white/10 transition-colors duration-200"
+                  className="inline-block bg-transparent border border-white/50 text-white px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-white/10 transition-colors duration-200"
                 >
                   Під замовлення
                 </Link>
@@ -133,11 +136,11 @@ export default async function HomePage() {
         </div>
 
         <div
-          className="absolute bottom-8 right-8 z-10 flex flex-col items-center gap-2 text-white/40 animate-fade-in"
+          className="absolute bottom-1 right-8 z-10 flex flex-col items-center gap-2 text-white/40 animate-fade-in"
           style={{ animationDelay: '800ms' }}
         >
           <span className="text-[9px] tracking-[0.3em] uppercase rotate-90 origin-center mb-2">
-            Scroll
+            Вниз
           </span>
           <ArrowDown className="h-4 w-4 animate-scroll-bounce" />
         </div>
@@ -162,7 +165,7 @@ export default async function HomePage() {
               </Link>
             </AnimatedSection>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-8">
               {inStockKnives.map((knife) => {
                 const firstImage = knife.images?.[0]
                 const imgUrl =
@@ -205,7 +208,7 @@ export default async function HomePage() {
               </Link>
             </AnimatedSection>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-8">
               {customKnives.map((knife) => {
                 const firstImage = knife.images?.[0]
                 const imgUrl =
@@ -232,7 +235,7 @@ export default async function HomePage() {
       {/* ── 4. Featured Manufacturers ──────────────────────── */}
       <section className="bg-white py-20 border-b border-black/[0.03]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <AnimatedSection className="mb-14">
+          <AnimatedSection className="mb-10">
             <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
               Клинки цих та багатьох інших майстрів ви маєте можливість замовити у нас
             </p>
@@ -253,14 +256,14 @@ export default async function HomePage() {
       <ReviewsMarquee reviews={reviewUrls} />
 
       {/* ── 6. Philosophy & Heritage (Immersive Editorial) ─────────── */}
-      <section className="bg-white py-16 md:py-20 lg:py-24 flex flex-col gap-14 lg:gap-16 border-t border-[var(--border)] overflow-hidden relative">
+      <section className="bg-white pt-32 md:pt-40 pb-16 md:pb-24 flex flex-col gap-10 border-t border-[var(--border)] overflow-hidden relative">
         {/* Heritage Watermark 01: 锻 (Forging) */}
         <div className="absolute left-[-5%] top-[10%] text-[40vw] font-serif opacity-[0.03] select-none pointer-events-none text-black leading-none">
           锻
         </div>
 
         {/* Section Header */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20 mb-4 md:mb-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
           <AnimatedSection>
             <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
               Можливо тому наші покупці обирають саме нас :)
@@ -273,7 +276,7 @@ export default async function HomePage() {
 
         {/* Intro & Definition */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-8 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-stretch">
             <div className="lg:col-span-5 flex flex-col pt-4 md:pt-8">
               <AnimatedSection variant="fade-in">
                 <div className="flex items-center gap-4 mb-10 overflow-hidden">
@@ -284,16 +287,9 @@ export default async function HomePage() {
                 </div>
               </AnimatedSection>
 
-              <AnimatedSection delay={0.1}>
-                <h2 className="font-serif text-5xl md:text-5xl lg:text-7xl mb-10 leading-[0.92] tracking-tighter text-black">
-                  Почнемо <br />з початку.
-                </h2>
-              </AnimatedSection>
-
               <div className="space-y-10 font-serif text-lg md:text-[22px] leading-relaxed text-black/80 text-justify">
                 <AnimatedSection delay={0.2}>
-                  <div className="relative pl-14 md:pl-16">
-                    <span className="absolute left-0 top-[6px] w-10 h-[1px] bg-[var(--gold)]"></span>
+                  <div className="relative pl-0">
                     <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans font-bold">
                       Коваль
                     </strong>
@@ -304,8 +300,7 @@ export default async function HomePage() {
                   </div>
                 </AnimatedSection>
                 <AnimatedSection delay={0.3}>
-                  <div className="relative pl-14 md:pl-16">
-                    <span className="absolute left-0 top-[6px] w-10 h-[1px] bg-black/20"></span>
+                  <div className="relative pl-0">
                     <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans font-bold">
                       Фабрика
                     </strong>
@@ -318,22 +313,20 @@ export default async function HomePage() {
 
             <div className="lg:col-span-6 lg:col-start-7 relative w-full group">
               <AnimatedSection variant="fade-in" delay={0.4} className="h-full">
-                <div className="aspect-[4/5] md:aspect-[5/6] h-full min-h-[420px] bg-[#F6F5F2] w-full relative overflow-hidden border border-black/6">
-                  <div className="absolute inset-0 bg-grain"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/[0.02] to-black/[0.04]"></div>
-
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 text-black/28 group-hover:text-black/40 transition-colors duration-700">
-                    <div className="w-16 h-[1px] bg-black/10 mb-6 group-hover:w-24 transition-all duration-700"></div>
-                    <span className="text-[10px] tracking-[0.4em] uppercase font-mono mb-2">
-                      Ref. Image 01
-                    </span>
-                    <span className="text-[11px] tracking-[0.08em] uppercase opacity-70">
-                      Hand-forging in progress
-                    </span>
-                  </div>
-
-                  <div className="absolute top-0 right-0 w-20 h-20 border-t border-r border-black/10 m-6 pointer-events-none"></div>
-                  <div className="absolute bottom-0 left-0 w-20 h-20 border-b border-l border-black/10 m-6 pointer-events-none"></div>
+                <div className="relative aspect-[4/5] md:aspect-[5/6] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
+                  <Image
+                    src="/images/phil1-1200.webp"
+                    alt="Hand-forging Process"
+                    fill
+                    className="object-cover transition-transform duration-1000"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  {/* Internal Editorial Border */}
+                  <div className="absolute inset-0 border-[1px] border-white/20 m-6 pointer-events-none z-20" />
+                  {/* Bottom Shadow Gradient */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/30 to-transparent z-10" />
+                  {/* Texture Overlay */}
+                  <div className="absolute inset-0 bg-grain opacity-10 pointer-events-none z-30"></div>
                 </div>
               </AnimatedSection>
 
@@ -353,34 +346,36 @@ export default async function HomePage() {
         </div>
 
         {/* Quality Commission - Cinematic Offset */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10 pt-10 md:pt-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-8 items-stretch">
             <div className="lg:col-span-7 order-2 lg:order-1 relative w-full group">
               <AnimatedSection variant="fade-in" className="h-full">
-                <div className="aspect-[5/4] h-full min-h-[360px] bg-[#F6F5F2] w-full relative overflow-hidden border border-black/6 shadow-2xl shadow-black/[0.02]">
-                  <div className="absolute inset-0 bg-grain"></div>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/[0.03] to-transparent"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 text-black/20 group-hover:text-black/40 transition-colors duration-700">
-                    <div className="w-20 h-[1px] bg-black/10 mb-6 group-hover:scale-x-125 transition-transform duration-700"></div>
-                    <span className="text-[10px] tracking-[0.4em] uppercase font-mono mb-2">
-                      Ref. Image 02
-                    </span>
-                    <span className="text-[11px] tracking-[0.08em] uppercase opacity-70">
-                      The Japanese Quality Commission
-                    </span>
-                  </div>
+                <div className="relative aspect-[5/4] h-full min-h-[360px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
+                  <Image
+                    src="/images/phil2-1200.webp"
+                    alt="Japanese Quality Commission Standards"
+                    fill
+                    className="object-cover transition-transform duration-1000"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  {/* Internal Editorial Border */}
+                  <div className="absolute inset-0 border-[1px] border-white/20 m-6 pointer-events-none z-20" />
+                  {/* Bottom Shadow Gradient */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/30 to-transparent z-10" />
+                  {/* Texture Overlay */}
+                  <div className="absolute inset-0 bg-grain opacity-10 pointer-events-none z-30"></div>
                 </div>
               </AnimatedSection>
             </div>
 
             <div className="lg:col-span-4 lg:col-start-9 order-1 lg:order-2 flex flex-col justify-center">
               <AnimatedSection delay={0.2}>
-                <div className="flex items-center gap-4 mb-8">
+                <div className="flex items-center gap-4 mb-10 overflow-hidden">
+                  <div className="w-12 h-[1px] bg-[var(--gold)] origin-left animate-width-reveal"></div>
                   <p className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-mono">
                     章 02 / Якість
                   </p>
                 </div>
-                <div className="w-16 h-[1px] bg-black/20 mb-10"></div>
                 <div className="font-serif text-lg md:text-[22px] leading-relaxed text-black/80 space-y-8 text-justify">
                   <p>
                     В Японії існує комісія, яка контролює якість клинків незалежно від майстерні.
@@ -413,16 +408,16 @@ export default async function HomePage() {
           <AnimatedSection delay={0.3}>
             <div className="flex flex-col items-center mb-8">
               <div className="w-[1px] h-20 bg-gradient-to-b from-black/0 via-black/20 to-black/0 mb-8"></div>
-              <p className="text-[10px] tracking-[0.6em] uppercase text-black/30 font-mono mb-8">
+              <p className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-mono mb-8">
                 章 03 / Унікальність
               </p>
             </div>
 
             <div className="max-w-6xl mx-auto mb-16 relative">
-              <h3 className="font-serif italic text-3xl md:text-4xl lg:text-6xl leading-[1.15] text-black mb-8 px-4 tracking-tight">
+              <h3 className="font-serif italic text-3xl md:text-4xl lg:text-6xl leading-[1.15] text-black mb-8 pl-2 pr-6 md:px-4 tracking-tight">
                 "На мою думку, кожен ніж — унікальний.
-                <br className="hidden md:block" />
-                Кожен коваль — винятковий."
+                <br />
+                <span className="whitespace-nowrap">Кожен коваль — винятковий."</span>
               </h3>
               <div className="flex justify-end pr-4 md:pr-10">
                 <p className="text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-black/40 font-sans font-bold translate-y-[-20px]">
@@ -436,7 +431,7 @@ export default async function HomePage() {
               тому кожен ніж має свій характер і не повторюється повністю.
             </p>
 
-            <div className="flex items-center justify-center gap-6 mb-14">
+            <div className="flex items-center justify-center gap-6 mb-16">
               <div className="w-16 h-[1px] bg-black/10 origin-right transition-transform hover:scale-x-150 duration-700"></div>
               <div className="w-2 h-2 border border-[var(--gold)] rotate-45 group-hover:bg-[var(--gold)] transition-colors duration-700"></div>
               <div className="w-16 h-[1px] bg-black/10 origin-left transition-transform hover:scale-x-150 duration-700"></div>
@@ -446,24 +441,24 @@ export default async function HomePage() {
       </section>
 
       {/* ── 8. Red Hinomaru CTA Line ────────────────────── */}
-      <section className="bg-[#BC002D] text-white py-8 md:py-10 text-center relative overflow-hidden">
+      <section className="bg-[#BC002D] text-white py-12 md:py-16 text-center relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
           <AnimatedSection>
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 justify-center items-center">
-              <h2 className="heading-display text-2xl md:text-3xl tracking-tight text-white whitespace-nowrap">
-                Кожен ніж має свого власника
+            <div className="flex flex-col gap-10 lg:gap-16 justify-center items-center">
+              <h2 className="heading-display text-3xl md:text-4xl tracking-tight text-white leading-tight max-w-2xl">
+                Подорож у світ японських ножів разом з нами
               </h2>
 
-              <div className="flex flex-col sm:flex-row gap-4 items-center">
+              <div className="flex flex-row gap-4 w-full max-w-xs sm:max-w-none sm:w-auto justify-center items-stretch">
                 <Link
                   href="/in-stock"
-                  className="group relative px-8 py-3 bg-white text-[#BC002D] font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-all duration-300 hover:scale-[1.05] active:scale-[0.98] shadow-lg shadow-black/10"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center px-4 sm:px-8 py-4 bg-white text-[#BC002D] font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-neutral-100 shadow-lg"
                 >
                   Обрати ніж
                 </Link>
                 <Link
                   href="/custom-order"
-                  className="group border border-white/40 text-white px-8 py-3 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-all duration-300 hover:bg-white hover:text-[#BC002D] shadow-lg shadow-black/5"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center border-2 border-white/40 text-white px-4 sm:px-8 py-4 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-white/10 shadow-lg"
                 >
                   Під замовлення
                 </Link>

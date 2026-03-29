@@ -1,9 +1,13 @@
-import React from 'react'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 import Link from 'next/link'
 import { Logo } from './Logo'
 import { Send } from 'lucide-react'
 
-export const BrandFooter: React.FC = () => {
+export const BrandFooter: React.FC = async () => {
+  const payload = await getPayload({ config })
+  const settings = await payload.findGlobal({ slug: 'site-settings', overrideAccess: false })
+
   return (
     <footer className="bg-[#0A0A09] text-white">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-10">
@@ -15,27 +19,48 @@ export const BrandFooter: React.FC = () => {
               Автентичні японські ножі ручної роботи. Преміальна якість. Доставка по Україні.
             </p>
 
-            {/* Socials */}
-            <div className="flex gap-4 mt-2">
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="p-2 border border-neutral-800 hover:border-neutral-500 transition-colors group"
-              >
-                {/* Instagram SVG */}
-                <svg className="h-4 w-4 text-neutral-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
-                </svg>
-              </a>
-              <a
-                href="#"
-                aria-label="Telegram"
-                className="p-2 border border-neutral-800 hover:border-neutral-500 transition-colors group"
-              >
-                <Send className="h-4 w-4 text-neutral-400 group-hover:text-white transition-colors" />
-              </a>
+            {/* Notable Socials */}
+            <div className="flex gap-4 mt-6">
+              {settings.instagramUrl && (
+                <a
+                  href={settings.instagramUrl as string}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="p-3 border border-neutral-800 hover:border-neutral-500 hover:bg-neutral-900 transition-all duration-300 group rounded-sm"
+                >
+                  <svg className="h-5 w-5 text-neutral-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <circle cx="12" cy="12" r="4" />
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+                  </svg>
+                </a>
+              )}
+              {settings.telegramUrl && (
+                <a
+                  href={settings.telegramUrl as string}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Telegram"
+                  className="p-3 border border-neutral-800 hover:border-neutral-500 hover:bg-neutral-900 transition-all duration-300 group rounded-sm"
+                >
+                  <Send className="h-5 w-5 text-neutral-400 group-hover:text-white transition-colors" />
+                </a>
+              )}
+              {settings.youtubeUrl && (
+                <a
+                  href={settings.youtubeUrl as string}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="p-3 border border-neutral-800 hover:border-neutral-500 hover:bg-neutral-900 transition-all duration-300 group rounded-sm"
+                >
+                  <svg className="h-5 w-5 text-neutral-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.46 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.46-5.58z" />
+                    <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" />
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
 

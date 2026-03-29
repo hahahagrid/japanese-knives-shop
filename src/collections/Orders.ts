@@ -3,8 +3,8 @@ import type { CollectionConfig } from 'payload'
 export const Orders: CollectionConfig = {
   slug: 'orders',
   admin: {
-    useAsTitle: 'name',
-    defaultColumns: ['name', 'phone', 'total', 'status', 'createdAt'],
+    useAsTitle: 'orderNumber',
+    defaultColumns: ['orderNumber', 'name', 'phone', 'total', 'status', 'createdAt'],
     group: 'Admin',
   },
   access: {
@@ -14,6 +14,15 @@ export const Orders: CollectionConfig = {
     delete: ({ req: { user } }) => Boolean(user),
   },
   fields: [
+    {
+      name: 'orderNumber',
+      type: 'text',
+      index: true,
+      unique: true,
+      admin: {
+        readOnly: true,
+      },
+    },
     {
       name: 'name',
       type: 'text',
@@ -95,5 +104,32 @@ export const Orders: CollectionConfig = {
       defaultValue: 'contact_form',
     },
   ],
+  hooks: {
+    beforeChange: [
+      async ({ data, req, operation }) => {
+        if (operation === 'create' && !data.orderNumber) {
+          try {
+            const lastOrder = await req.payload.find({
+              collection: 'orders',
+              sort: '-createdAt',
+              limit: 1,
+              depth: 0,
+              pagination: false,
+            })
+
+            let nextNumber = 1001
+            if (lastOrder.docs.length > 0 && lastOrder.docs[0].orderNumber) {
+              const lastNum = parseInt(lastOrder.docs[0].orderNumber.replace('#', ''))
+              if (!isNaN(lastNum)) nextNumber = lastNum + 1
+            }
+            data.orderNumber = `#${nextNumber}`
+          } catch (err) {
+            console.error('Error generating order number:', err)
+          }
+        }
+        return data
+      },
+    ],
+  },
   timestamps: true,
 }
