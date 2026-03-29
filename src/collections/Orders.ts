@@ -15,6 +15,16 @@ export const Orders: CollectionConfig = {
   },
   fields: [
     {
+      name: 'orderNumber',
+      type: 'text',
+      index: true,
+      unique: true,
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,

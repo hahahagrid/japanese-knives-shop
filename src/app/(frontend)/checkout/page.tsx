@@ -14,6 +14,7 @@ export default function CheckoutPage() {
   const router = useRouter()
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
+  const [orderNumber, setOrderNumber] = useState('')
 
   const subtotal = getTotal()
   // Can add shipping cost later if needed
@@ -53,13 +54,10 @@ export default function CheckoutPage() {
         throw new Error(err.error || 'Щось пішло не так при оформленні замовлення.')
       }
 
+      const resData = await res.json()
+      setOrderNumber(resData.orderNumber)
       setStatus('success')
       clearCart()
-      
-      // Redirect to a success page or show success state
-      setTimeout(() => {
-        router.push('/')
-      }, 3000)
     } catch (err: any) {
       setErrorMessage(err.message)
       setStatus('error')
@@ -68,7 +66,7 @@ export default function CheckoutPage() {
 
   if (status === 'success') {
     return (
-      <div className="container mx-auto px-4 min-h-[70vh] flex flex-col items-center justify-center text-center">
+      <div className="container mx-auto px-4 min-h-[70vh] flex flex-col items-center justify-center text-center pt-28">
         <AnimatedSection className="max-w-xl">
           <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8 text-green-600 border border-green-100">
              <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,7 +74,11 @@ export default function CheckoutPage() {
              </svg>
           </div>
           <h1 className="text-4xl font-serif font-bold mb-6">Замовлення прийнято</h1>
-          <p className="text-neutral-500 mb-10 text-lg">
+          <div className="bg-neutral-50 border border-neutral-100 py-6 px-10 rounded-sm mb-8 inline-block">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold">Номер вашого замовлення</p>
+            <p className="text-4xl font-serif font-bold">{orderNumber}</p>
+          </div>
+          <p className="text-neutral-500 mb-10 text-lg max-w-md mx-auto">
             Дякуємо за ваш вибір! Ми зв&apos;яжемося з вами найближчим часом для підтвердження деталей оплати та доставки.
           </p>
           <Link href="/" className="text-[11px] font-bold uppercase tracking-[0.2em] border-b border-black pb-1 hover:opacity-60 transition-opacity">
@@ -88,17 +90,17 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-28 pb-16 md:pt-32 md:pb-24 relative z-10">
       <AnimatedSection>
-        <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">Оформлення</p>
+        <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">ОФОРМЛЕННЯ</p>
         <h1 className="heading-display text-4xl md:text-5xl lg:text-6xl mb-12 lg:mb-16">
           Ваше замовлення
         </h1>
       </AnimatedSection>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-        {/* Left: Form */}
-        <AnimatedSection delay={0.1} className="lg:col-span-7 xl:col-span-6">
+        {/* Left: Form - Order 2 on Mobile */}
+        <AnimatedSection delay={0.1} className="lg:col-span-7 xl:col-span-6 order-2 lg:order-1">
           <form onSubmit={handleSubmit} className="space-y-10">
             <div className="space-y-8">
               <h2 className="text-xl font-serif font-bold border-b border-black/10 pb-4">Контактні дані</h2>
@@ -223,9 +225,9 @@ export default function CheckoutPage() {
           </form>
         </AnimatedSection>
 
-        {/* Right: Summary */}
-        <AnimatedSection delay={0.2} className="lg:col-span-5 xl:col-start-8">
-          <div className="bg-neutral-50/50 p-8 border border-neutral-100 rounded-sm sticky top-32">
+        {/* Right: Summary - Order 1 on Mobile */}
+        <AnimatedSection delay={0.2} className="lg:col-span-5 xl:col-start-8 order-1 lg:order-2">
+          <div className="bg-neutral-50/50 p-8 border border-neutral-100 rounded-sm lg:sticky lg:top-32">
             <h2 className="text-xl font-serif font-bold border-b border-black/10 pb-4 mb-8">Ваш кошик</h2>
             
             {items.length === 0 ? (

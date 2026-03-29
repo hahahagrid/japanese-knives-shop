@@ -301,6 +301,7 @@ export interface Post {
  */
 export interface Order {
   id: number;
+  orderNumber?: string | null;
   name: string;
   phone: string;
   email?: string | null;
@@ -558,6 +559,7 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "orders_select".
  */
 export interface OrdersSelect<T extends boolean = true> {
+  orderNumber?: T;
   name?: T;
   phone?: T;
   email?: T;

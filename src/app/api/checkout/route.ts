@@ -29,13 +29,23 @@ export async function POST(req: Request) {
       orderData.email = email.trim()
     }
 
+    // Generate sequential order number starting from #1001
+    const { totalDocs } = await payload.find({
+      collection: 'orders',
+      limit: 0,
+    })
+    const orderNumber = `#${1000 + (totalDocs + 1)}`
+
     // Create the order in Payload CMS
     const order = await payload.create({
       collection: 'orders',
-      data: orderData,
+      data: {
+        ...orderData,
+        orderNumber,
+      },
     })
 
-    return NextResponse.json({ success: true, orderId: order.id }, { status: 201 })
+    return NextResponse.json({ success: true, orderId: order.id, orderNumber }, { status: 201 })
   } catch (err: any) {
     console.error('Checkout error:', err)
     return NextResponse.json(
