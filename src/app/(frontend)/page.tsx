@@ -414,7 +414,7 @@ export default async function HomePage() {
             </div>
 
             <div className="max-w-6xl mx-auto mb-16 relative">
-              <h3 className="font-serif italic text-3xl md:text-4xl lg:text-6xl leading-[1.15] text-black mb-8 px-4 tracking-tight">
+              <h3 className="font-serif italic text-3xl md:text-4xl lg:text-6xl leading-[1.15] text-black mb-8 pl-2 pr-6 md:px-4 tracking-tight">
                 "На мою думку, кожен ніж — унікальний.
                 <br />
                 <span className="whitespace-nowrap">Кожен коваль — винятковий."</span>
