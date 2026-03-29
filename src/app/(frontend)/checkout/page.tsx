@@ -233,7 +233,7 @@ export default function CheckoutPage() {
             {items.length === 0 ? (
               <div className="text-center py-12">
                 <p className="text-neutral-400 mb-4 italic font-serif">Ваша корзина порожня</p>
-                <Link href="/in-stock" className="text-[10px] font-bold uppercase tracking-widest text-black border-b border-black pb-1 hover:opacity-60 transition-opacity">
+                <Link href="/knives/in-stock" className="text-[10px] font-bold uppercase tracking-widest text-black border-b border-black pb-1 hover:opacity-60 transition-opacity">
                   До каталогу
                 </Link>
               </div>

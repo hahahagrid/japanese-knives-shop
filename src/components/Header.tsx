@@ -8,8 +8,9 @@ import { MobileMenu } from './MobileMenu'
 import { CartIcon } from './Cart/CartIcon'
 
 const navLinks = [
-  { href: '/in-stock', label: 'В наявності' },
-  { href: '/custom-order', label: 'Під замовлення' },
+  { href: '/', label: 'Головна' },
+  { href: '/knives/in-stock', label: 'В наявності' },
+  { href: '/knives/custom-order', label: 'Під замовлення' },
   { href: '/about', label: 'Про нас' },
   { href: '/shipping', label: 'Доставка' },
   { href: '/blog', label: 'Блог' },
@@ -19,7 +20,10 @@ export const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
-  const isAlwaysDark = pathname?.startsWith('/knives/') || pathname?.startsWith('/blog/') || pathname === '/contacts' || pathname === '/checkout'
+  const isAlwaysDark = (pathname?.startsWith('/knives/') && pathname !== '/knives/in-stock' && pathname !== '/knives/custom-order') ||
+    (pathname?.startsWith('/blog/') && pathname !== '/blog') ||
+    pathname === '/contacts' || 
+    pathname === '/checkout'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +36,7 @@ export const Header: React.FC = () => {
 
   const isDarkText = scrolled || isAlwaysDark
 
-  const bgClass = scrolled 
+  const bgClass = (scrolled || isAlwaysDark)
     ? 'bg-[#fbfbfd]/75 backdrop-blur-md border-[var(--border)]' 
     : 'bg-transparent border-transparent'
 

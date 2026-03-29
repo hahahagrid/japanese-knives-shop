@@ -8,8 +8,9 @@ import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
-  { href: '/in-stock', label: 'В наявності' },
-  { href: '/custom-order', label: 'Під замовлення' },
+  { href: '/', label: 'Головна' },
+  { href: '/knives/in-stock', label: 'В наявності' },
+  { href: '/knives/custom-order', label: 'Під замовлення' },
   { href: '/about', label: 'Про нас' },
   { href: '/shipping', label: 'Доставка' },
   { href: '/blog', label: 'Блог' },

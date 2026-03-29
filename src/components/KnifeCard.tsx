@@ -10,8 +10,10 @@ interface KnifeCardProps {
 }
 
 export function KnifeCard({ slug, title, price, status, imageUrl }: KnifeCardProps) {
+  const statusPath = status === 'in_stock' ? 'in-stock' : 'custom-order'
+  
   return (
-    <Link href={`/knives/${slug}`} className="group flex flex-col">
+    <Link href={`/knives/${statusPath}/${slug}`} className="group flex flex-col">
       {/* Image */}
       <div className="aspect-[4/5] overflow-hidden relative mb-5">
         {imageUrl ? (
