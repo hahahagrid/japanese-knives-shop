@@ -154,7 +154,7 @@ export default function AboutPage() {
                 </p>
                 <div className="flex flex-wrap gap-6">
                   <Link
-                    href="/contact"
+                    href="/contacts"
                     className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 text-sm uppercase tracking-widest font-bold hover:bg-neutral-200 transition-colors"
                   >
                     <Mail className="w-4 h-4" />

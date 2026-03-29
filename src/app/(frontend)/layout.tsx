@@ -4,6 +4,7 @@ import { Header } from '@/components/Header'
 import { BrandFooter as Footer } from '@/components/BrandFooter'
 import { CartDrawer } from '@/components/Cart/CartDrawer'
 import { LoadingScreen } from '@/components/LoadingScreen'
+import { ViewportHandler } from '@/components/ViewportHandler'
 import './styles.css'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter', display: 'swap' })
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen bg-background text-foreground font-sans antialiased flex flex-col selection:bg-neutral-800 selection:text-white">
+        <ViewportHandler />
         <LoadingScreen />
         <Header />
         <main className="flex-1">{children}</main>

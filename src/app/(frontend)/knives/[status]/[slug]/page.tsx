@@ -1,15 +1,20 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { KnifeGallery } from '@/components/KnifeGallery'
 import { RichText } from '@/components/RichText'
 import { AddToCartButton } from '@/components/Cart/AddToCartButton'
-import { ChevronRight, ShieldCheck, Ruler, Scale, Database } from 'lucide-react'
+import { Database } from 'lucide-react'
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+// Map UI status to DB status
+const statusMap: Record<string, string> = {
+  'in-stock': 'in_stock',
+  'custom-order': 'custom_order'
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ status: string, slug: string }> }) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
   const payload = await getPayload({ config })
@@ -21,13 +26,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return { title: `${docs[0].title} | K N I V E S` }
 }
 
-export default async function KnifePage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+export default async function KnifePage({ params }: { params: Promise<{ status: string, slug: string }> }) {
+  const { status, slug } = await params
   const decodedSlug = decodeURIComponent(slug)
   const payload = await getPayload({ config })
+  
+  const dbStatus = statusMap[status]
+  
+  if (!dbStatus) {
+    notFound()
+  }
+
   const { docs } = await payload.find({
     collection: 'knives',
-    where: { slug: { equals: decodedSlug } },
+    where: { 
+      and: [
+        { slug: { equals: decodedSlug } },
+        { status: { equals: dbStatus } }
+      ]
+    },
     overrideAccess: false,
     depth: 1,
   })
@@ -38,20 +55,17 @@ export default async function KnifePage({ params }: { params: Promise<{ slug: st
 
   const knife = docs[0]
 
-  // Lexical editor returns an object even when empty, check for actual text nodes
+  // Check description
   const hasDescription = (() => {
     const desc = knife.description as any
     if (!desc) return false
     const children = desc?.root?.children ?? []
-    if (children.length === 0) return false
-    // Check if any child node has text content
     return children.some((node: any) => {
       const text = node?.children?.map((c: any) => c.text ?? '').join('') ?? ''
       return text.trim().length > 0
     })
   })()
 
-  // Type-safe mapping for the gallery component
   const galleryImages = (knife.images || []).map((img: any) => ({
     image: img,
     id: typeof img === 'object' && img !== null ? img.id : undefined,
@@ -85,10 +99,10 @@ export default async function KnifePage({ params }: { params: Promise<{ slug: st
         </Link>
         <span className="opacity-30">/</span>
         <Link
-          href={knife.status === 'in_stock' ? '/in-stock' : '/custom-order'}
+          href={dbStatus === 'in_stock' ? '/knives/in-stock' : '/knives/custom-order'}
           className="hover:text-black transition-colors"
         >
-          {knife.status === 'in_stock' ? 'В наявності' : 'Під замовлення'}
+          {dbStatus === 'in_stock' ? 'В наявності' : 'Під замовлення'}
         </Link>
         <span className="opacity-30">/</span>
         <span className="text-black font-semibold">{knife.title}</span>
@@ -107,7 +121,7 @@ export default async function KnifePage({ params }: { params: Promise<{ slug: st
           <AnimatedSection delay={0.15} className="flex flex-col">
             <div className="mb-10 lg:mb-14 border-b border-[var(--border)] pb-10">
               <p className="text-[11px] tracking-[0.4em] uppercase text-[var(--muted)] mb-4 italic font-medium">
-                {knife.status === 'in_stock' ? 'В наявності' : 'Доступний під замовлення'}
+                {dbStatus === 'in_stock' ? 'В наявності' : 'Доступний під замовлення'}
               </p>
               <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-10 leading-tight">
                 {knife.title}
@@ -115,7 +129,7 @@ export default async function KnifePage({ params }: { params: Promise<{ slug: st
               <p className="text-4xl font-serif italic text-[var(--gold)]">
                 {knife.price
                   ? `${knife.price.toLocaleString('uk-UA')} грн`
-                  : knife.status === 'custom_order'
+                  : dbStatus === 'custom_order'
                     ? 'Ціна за запитом'
                     : 'Ціна уточнюється'}
               </p>

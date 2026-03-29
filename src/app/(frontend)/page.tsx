@@ -89,7 +89,10 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       {/* ── Hero ──────────────────────────────────── */}
-      <section className="relative h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white">
+      <section 
+        className="relative h-[92svh] md:h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white"
+        style={{ height: 'calc(var(--vh, 1vh) * 92)' }}
+      >
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
@@ -119,13 +122,13 @@ export default async function HomePage() {
               </h1>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  href="/in-stock"
+                  href="/knives/in-stock"
                   className="inline-block bg-white text-black px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-neutral-200 transition-colors duration-200"
                 >
                   Каталог в наявності
                 </Link>
                 <Link
-                  href="/custom-order"
+                  href="/knives/custom-order"
                   className="inline-block bg-transparent border border-white/50 text-white px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-white/10 transition-colors duration-200"
                 >
                   Під замовлення
@@ -158,7 +161,7 @@ export default async function HomePage() {
                 <h2 className="heading-display text-3xl md:text-4xl">В наявності</h2>
               </div>
               <Link
-                href="/in-stock"
+                href="/knives/in-stock"
                 className="hidden sm:inline-flex text-xs tracking-widest uppercase items-center gap-2 border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
               >
                 Всі ножі
@@ -168,9 +171,14 @@ export default async function HomePage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-8">
               {inStockKnives.map((knife) => {
                 const firstImage = knife.images?.[0]
+                const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
                     ? (firstImage as { url?: string }).url
+                    : null
+                const hoverImgUrl =
+                  typeof secondImage === 'object' && secondImage !== null
+                    ? (secondImage as { url?: string }).url
                     : null
                 return (
                   <div key={knife.id}>
@@ -180,6 +188,7 @@ export default async function HomePage() {
                       price={knife.price}
                       status={knife.status ?? 'in_stock'}
                       imageUrl={imgUrl}
+                      hoverImageUrl={hoverImgUrl}
                     />
                   </div>
                 )
@@ -201,7 +210,7 @@ export default async function HomePage() {
                 <h2 className="heading-display text-3xl md:text-4xl">Під замовлення</h2>
               </div>
               <Link
-                href="/custom-order"
+                href="/knives/custom-order"
                 className="hidden sm:inline-flex text-xs tracking-widest uppercase items-center gap-2 border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
               >
                 Дізнатись більше
@@ -211,9 +220,14 @@ export default async function HomePage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-8">
               {customKnives.map((knife) => {
                 const firstImage = knife.images?.[0]
+                const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
                     ? (firstImage as { url?: string }).url
+                    : null
+                const hoverImgUrl =
+                  typeof secondImage === 'object' && secondImage !== null
+                    ? (secondImage as { url?: string }).url
                     : null
                 return (
                   <div key={knife.id}>
@@ -223,6 +237,7 @@ export default async function HomePage() {
                       price={knife.price}
                       status={knife.status ?? 'custom'}
                       imageUrl={imgUrl}
+                      hoverImageUrl={hoverImgUrl}
                     />
                   </div>
                 )
@@ -451,13 +466,13 @@ export default async function HomePage() {
 
               <div className="flex flex-row gap-4 w-full max-w-xs sm:max-w-none sm:w-auto justify-center items-stretch">
                 <Link
-                  href="/in-stock"
+                  href="/knives/in-stock"
                   className="flex-1 sm:flex-none inline-flex items-center justify-center px-4 sm:px-8 py-4 bg-white text-[#BC002D] font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-neutral-100 shadow-lg"
                 >
                   Обрати ніж
                 </Link>
                 <Link
-                  href="/custom-order"
+                  href="/knives/custom-order"
                   className="flex-1 sm:flex-none inline-flex items-center justify-center border-2 border-white/40 text-white px-4 sm:px-8 py-4 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-white/10 shadow-lg"
                 >
                   Під замовлення

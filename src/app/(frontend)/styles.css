@@ -22,6 +22,31 @@
 
   html {
     scroll-behavior: smooth;
+    /* Prevent layout jitter on mobile chrome shift */
+    min-height: 100%;
+    min-height: -webkit-fill-available;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+  }
+
+  /* Disable smooth scroll for mobile to prevent jitter when browser chrome shifts */
+  @media (max-width: 768px), (pointer: coarse) {
+    html {
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    min-height: 100svh; /* Smallest viewport height as a baseline */
+    min-height: -webkit-fill-available;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   * {

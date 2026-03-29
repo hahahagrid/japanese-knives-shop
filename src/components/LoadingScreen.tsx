@@ -56,7 +56,7 @@ export function LoadingScreen() {
             <motion.div
               className="absolute top-0 w-[1px] bg-black/15 shadow-[0_0_10px_rgba(0,0,0,0.1)]"
               initial={{ height: 0 }}
-              animate={{ height: '100vh' }}
+              animate={{ height: 'calc(var(--vh, 1vh) * 100)' }}
               transition={{ duration: 0.9, ease: 'linear' }}
             />
 
@@ -64,7 +64,7 @@ export function LoadingScreen() {
             <motion.div
               className="absolute top-0 flex justify-center w-12"
               initial={{ y: '-100%' }} 
-              animate={{ y: '100vh' }}
+              animate={{ y: 'calc(var(--vh, 1vh) * 100)' }}
               transition={{ duration: 0.9, ease: 'linear' }}
             >
               <div className="relative -top-40 flex flex-col items-center drop-shadow-2xl">

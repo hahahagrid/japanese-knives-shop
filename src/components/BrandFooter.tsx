@@ -68,12 +68,13 @@ export const BrandFooter: React.FC = async () => {
           <div className="flex gap-16">
             <div className="flex flex-col gap-3">
               <p className="text-[10px] uppercase tracking-widest text-neutral-600 mb-1">Каталог</p>
-              <Link href="/in-stock" className="text-sm text-neutral-400 hover:text-white transition-colors">В наявності</Link>
-              <Link href="/custom-order" className="text-sm text-neutral-400 hover:text-white transition-colors">Під замовлення</Link>
+              <Link href="/knives/in-stock" className="text-sm text-neutral-400 hover:text-white transition-colors">В наявності</Link>
+              <Link href="/knives/custom-order" className="text-sm text-neutral-400 hover:text-white transition-colors">Під замовлення</Link>
               <Link href="/blog" className="text-sm text-neutral-400 hover:text-white transition-colors">Блог</Link>
             </div>
             <div className="flex flex-col gap-3">
               <p className="text-[10px] uppercase tracking-widest text-neutral-600 mb-1">Інфо</p>
+              <Link href="/" className="text-sm text-neutral-400 hover:text-white transition-colors">Головна</Link>
               <Link href="/about" className="text-sm text-neutral-400 hover:text-white transition-colors">Про нас</Link>
               <Link href="/shipping" className="text-sm text-neutral-400 hover:text-white transition-colors">Оплата та доставка</Link>
               <Link href="/contacts" className="text-sm text-neutral-400 hover:text-white transition-colors">Контакти</Link>

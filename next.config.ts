@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
         port: '3000',
         pathname: '/media/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'japanese-knives-shop-development.up.railway.app',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (webpackConfig) => {

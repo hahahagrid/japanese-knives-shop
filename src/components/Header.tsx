@@ -8,8 +8,9 @@ import { MobileMenu } from './MobileMenu'
 import { CartIcon } from './Cart/CartIcon'
 
 const navLinks = [
-  { href: '/in-stock', label: 'В наявності' },
-  { href: '/custom-order', label: 'Під замовлення' },
+  { href: '/', label: 'Головна' },
+  { href: '/knives/in-stock', label: 'В наявності' },
+  { href: '/knives/custom-order', label: 'Під замовлення' },
   { href: '/about', label: 'Про нас' },
   { href: '/shipping', label: 'Доставка' },
   { href: '/blog', label: 'Блог' },
@@ -19,7 +20,10 @@ export const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
-  const isAlwaysDark = pathname?.startsWith('/knives/') || pathname?.startsWith('/blog/') || pathname === '/contacts' || pathname === '/checkout'
+  const isAlwaysDark = (pathname?.startsWith('/knives/') && pathname !== '/knives/in-stock' && pathname !== '/knives/custom-order') ||
+    (pathname?.startsWith('/blog/') && pathname !== '/blog') ||
+    pathname === '/contacts' || 
+    pathname === '/checkout'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +36,7 @@ export const Header: React.FC = () => {
 
   const isDarkText = scrolled || isAlwaysDark
 
-  const bgClass = scrolled 
+  const bgClass = (scrolled || isAlwaysDark)
     ? 'bg-[#fbfbfd]/75 backdrop-blur-md border-[var(--border)]' 
     : 'bg-transparent border-transparent'
 
@@ -43,10 +47,10 @@ export const Header: React.FC = () => {
   return (
     <>
       {/* Background/Blur Layer */}
-      <div className={`fixed top-0 left-0 z-[49] w-full h-20 transition-all duration-500 ease-in-out border-b pointer-events-none ${bgClass}`} />
+      <div className={`fixed top-0 left-0 z-[49] w-full h-20 transition-[background-color,backdrop-filter,border-color] duration-500 ease-in-out border-b pointer-events-none ${bgClass}`} />
 
       {/* Interactive Layer */}
-      <header className={`fixed top-0 left-0 z-[50] w-full h-20 pointer-events-none transition-colors duration-500 ease-in-out ${textColorClass}`}>
+      <header className={`fixed top-0 left-0 z-[50] w-full h-20 pointer-events-none transition-[color] duration-500 ease-in-out ${textColorClass}`}>
         <div className="container relative mx-auto flex h-full items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl pointer-events-auto">
           {/* Left: Logo */}
           <div className="flex-1 flex justify-start">

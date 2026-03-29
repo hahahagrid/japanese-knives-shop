@@ -7,21 +7,37 @@ interface KnifeCardProps {
   price?: number | null
   status?: string
   imageUrl?: string | null
+  hoverImageUrl?: string | null
 }
 
-export function KnifeCard({ slug, title, price, status, imageUrl }: KnifeCardProps) {
+export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl }: KnifeCardProps) {
+  const statusPath = status === 'in_stock' ? 'in-stock' : 'custom-order'
+  
   return (
-    <Link href={`/knives/${slug}`} className="group flex flex-col">
+    <Link href={`/knives/${statusPath}/${slug}`} className="group flex flex-col">
       {/* Image */}
       <div className="aspect-[4/5] overflow-hidden relative mb-5">
         {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={title}
-            fill
-            className="object-cover transition-transform duration-1000 ease-out-expo group-hover:scale-[1.05] will-change-transform"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          />
+          <>
+            <Image
+              src={imageUrl}
+              alt={title}
+              fill
+              className={`object-cover transition-all duration-1000 ease-out-expo group-hover:scale-[1.05] will-change-transform ${
+                hoverImageUrl ? 'md:group-hover:opacity-0' : ''
+              }`}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            />
+            {hoverImageUrl && (
+              <Image
+                src={hoverImageUrl}
+                alt={`${title} - view 2`}
+                fill
+                className="hidden md:block object-cover transition-all duration-1000 ease-out-expo opacity-0 group-hover:opacity-100 group-hover:scale-[1.05] will-change-transform"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              />
+            )}
+          </>
         ) : (
           <div className="absolute inset-0 bg-neutral-100" />
         )}
