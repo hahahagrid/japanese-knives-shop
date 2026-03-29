@@ -168,9 +168,14 @@ export default async function HomePage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-8">
               {inStockKnives.map((knife) => {
                 const firstImage = knife.images?.[0]
+                const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
                     ? (firstImage as { url?: string }).url
+                    : null
+                const hoverImgUrl =
+                  typeof secondImage === 'object' && secondImage !== null
+                    ? (secondImage as { url?: string }).url
                     : null
                 return (
                   <div key={knife.id}>
@@ -180,6 +185,7 @@ export default async function HomePage() {
                       price={knife.price}
                       status={knife.status ?? 'in_stock'}
                       imageUrl={imgUrl}
+                      hoverImageUrl={hoverImgUrl}
                     />
                   </div>
                 )
@@ -211,9 +217,14 @@ export default async function HomePage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-8">
               {customKnives.map((knife) => {
                 const firstImage = knife.images?.[0]
+                const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
                     ? (firstImage as { url?: string }).url
+                    : null
+                const hoverImgUrl =
+                  typeof secondImage === 'object' && secondImage !== null
+                    ? (secondImage as { url?: string }).url
                     : null
                 return (
                   <div key={knife.id}>
@@ -223,6 +234,7 @@ export default async function HomePage() {
                       price={knife.price}
                       status={knife.status ?? 'custom'}
                       imageUrl={imgUrl}
+                      hoverImageUrl={hoverImgUrl}
                     />
                   </div>
                 )

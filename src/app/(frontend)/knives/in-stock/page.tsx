@@ -67,9 +67,14 @@ export default async function InStockPage() {
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-14 stagger-children">
             {knives.map((knife) => {
               const firstImage = knife.images?.[0]
+              const secondImage = knife.images?.[1]
               const imgUrl =
                 typeof firstImage === 'object' && firstImage !== null
                   ? (firstImage as { url?: string }).url
+                  : null
+              const hoverImgUrl =
+                typeof secondImage === 'object' && secondImage !== null
+                  ? (secondImage as { url?: string }).url
                   : null
               return (
                 <div key={knife.id} className="animate-fade-up">
@@ -79,6 +84,7 @@ export default async function InStockPage() {
                     price={knife.price}
                     status={knife.status ?? 'in_stock'}
                     imageUrl={imgUrl}
+                    hoverImageUrl={hoverImgUrl}
                   />
                 </div>
               )
