@@ -417,7 +417,7 @@ export default async function HomePage() {
               <h3 className="font-serif italic text-3xl md:text-4xl lg:text-6xl leading-[1.15] text-black mb-8 px-4 tracking-tight">
                 "На мою думку, кожен ніж — унікальний.
                 <br />
-                Кожен коваль — винятковий."
+                <span className="whitespace-nowrap">Кожен коваль — винятковий."</span>
               </h3>
               <div className="flex justify-end pr-4 md:pr-10">
                 <p className="text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-black/40 font-sans font-bold translate-y-[-20px]">
