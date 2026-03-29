@@ -10,6 +10,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 const navLinks = [
   { href: '/in-stock', label: 'В наявності' },
   { href: '/custom-order', label: 'Під замовлення' },
+  { href: '/about', label: 'Про нас' },
+  { href: '/shipping', label: 'Доставка' },
   { href: '/blog', label: 'Блог' },
   { href: '/contacts', label: 'Контакти' },
 ]
@@ -80,7 +82,7 @@ export function MobileMenu() {
                     <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className="block py-4 text-4xl font-serif font-bold text-foreground border-b border-[var(--border)] hover:opacity-50 transition-opacity"
+                      className="block py-4 text-3xl font-serif font-bold text-foreground border-b border-[var(--border)] hover:opacity-50 transition-opacity"
                     >
                       {link.label}
                     </Link>

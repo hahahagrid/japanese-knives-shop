@@ -136,7 +136,7 @@ export default async function HomePage() {
         </div>
 
         <div
-          className="absolute bottom-8 right-8 z-10 flex flex-col items-center gap-2 text-white/40 animate-fade-in"
+          className="absolute bottom-1 right-8 z-10 flex flex-col items-center gap-2 text-white/40 animate-fade-in"
           style={{ animationDelay: '800ms' }}
         >
           <span className="text-[9px] tracking-[0.3em] uppercase rotate-90 origin-center mb-2">
@@ -235,7 +235,7 @@ export default async function HomePage() {
       {/* ── 4. Featured Manufacturers ──────────────────────── */}
       <section className="bg-white py-20 border-b border-black/[0.03]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <AnimatedSection className="mb-16">
+          <AnimatedSection className="mb-10">
             <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
               Клинки цих та багатьох інших майстрів ви маєте можливість замовити у нас
             </p>
@@ -287,16 +287,9 @@ export default async function HomePage() {
                 </div>
               </AnimatedSection>
 
-              <AnimatedSection delay={0.1}>
-                <h2 className="font-serif text-5xl md:text-5xl lg:text-7xl mb-10 leading-[0.92] tracking-tighter text-black">
-                  Почнемо <br />з початку.
-                </h2>
-              </AnimatedSection>
-
               <div className="space-y-10 font-serif text-lg md:text-[22px] leading-relaxed text-black/80 text-justify">
                 <AnimatedSection delay={0.2}>
-                  <div className="relative pl-16">
-                    <span className="absolute left-0 top-[6px] w-10 h-[1px] bg-[var(--gold)]"></span>
+                  <div className="relative pl-0">
                     <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans font-bold">
                       Коваль
                     </strong>
@@ -307,8 +300,7 @@ export default async function HomePage() {
                   </div>
                 </AnimatedSection>
                 <AnimatedSection delay={0.3}>
-                  <div className="relative pl-16">
-                    <span className="absolute left-0 top-[6px] w-10 h-[1px] bg-black/20"></span>
+                  <div className="relative pl-0">
                     <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans font-bold">
                       Фабрика
                     </strong>
@@ -354,7 +346,7 @@ export default async function HomePage() {
         </div>
 
         {/* Quality Commission - Cinematic Offset */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10 pt-10 md:pt-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-8 items-stretch">
             <div className="lg:col-span-7 order-2 lg:order-1 relative w-full group">
               <AnimatedSection variant="fade-in" className="h-full">
@@ -378,12 +370,12 @@ export default async function HomePage() {
 
             <div className="lg:col-span-4 lg:col-start-9 order-1 lg:order-2 flex flex-col justify-center">
               <AnimatedSection delay={0.2}>
-                <div className="flex items-center gap-4 mb-8">
+                <div className="flex items-center gap-4 mb-10 overflow-hidden">
+                  <div className="w-12 h-[1px] bg-[var(--gold)] origin-left animate-width-reveal"></div>
                   <p className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-mono">
                     章 02 / Якість
                   </p>
                 </div>
-                <div className="w-16 h-[1px] bg-black/20 mb-10"></div>
                 <div className="font-serif text-lg md:text-[22px] leading-relaxed text-black/80 space-y-8 text-justify">
                   <p>
                     В Японії існує комісія, яка контролює якість клинків незалежно від майстерні.
@@ -416,7 +408,7 @@ export default async function HomePage() {
           <AnimatedSection delay={0.3}>
             <div className="flex flex-col items-center mb-8">
               <div className="w-[1px] h-20 bg-gradient-to-b from-black/0 via-black/20 to-black/0 mb-8"></div>
-              <p className="text-[10px] tracking-[0.6em] uppercase text-black/30 font-mono mb-8">
+              <p className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-mono mb-8">
                 章 03 / Унікальність
               </p>
             </div>

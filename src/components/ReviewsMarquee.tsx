@@ -76,8 +76,8 @@ export function ReviewsMarquee({ reviews = [] }: { reviews?: string[] }) {
   }
 
   return (
-    <section className="w-full overflow-hidden bg-[var(--stone-50)] pt-24 pb-0 relative flex flex-col">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20 mb-12 sm:mb-16 text-left">
+    <section className="w-full overflow-hidden bg-[var(--stone-50)] pt-16 md:pt-20 pb-0 relative flex flex-col">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20 mb-10 text-left">
         <AnimatedSection>
           <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
             Японський ніж — це не просто річ, це мистецтво.
