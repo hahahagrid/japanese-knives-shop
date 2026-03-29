@@ -39,9 +39,13 @@ export function AnimatedSection({
       animate={isInView ? 'visible' : 'hidden'}
       variants={variants[variant]}
       transition={{
-        duration: 0.6,
+        duration: 0.8,
         delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
+        ease: [0.16, 1, 0.3, 1], // Smoother deceleration
+      }}
+      style={{
+        transform: 'translateZ(0)',
+        willChange: 'opacity, transform',
       }}
       className={className}
     >
