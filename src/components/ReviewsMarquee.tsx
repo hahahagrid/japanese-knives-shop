@@ -32,7 +32,7 @@ export function ReviewsMarquee({ reviews = [] }: { reviews?: string[] }) {
       if (containerRef.current) {
         const newBaseWidth = containerRef.current.scrollWidth / 4
         setBaseWidth(newBaseWidth)
-        
+
         // Only set the initial position once or if we are wildly out of range.
         // This prevents the "jump to start" when mobile URL bars hide/show (triggering resize).
         const currentX = x.get()
@@ -83,7 +83,7 @@ export function ReviewsMarquee({ reviews = [] }: { reviews?: string[] }) {
             Японський ніж — це не просто річ, це мистецтво.
           </p>
           <h2 className="heading-display text-4xl md:text-4xl">
-            Багато з вас вже користуються цими клинками і цінують їх.
+            Багато з вас вже користуються цими клинками і цінують їх
           </h2>
         </AnimatedSection>
       </div>
