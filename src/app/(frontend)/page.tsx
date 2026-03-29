@@ -89,7 +89,10 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       {/* ── Hero ──────────────────────────────────── */}
-      <section className="relative h-[92svh] md:h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white">
+      <section 
+        className="relative h-[92svh] md:h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white"
+        style={{ height: 'calc(var(--vh, 1vh) * 92)' }}
+      >
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
