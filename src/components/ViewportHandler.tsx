@@ -4,14 +4,26 @@ import { useEffect } from 'react'
 
 export function ViewportHandler() {
   useEffect(() => {
+    let lastWidth = window.innerWidth
+    
     const setVh = () => {
-      const vh = window.innerHeight * 0.01
-      document.documentElement.style.setProperty('--vh', `${vh}px`)
+      const currentWidth = window.innerWidth
+      const currentHeight = window.innerHeight
+      
+      // Only update if the width changed significantly (orientation change)
+      // or if it's the initial load. 
+      // This prevents the "jumping" when the mobile address bar hides/shows.
+      if (currentWidth !== lastWidth || !document.documentElement.style.getPropertyValue('--vh')) {
+        const vh = currentHeight * 0.01
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+        lastWidth = currentWidth
+      }
     }
 
     setVh()
+    
+    // Listen for resize but be smart about it
     window.addEventListener('resize', setVh)
-    // Also listen for orientation changes as some browsers don't fire resize
     window.addEventListener('orientationchange', setVh)
 
     return () => {

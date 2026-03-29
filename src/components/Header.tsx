@@ -47,10 +47,10 @@ export const Header: React.FC = () => {
   return (
     <>
       {/* Background/Blur Layer */}
-      <div className={`fixed top-0 left-0 z-[49] w-full h-20 transition-all duration-500 ease-in-out border-b pointer-events-none will-change-transform ${bgClass}`} />
+      <div className={`fixed top-0 left-0 z-[49] w-full h-20 transition-[background-color,backdrop-filter,border-color] duration-500 ease-in-out border-b pointer-events-none ${bgClass}`} />
 
       {/* Interactive Layer */}
-      <header className={`fixed top-0 left-0 z-[50] w-full h-20 pointer-events-none transition-colors duration-500 ease-in-out will-change-transform ${textColorClass}`}>
+      <header className={`fixed top-0 left-0 z-[50] w-full h-20 pointer-events-none transition-[color] duration-500 ease-in-out ${textColorClass}`}>
         <div className="container relative mx-auto flex h-full items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl pointer-events-auto">
           {/* Left: Logo */}
           <div className="flex-1 flex justify-start">
