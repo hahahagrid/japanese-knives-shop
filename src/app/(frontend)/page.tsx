@@ -89,7 +89,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       {/* ── Hero ──────────────────────────────────── */}
-      <section className="relative h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white">
+      <section className="relative h-[92svh] md:h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white">
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image

@@ -66,7 +66,7 @@ export default function CheckoutPage() {
 
   if (status === 'success') {
     return (
-      <div className="container mx-auto px-4 min-h-[70vh] flex flex-col items-center justify-center text-center pt-28">
+      <div className="container mx-auto px-4 min-h-[70dvh] flex flex-col items-center justify-center text-center pt-28">
         <AnimatedSection className="max-w-xl">
           <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8 text-green-600 border border-green-100">
              <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">

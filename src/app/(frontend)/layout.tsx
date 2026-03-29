@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="min-h-screen bg-background text-foreground font-sans antialiased flex flex-col selection:bg-neutral-800 selection:text-white">
+      <body className="min-h-[100dvh] bg-background text-foreground font-sans antialiased flex flex-col selection:bg-neutral-800 selection:text-white">
         <LoadingScreen />
         <Header />
         <main className="flex-1">{children}</main>
