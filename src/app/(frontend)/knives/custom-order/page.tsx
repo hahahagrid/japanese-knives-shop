@@ -42,7 +42,7 @@ export default async function CustomOrderPage() {
             </h1>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed font-light italic font-serif">
               Оберіть модель зі списку або опишіть свій ідеальний ніж — конкретну сталь, довжину
-              леза, тип рукоятки, улюбленого майстра. Ми знайдемо, привеземо та доставимо шедевр
+              леза, тип руків'я, улюбленого майстра. Ми знайдемо, привеземо та доставимо шедевр
               спеціально для вас.
             </p>
           </AnimatedSection>

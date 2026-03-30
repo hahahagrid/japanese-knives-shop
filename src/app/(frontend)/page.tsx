@@ -19,7 +19,7 @@ const manufacturers = [
   { en: 'Kei Kobayashi', jp: '小林 圭' },
   { en: 'Yoshihiro', jp: '義弘' },
   { en: 'Takamura Hamono', jp: '高村 刃物' },
-  { en: 'Ichiro Hattori', jp: '服部 一郎' },
+  { en: 'Kazuyuki Tanaka', jp: '田中 和之' },
   { en: 'Yuji Kurosaki', jp: '黒崎 優' },
   { en: 'Anryu Hamono', jp: '安立 刃物' },
   { en: 'Koutetsu Hamono', jp: '硬鉄 刃物' },
