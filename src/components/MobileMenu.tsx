@@ -9,12 +9,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
   { href: '/', label: 'Головна' },
-  { href: '/knives/in-stock', label: 'В наявності' },
-  { href: '/knives/custom-order', label: 'Під замовлення' },
+  { href: '/knives/in-stock', label: 'Ножі в наявності' },
+  { href: '/knives/custom-order', label: 'Ножі під замовлення' },
+  { href: '/accessories', label: 'Аксесуари' },
   { href: '/about', label: 'Про нас' },
   { href: '/shipping', label: 'Доставка' },
   { href: '/blog', label: 'Блог' },
-  { href: '/contacts', label: 'Контакти' },
 ]
 
 export function MobileMenu() {

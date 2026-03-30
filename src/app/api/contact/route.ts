@@ -12,8 +12,6 @@ export async function POST(req: Request) {
     //   html: `<p>Ім'я: ${data.name}</p><p>Контакт: ${data.email}</p><p>Повідомлення: ${data.message}</p>`
     // })
     
-    console.log('Mock Email Sent - Contact Request:', data)
-    
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Contact form error:', error)

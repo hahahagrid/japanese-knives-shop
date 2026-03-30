@@ -95,7 +95,10 @@ export function CartDrawer() {
                       </div>
                       <div className="flex flex-col flex-1 py-1">
                         <Link
-                          href={`/knives/${item.slug}`}
+                          href={item.type === 'accessory' 
+                            ? `/accessories/${item.slug}` 
+                            : `/knives/${item.status === 'in_stock' ? 'in-stock' : 'custom-order'}/${item.slug}`
+                          }
                           onClick={() => setCartOpen(false)}
                           className="font-serif font-bold text-lg leading-snug hover:text-[var(--gold)] transition-colors mb-1 line-clamp-2"
                         >

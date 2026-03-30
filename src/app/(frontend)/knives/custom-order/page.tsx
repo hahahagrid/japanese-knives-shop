@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 86400
 
 import { getPayload } from 'payload'
 import config from '@payload-config'
@@ -15,8 +15,10 @@ export default async function CustomOrderPage() {
   const payload = await getPayload({ config })
 
   const { docs: knives } = await payload.find({
-    collection: 'knives',
-    where: { status: { equals: 'custom_order' } },
+    collection: 'products',
+    where: {
+      and: [{ status: { equals: 'custom_order' } }, { type: { equals: 'knife' } }],
+    },
     overrideAccess: false,
     depth: 1,
   })
@@ -49,12 +51,12 @@ export default async function CustomOrderPage() {
 
       {/* Grid */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24">
-        <AnimatedSection className="mb-12 border-b border-[var(--border)] pb-8">
-          <div className="flex items-end justify-between">
-            <h2 className="heading-display text-2xl md:text-3xl">Доступні моделі</h2>
-            {knives.length > 0 && (
-              <p className="text-sm text-[var(--muted)]">{knives.length} моделей</p>
-            )}
+        <AnimatedSection className="mb-16 border-b border-[var(--border)] pb-10 flex items-end justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-[1px] bg-[var(--gold)]" />
+            <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">
+              Весь каталог ({knives.length})
+            </h2>
           </div>
         </AnimatedSection>
 

@@ -4,10 +4,11 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { uk } from '@payloadcms/translations/languages/uk'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Knives } from './collections/Knives'
+import { Products } from './collections/Products'
 import { Categories } from './collections/Categories'
 import { Posts } from './collections/Posts'
 import { Orders } from './collections/Orders'
@@ -24,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Knives, Categories, Posts, Orders],
+  collections: [Users, Media, Products, Categories, Posts, Orders],
   globals: [SiteSettings, HomepageReviews],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -39,5 +40,9 @@ export default buildConfig({
     migrationDir: path.resolve(dirname, 'migrations'),
   }),
   sharp,
+  i18n: {
+    supportedLanguages: { uk },
+    fallbackLanguage: 'uk',
+  },
   plugins: [],
 })

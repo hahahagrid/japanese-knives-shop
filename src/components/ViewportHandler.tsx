@@ -20,15 +20,29 @@ export function ViewportHandler() {
       }
     }
 
+    // ── Image & Content Protection ─────────────────
+    const preventAction = (e: MouseEvent | DragEvent) => {
+      const target = e.target as HTMLElement
+      if (target.tagName === 'IMG' || target.closest('picture')) {
+        e.preventDefault()
+      }
+    }
+
     setVh()
     
     // Listen for resize but be smart about it
     window.addEventListener('resize', setVh)
     window.addEventListener('orientationchange', setVh)
+    
+    // Protection listeners
+    document.addEventListener('contextmenu', preventAction)
+    document.addEventListener('dragstart', preventAction)
 
     return () => {
       window.removeEventListener('resize', setVh)
       window.removeEventListener('orientationchange', setVh)
+      document.removeEventListener('contextmenu', preventAction)
+      document.removeEventListener('dragstart', preventAction)
     }
   }, [])
 

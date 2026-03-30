@@ -1,3 +1,5 @@
+export const revalidate = 86400
+
 import React from 'react'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import Image from 'next/image'
@@ -34,7 +36,7 @@ export default function AboutPage() {
         </p>
       </>
     ),
-    image: '/images/about-hero.jpg',
+    image: '/images/about-hero-1200.webp',
   }
 
   const offerings = [
@@ -69,7 +71,7 @@ export default function AboutPage() {
         </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
           <AnimatedSection>
-            <p className="text-[10px] tracking-[0.5em] uppercase text-neutral-500 mb-4 font-bold">
+            <p className="text-label mb-4 text-neutral-500">
               Наша Спадщина
             </p>
             <h1 className="heading-display text-5xl md:text-6xl lg:text-8xl mb-6">{hero.title}</h1>
@@ -85,7 +87,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <AnimatedSection className="order-2 lg:order-1">
-              <span className="text-[10px] tracking-[0.4em] uppercase text-neutral-500 mb-6 block font-bold">
+              <span className="text-label mb-6 block text-neutral-500">
                 Про нас
               </span>
               <h2 className="heading-display text-4xl md:text-6xl mb-10">{intro.title}</h2>
@@ -95,7 +97,14 @@ export default function AboutPage() {
             </AnimatedSection>
             <AnimatedSection delay={0.2} className="order-1 lg:order-2">
               <div className="relative aspect-[4/5] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
-                <Image src={intro.image} alt={intro.title} fill className="object-cover" />
+                <Image
+                  src={intro.image}
+                  alt={intro.title}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
                 <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/20 to-transparent" />
                 <div className="absolute inset-0 border-[1px] border-white/20 m-6" />
               </div>
@@ -142,7 +151,7 @@ export default function AboutPage() {
           <AnimatedSection className="bg-[#0A0A09] text-white p-12 md:p-20 relative overflow-hidden shadow-2xl">
             <div className="relative z-10 flex flex-col md:flex-row gap-12 items-center">
               <div className="flex-1">
-                <span className="text-[10px] tracking-[0.4em] uppercase text-neutral-500 mb-6 block font-bold">
+                <span className="text-label mb-6 block text-neutral-500">
                   Ексклюзивна послуга
                 </span>
                 <h2 className="heading-display text-3xl md:text-5xl mb-8">

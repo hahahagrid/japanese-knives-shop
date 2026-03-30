@@ -2,10 +2,14 @@ import type { CollectionConfig } from 'payload'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
+  labels: {
+    singular: 'Замовлення',
+    plural: 'Замовлення',
+  },
   admin: {
     useAsTitle: 'orderNumber',
     defaultColumns: ['orderNumber', 'name', 'phone', 'total', 'status', 'createdAt'],
-    group: 'Admin',
+    group: 'Адміністрування',
   },
   access: {
     create: () => true, // Anyone can submit a contact form
@@ -16,6 +20,7 @@ export const Orders: CollectionConfig = {
   fields: [
     {
       name: 'orderNumber',
+      label: 'Номер замовлення',
       type: 'text',
       index: true,
       unique: true,
@@ -25,38 +30,44 @@ export const Orders: CollectionConfig = {
     },
     {
       name: 'name',
+      label: "Ім'я",
       type: 'text',
       required: true,
     },
     {
       name: 'phone',
+      label: 'Телефон',
       type: 'text',
       required: true,
     },
     {
       name: 'email',
+      label: 'Email',
       type: 'text',
     },
     {
       name: 'message',
+      label: 'Повідомлення',
       type: 'textarea',
     },
     {
       name: 'deliveryInfo',
+      label: 'Дані для доставки',
       type: 'textarea',
       admin: {
-        description: 'Інформація про доставку (Місто, Відділення НП, тощо)',
+        description: 'Місто, відділення НП, ПІБ отримувача тощо',
       },
     },
     {
       name: 'items',
+      label: 'Товари',
       type: 'array',
       admin: {
-        description: 'Товари в замовленні',
+        description: 'Список товарів у замовленні',
       },
       fields: [
         {
-          name: 'knifeId',
+          name: 'productId',
           type: 'text',
         },
         {
@@ -75,13 +86,15 @@ export const Orders: CollectionConfig = {
     },
     {
       name: 'total',
+      label: 'Загальна сума',
       type: 'number',
       admin: {
-        description: 'Сума замовлення',
+        description: 'Сума замовлення в гривнях',
       },
     },
     {
       name: 'status',
+      label: 'Статус замовлення',
       type: 'select',
       defaultValue: 'new',
       options: [
@@ -96,6 +109,7 @@ export const Orders: CollectionConfig = {
     },
     {
       name: 'source',
+      label: 'Джерело замовлення',
       type: 'text',
       admin: {
         readOnly: true,

@@ -1,10 +1,15 @@
 import type { GlobalConfig } from 'payload'
 
+import { revalidateGlobal } from '../hooks/revalidate'
+
 export const HomepageReviews: GlobalConfig = {
   slug: 'homepage-reviews',
   label: 'Відгуки на Головній',
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateGlobal('homepage-reviews')],
   },
   fields: [
     {

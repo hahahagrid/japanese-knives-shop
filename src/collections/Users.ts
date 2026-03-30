@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: {
+    singular: 'Користувач',
+    plural: 'Користувачі',
+  },
   admin: {
     useAsTitle: 'email',
   },
@@ -15,9 +19,13 @@ export const Users: CollectionConfig = {
   fields: [
     {
       name: 'roles',
+      label: 'Ролі',
       type: 'select',
       hasMany: true,
-      options: ['admin', 'editor'],
+      options: [
+        { label: 'Адміністратор', value: 'admin' },
+        { label: 'Редактор', value: 'editor' },
+      ],
       defaultValue: ['admin'],
       required: true,
       saveToJWT: true,

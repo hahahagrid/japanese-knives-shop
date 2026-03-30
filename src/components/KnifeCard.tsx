@@ -8,13 +8,15 @@ interface KnifeCardProps {
   status?: string
   imageUrl?: string | null
   hoverImageUrl?: string | null
+  pathPrefix?: string
 }
 
-export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl }: KnifeCardProps) {
+export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl, pathPrefix }: KnifeCardProps) {
   const statusPath = status === 'in_stock' ? 'in-stock' : 'custom-order'
+  const href = pathPrefix ? `${pathPrefix}/${slug}` : `/knives/${statusPath}/${slug}`
   
   return (
-    <Link href={`/knives/${statusPath}/${slug}`} className="group flex flex-col">
+    <Link href={href} className="group flex flex-col">
       {/* Image */}
       <div className="aspect-[4/5] overflow-hidden relative mb-5">
         {imageUrl ? (
@@ -48,7 +50,7 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl 
         <h2 className="font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 group-hover:opacity-60">
           {title}
         </h2>
-        <p className="text-[13px] tracking-widest uppercase text-[var(--muted)] font-medium">
+        <p className="text-metadata">
           {price 
             ? `${price.toLocaleString('uk-UA')} грн`
             : (status === 'custom_order' ? 'Ціна за запитом' : 'Ціна уточнюється')}

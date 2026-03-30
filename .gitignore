@@ -62,3 +62,4 @@ sync-media-metadata.ts
 test-payload.ts
 dev.log
 dev.pid
+DEV_CHECKLIST.md
