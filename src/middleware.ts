@@ -9,6 +9,19 @@ import type { NextRequest } from 'next/server'
  * On production (where variables are missing), it remains completely transparent.
  */
 export function middleware(req: NextRequest) {
+  // --- DYNAMIC LOADER.IO VERIFICATION ---
+  const loaderioToken = process.env.LOADERIO_TOKEN
+  const pathname = req.nextUrl.pathname
+
+  if (loaderioToken && pathname.startsWith('/loaderio-')) {
+    const cleanPath = pathname.replace(/^\/|\/$/g, '').replace(/\.(txt|html)$/, '')
+    if (cleanPath === `loaderio-${loaderioToken}`) {
+      return new NextResponse(`loaderio-${loaderioToken}`, {
+        headers: { 'Content-Type': 'text/plain' },
+      })
+    }
+  }
+
   const basicAuth = req.headers.get('authorization')
   
   // These credentials should only be set in the Railway 'develop' environment variables

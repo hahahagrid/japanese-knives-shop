@@ -35,22 +35,6 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(dirname),
   },
-  async rewrites() {
-    return [
-      {
-        source: '/loaderio-560957267a5c70bd8feb0f3d34fc6612/',
-        destination: '/loaderio-560957267a5c70bd8feb0f3d34fc6612.txt',
-      },
-      {
-        source: '/loaderio-560957267a5c70bd8feb0f3d34fc6612.html',
-        destination: '/loaderio-560957267a5c70bd8feb0f3d34fc6612.txt',
-      },
-      {
-        source: '/loaderio-560957267a5c70bd8feb0f3d34fc6612',
-        destination: '/loaderio-560957267a5c70bd8feb0f3d34fc6612.txt',
-      },
-    ]
-  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
