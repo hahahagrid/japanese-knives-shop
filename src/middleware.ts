@@ -46,6 +46,6 @@ export function middleware(req: NextRequest) {
 // Configuration: Block all paths except specific internal Next.js/Public resources
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|images|favicon.ico|robots.txt|loaderio-47fd7b78b22887cdb1e0f769963bbb72.*).*)',
+    '/((?!api|_next/static|_next/image|images|favicon.ico|robots.txt|loaderio-.*).*)',
   ],
 }
