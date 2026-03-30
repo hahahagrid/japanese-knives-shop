@@ -54,9 +54,7 @@ const advantages = [
 ]
 
 export default async function HomePage() {
-  console.log('[DEBUG] HomePage start')
   const payload = await getPayload({ config })
-  console.log('[DEBUG] Payload instance received')
 
   const { docs: inStockKnives } = await payload.find({
     collection: 'products',

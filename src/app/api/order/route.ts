@@ -36,8 +36,7 @@ export async function POST(req: Request) {
     })
 
     // In a real production environment, you could also send an email here using Resend/Nodemailer
-    console.log('Order saved and notification triggered for:', name)
-
+    
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Order submission error:', error)

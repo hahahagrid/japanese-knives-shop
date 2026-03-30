@@ -47,6 +47,7 @@ export const Posts: CollectionConfig = {
       name: 'publishedDate',
       label: 'Дата публікації',
       type: 'date',
+      index: true,
       admin: { position: 'sidebar' },
     },
   ],

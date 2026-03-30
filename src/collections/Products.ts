@@ -58,6 +58,7 @@ export const Products: CollectionConfig = {
       name: 'type',
       label: 'Тип товару',
       type: 'select',
+      index: true,
       options: [
         { label: 'Ніж', value: 'knife' },
         { label: 'Аксесуар', value: 'accessory' },
@@ -72,6 +73,7 @@ export const Products: CollectionConfig = {
       name: 'status',
       label: 'Статус',
       type: 'select',
+      index: true,
       options: [
         { label: 'В наявності', value: 'in_stock' },
         { label: 'Під замовлення', value: 'custom_order' },
@@ -94,6 +96,7 @@ export const Products: CollectionConfig = {
       label: 'Категорія',
       type: 'relationship',
       relationTo: 'categories',
+      index: true,
       admin: {
         position: 'sidebar',
       },
