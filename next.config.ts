@@ -38,16 +38,16 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/loaderio-c1100d19144c563ce2c5f0bacf353f46/',
-        destination: '/loaderio-c1100d19144c563ce2c5f0bacf353f46.txt',
+        source: '/loaderio-560957267a5c70bd8feb0f3d34fc6612/',
+        destination: '/loaderio-560957267a5c70bd8feb0f3d34fc6612.txt',
       },
       {
-        source: '/loaderio-c1100d19144c563ce2c5f0bacf353f46.html',
-        destination: '/loaderio-c1100d19144c563ce2c5f0bacf353f46.txt',
+        source: '/loaderio-560957267a5c70bd8feb0f3d34fc6612.html',
+        destination: '/loaderio-560957267a5c70bd8feb0f3d34fc6612.txt',
       },
       {
-        source: '/loaderio-c1100d19144c563ce2c5f0bacf353f46',
-        destination: '/loaderio-c1100d19144c563ce2c5f0bacf353f46.txt',
+        source: '/loaderio-560957267a5c70bd8feb0f3d34fc6612',
+        destination: '/loaderio-560957267a5c70bd8feb0f3d34fc6612.txt',
       },
     ]
   },
