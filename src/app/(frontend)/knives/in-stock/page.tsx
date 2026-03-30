@@ -1,5 +1,3 @@
-export const revalidate = 300
-
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { KnifeCard } from '@/components/KnifeCard'

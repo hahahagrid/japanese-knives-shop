@@ -8,7 +8,7 @@ import type { NextRequest } from 'next/server'
  * If authenticated (on dev/staging), it also injeсts a noindex header for search engine protection.
  * On production (where variables are missing), it remains completely transparent.
  */
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   // --- DYNAMIC LOADER.IO VERIFICATION ---
   const loaderioToken = process.env.LOADERIO_TOKEN
   const pathname = req.nextUrl.pathname

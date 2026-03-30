@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+import { revalidatePost } from '../hooks/revalidate'
+
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
@@ -7,6 +9,9 @@ export const Posts: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidatePost],
   },
   fields: [
     {

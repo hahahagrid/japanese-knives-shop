@@ -9,6 +9,8 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
+import { revalidateProduct, revalidateDelete } from '../hooks/revalidate'
+
 export const Products: CollectionConfig = {
   slug: 'products',
   admin: {
@@ -27,6 +29,8 @@ export const Products: CollectionConfig = {
         return data
       },
     ],
+    afterChange: [revalidateProduct],
+    afterDelete: [revalidateDelete],
   },
   fields: [
     {
