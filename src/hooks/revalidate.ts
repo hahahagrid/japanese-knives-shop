@@ -44,7 +44,16 @@ export const revalidateGlobal: any = (slug: string) => {
 export const revalidateDelete: any = ({ doc }: any) => {
   const statusSlug = doc.status?.replace('_', '-') || 'in-stock'
   const prefix = doc.type === 'accessory' ? '/accessories' : `/knives/${statusSlug}`
+  
+  // 1. Revalidate the specific product page (will now 404)
   revalidatePath(`${prefix}/${doc.slug}`)
-  revalidatePath('/') // Just in case
+  
+  // 2. Revalidate listing pages where the product appeared
+  revalidatePath(doc.type === 'accessory' ? '/accessories' : '/knives/in-stock')
+  revalidatePath('/knives/custom-order')
+  
+  // 3. Revalidate the homepage
+  revalidatePath('/')
+  
   return doc
 }
