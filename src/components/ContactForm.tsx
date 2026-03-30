@@ -64,10 +64,13 @@ export function ContactForm() {
   return (
     <div className="bg-white border border-neutral-100 p-8 md:p-12 shadow-sm rounded-sm relative overflow-hidden group/form">
       <h2 className="text-2xl font-serif font-bold mb-10 tracking-tight">Напишіть нам</h2>
-      
+
       <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
         <div className="relative group">
-          <label htmlFor="name" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+          <label
+            htmlFor="name"
+            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]"
+          >
             Ваше ім&apos;я
           </label>
           <input
@@ -80,13 +83,16 @@ export function ContactForm() {
             pattern="^[A-Za-zА-Яа-яІіЇїЄєҐґ\s\-]+$"
             title="Ім'я може містити лише літери, пробіли та дефіси"
             className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
-            placeholder="Іван Іванов"
+            placeholder="Василь Симоненко"
           />
         </div>
-        
+
         <div className="relative group">
-          <label htmlFor="phone" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
-             Телефон *
+          <label
+            htmlFor="phone"
+            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]"
+          >
+            Телефон *
           </label>
           <input
             type="tel"
@@ -101,10 +107,13 @@ export function ContactForm() {
             placeholder="+380..."
           />
         </div>
-        
+
         <div className="relative group">
-          <label htmlFor="email" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
-             Email (необов'язково)
+          <label
+            htmlFor="email"
+            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]"
+          >
+            Email (необов'язково)
           </label>
           <input
             type="email"
@@ -117,9 +126,12 @@ export function ContactForm() {
             placeholder="example@mail.com"
           />
         </div>
-        
+
         <div className="relative group">
-          <label htmlFor="message" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+          <label
+            htmlFor="message"
+            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]"
+          >
             Ваше запитання
           </label>
           <textarea
