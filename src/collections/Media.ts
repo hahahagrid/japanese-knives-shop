@@ -11,7 +11,7 @@ const processWatermark = async (req: any, file: any) => {
       .resize({ width: 2560, height: 2560, fit: 'inside', withoutEnlargement: true })
 
     const wmFile = 'WATERMARK B.png'
-    const wmPath = path.resolve(process.cwd(), 'public', wmFile)
+    const wmPath = path.join(process.cwd(), 'public', wmFile)
 
     const metadata = await imageProcessor.metadata()
     const width = metadata.width || 2560
