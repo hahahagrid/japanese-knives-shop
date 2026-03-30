@@ -59,16 +59,26 @@ export default async function HomePage() {
   console.log('[DEBUG] Payload instance received')
 
   const { docs: inStockKnives } = await payload.find({
-    collection: 'knives',
-    where: { status: { equals: 'in_stock' } },
+    collection: 'products',
+    where: { 
+      and: [
+        { status: { equals: 'in_stock' } },
+        { type: { equals: 'knife' } }
+      ]
+    },
     limit: 4,
     overrideAccess: false,
     depth: 1,
   })
 
   const { docs: customKnives } = await payload.find({
-    collection: 'knives',
-    where: { status: { equals: 'custom_order' } },
+    collection: 'products',
+    where: { 
+      and: [
+        { status: { equals: 'custom_order' } },
+        { type: { equals: 'knife' } }
+      ]
+    },
     limit: 4,
     overrideAccess: false,
     depth: 1,

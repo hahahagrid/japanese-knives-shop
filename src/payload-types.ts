@@ -69,7 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    knives: Knife;
+    products: Product;
     categories: Category;
     posts: Post;
     orders: Order;
@@ -82,7 +82,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    knives: KnivesSelect<false> | KnivesSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
@@ -204,15 +204,16 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "knives".
+ * via the `definition` "products".
  */
-export interface Knife {
+export interface Product {
   id: number;
   title: string;
   /**
    * Авто-генерується з назви. Можна змінити вручну.
    */
   slug: string;
+  type: 'knife' | 'accessory';
   status: 'in_stock' | 'custom_order';
   /**
    * Ціна в гривнях (залиште порожнім, якщо ціна за запитом)
@@ -315,7 +316,7 @@ export interface Order {
    */
   items?:
     | {
-        knifeId?: string | null;
+        productId?: string | null;
         title?: string | null;
         price?: number | null;
         quantity?: number | null;
@@ -364,8 +365,8 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'knives';
-        value: number | Knife;
+        relationTo: 'products';
+        value: number | Product;
       } | null)
     | ({
         relationTo: 'categories';
@@ -498,11 +499,12 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "knives_select".
+ * via the `definition` "products_select".
  */
-export interface KnivesSelect<T extends boolean = true> {
+export interface ProductsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  type?: T;
   status?: T;
   price?: T;
   category?: T;
@@ -568,7 +570,7 @@ export interface OrdersSelect<T extends boolean = true> {
   items?:
     | T
     | {
-        knifeId?: T;
+        productId?: T;
         title?: T;
         price?: T;
         quantity?: T;

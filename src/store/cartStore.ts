@@ -9,6 +9,7 @@ export interface CartItem {
   imageUrl: string | null
   quantity: number
   status: string
+  type: 'knife' | 'accessory'
 }
 
 interface CartState {
@@ -76,7 +77,7 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: 'knives-cart-storage',
+      name: 'products-cart-storage',
       storage: createJSONStorage(() => localStorage),
       // Don't persist UI state (isOpen)
       partialize: (state) => ({ items: state.items }),

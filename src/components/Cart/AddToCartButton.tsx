@@ -11,6 +11,7 @@ interface AddToCartButtonProps {
     price: number
     status: string
     imageUrl: string | null
+    type?: 'knife' | 'accessory'
   }
 }
 
@@ -39,6 +40,7 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
           price: knife.price,
           status: knife.status,
           imageUrl: knife.imageUrl,
+          type: knife.type || 'knife',
         })
       }
       className="flex-1 bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 flex items-center justify-center gap-3 group/btn overflow-hidden relative"

@@ -15,8 +15,13 @@ export default async function CustomOrderPage() {
   const payload = await getPayload({ config })
 
   const { docs: knives } = await payload.find({
-    collection: 'knives',
-    where: { status: { equals: 'custom_order' } },
+    collection: 'products',
+    where: { 
+      and: [
+        { status: { equals: 'custom_order' } },
+        { type: { equals: 'knife' } }
+      ]
+    },
     overrideAccess: false,
     depth: 1,
   })

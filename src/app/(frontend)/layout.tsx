@@ -8,11 +8,18 @@ import { ViewportHandler } from '@/components/ViewportHandler'
 import './styles.css'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter', display: 'swap' })
-const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'], variable: '--font-playfair', display: 'swap' })
+const playfair = Playfair_Display({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-playfair',
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'KNIVES | Преміальні японські ножі в Україні',
   description: 'Інтернет-магазин японських ножів ручної роботи. В наявності та під замовлення.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

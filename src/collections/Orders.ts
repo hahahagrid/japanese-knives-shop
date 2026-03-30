@@ -56,7 +56,7 @@ export const Orders: CollectionConfig = {
       },
       fields: [
         {
-          name: 'knifeId',
+          name: 'productId',
           type: 'text',
         },
         {

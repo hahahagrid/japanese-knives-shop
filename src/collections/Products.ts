@@ -9,11 +9,11 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
-export const Knives: CollectionConfig = {
-  slug: 'knives',
+export const Products: CollectionConfig = {
+  slug: 'products',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'status', 'price', 'updatedAt'],
+    defaultColumns: ['title', 'type', 'status', 'price', 'updatedAt'],
   },
   access: {
     read: () => true,
@@ -43,6 +43,19 @@ export const Knives: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'Авто-генерується з назви. Можна змінити вручну.',
+      },
+    },
+    {
+      name: 'type',
+      type: 'select',
+      options: [
+        { label: 'Ніж (Knife)', value: 'knife' },
+        { label: 'Аксесуар (Accessory)', value: 'accessory' },
+      ],
+      defaultValue: 'knife',
+      required: true,
+      admin: {
+        position: 'sidebar',
       },
     },
     {
@@ -96,6 +109,9 @@ export const Knives: CollectionConfig = {
     {
       name: 'specs',
       type: 'group',
+      admin: {
+        condition: (data) => data.type === 'knife',
+      },
       fields: [
         { name: 'manufacturer', type: 'text', label: 'Виробник (Manufacturer)' },
         { name: 'country', type: 'text', label: 'Країна виробник (Country)' },

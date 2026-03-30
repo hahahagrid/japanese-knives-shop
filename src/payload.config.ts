@@ -7,7 +7,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Knives } from './collections/Knives'
+import { Products } from './collections/Products'
 import { Categories } from './collections/Categories'
 import { Posts } from './collections/Posts'
 import { Orders } from './collections/Orders'
@@ -24,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Knives, Categories, Posts, Orders],
+  collections: [Users, Media, Products, Categories, Posts, Orders],
   globals: [SiteSettings, HomepageReviews],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

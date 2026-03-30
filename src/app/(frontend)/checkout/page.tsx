@@ -34,7 +34,7 @@ export default function CheckoutPage() {
       deliveryInfo: formData.get('deliveryInfo'),
       message: formData.get('message'),
       items: items.map(item => ({
-        knifeId: String(item.id),
+        productId: String(item.id),
         title: item.title,
         price: item.price,
         quantity: item.quantity,
@@ -234,7 +234,11 @@ export default function CheckoutPage() {
               <div className="text-center py-12">
                 <p className="text-neutral-400 mb-4 italic font-serif">Ваша корзина порожня</p>
                 <Link href="/knives/in-stock" className="text-[10px] font-bold uppercase tracking-widest text-black border-b border-black pb-1 hover:opacity-60 transition-opacity">
-                  До каталогу
+                  До каталогу ножів
+                </Link>
+                <div className="h-4" />
+                <Link href="/accessories" className="text-[10px] font-bold uppercase tracking-widest text-black border-b border-black pb-1 hover:opacity-60 transition-opacity">
+                  До аксесуарів
                 </Link>
               </div>
             ) : (
@@ -255,7 +259,10 @@ export default function CheckoutPage() {
                       </div>
                       <div className="flex flex-col flex-1 py-1">
                         <Link
-                          href={`/knives/${item.slug}`}
+                          href={item.type === 'accessory' 
+                            ? `/accessories/${item.slug}` 
+                            : `/knives/${item.status === 'in_stock' ? 'in-stock' : 'custom-order'}/${item.slug}`
+                          }
                           className="font-serif font-bold text-base leading-snug hover:text-[var(--gold)] transition-colors line-clamp-2 pr-4"
                         >
                           {item.title}

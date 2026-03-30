@@ -70,6 +70,7 @@ export const BrandFooter: React.FC = async () => {
               <p className="text-[10px] uppercase tracking-widest text-neutral-600 mb-1">Каталог</p>
               <Link href="/knives/in-stock" className="text-sm text-neutral-400 hover:text-white transition-colors">В наявності</Link>
               <Link href="/knives/custom-order" className="text-sm text-neutral-400 hover:text-white transition-colors">Під замовлення</Link>
+              <Link href="/accessories" className="text-sm text-neutral-400 hover:text-white transition-colors">Аксесуари</Link>
               <Link href="/blog" className="text-sm text-neutral-400 hover:text-white transition-colors">Блог</Link>
             </div>
             <div className="flex flex-col gap-3">

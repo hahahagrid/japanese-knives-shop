@@ -19,8 +19,13 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
   const decodedSlug = decodeURIComponent(slug)
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
-    collection: 'knives',
-    where: { slug: { equals: decodedSlug } },
+    collection: 'products',
+    where: { 
+      and: [
+        { slug: { equals: decodedSlug } },
+        { type: { equals: 'knife' } }
+      ]
+    },
   })
   if (!docs.length) return { title: 'Not Found' }
   return { title: `${docs[0].title} | K N I V E S` }
@@ -38,11 +43,12 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
   }
 
   const { docs } = await payload.find({
-    collection: 'knives',
+    collection: 'products',
     where: { 
       and: [
         { slug: { equals: decodedSlug } },
-        { status: { equals: dbStatus } }
+        { status: { equals: dbStatus } },
+        { type: { equals: 'knife' } }
       ]
     },
     overrideAccess: false,
@@ -144,6 +150,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
                   title: knife.title as string,
                   price: knife.price as number,
                   status: knife.status as string,
+                  type: 'knife',
                   imageUrl: galleryImages[0]?.image?.url as string | null,
                 }} 
               />

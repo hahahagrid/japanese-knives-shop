@@ -6,11 +6,19 @@ import { usePathname } from 'next/navigation'
 import { Logo } from './Logo'
 import { MobileMenu } from './MobileMenu'
 import { CartIcon } from './Cart/CartIcon'
+import { ChevronDown } from 'lucide-react'
 
 const navLinks = [
   { href: '/', label: 'Головна' },
-  { href: '/knives/in-stock', label: 'В наявності' },
-  { href: '/knives/custom-order', label: 'Під замовлення' },
+  { 
+    label: 'Ножі', 
+    href: '/knives/in-stock',
+    children: [
+      { href: '/knives/in-stock', label: 'В наявності' },
+      { href: '/knives/custom-order', label: 'Під замовлення' },
+    ]
+  },
+  { href: '/accessories', label: 'Аксесуари' },
   { href: '/about', label: 'Про нас' },
   { href: '/shipping', label: 'Доставка' },
   { href: '/blog', label: 'Блог' },
@@ -21,6 +29,7 @@ export const Header: React.FC = () => {
   const pathname = usePathname()
 
   const isAlwaysDark = (pathname?.startsWith('/knives/') && pathname !== '/knives/in-stock' && pathname !== '/knives/custom-order') ||
+    (pathname?.startsWith('/accessories/') && pathname !== '/accessories') ||
     (pathname?.startsWith('/blog/') && pathname !== '/blog') ||
     pathname === '/contacts' || 
     pathname === '/checkout'
@@ -43,6 +52,8 @@ export const Header: React.FC = () => {
   const textColorClass = isDarkText ? 'text-[#1d1d1f]' : 'text-white'
   const textMutedClass = isDarkText ? 'text-[#1d1d1f]/60' : 'text-white/60'
   const textHoverBase = isDarkText ? 'text-[#1d1d1f]/80 hover:text-[#1d1d1f]' : 'text-white/80 hover:text-white'
+  const dropdownBgClass = isDarkText ? 'bg-white shadow-[0_20px_40px_rgba(0,0,0,0.1)]' : 'bg-[#0A0A09] shadow-[0_20px_40px_rgba(0,0,0,0.4)]'
+  const dropdownItemHoverClass = isDarkText ? 'hover:bg-neutral-50' : 'hover:bg-white/5'
 
   return (
     <>
@@ -62,13 +73,38 @@ export const Header: React.FC = () => {
             {/* Desktop Nav */}
             <nav className="hidden xl:flex items-center gap-10">
               {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-[14px] font-medium transition-colors duration-300 relative group whitespace-nowrap cursor-pointer ${textHoverBase}`}
-                >
-                  {link.label}
-                </Link>
+                <div key={link.label} className="relative group p-4 -m-4">
+                  {link.children ? (
+                    <>
+                      <div className={`flex items-center gap-1 text-[14px] font-medium transition-colors duration-300 whitespace-nowrap cursor-pointer ${textHoverBase}`}>
+                        {link.label}
+                        <ChevronDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      
+                      {/* Dropdown Menu */}
+                      <div className={`absolute top-[full] left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out-expo translate-y-2 group-hover:translate-y-0`}>
+                        <div className={`w-48 overflow-hidden rounded-none ${dropdownBgClass}`}>
+                          {link.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={`block px-6 py-3 text-[14px] font-medium transition-all duration-300 ${textHoverBase} ${dropdownItemHoverClass}`}
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      href={link.href!}
+                      className={`text-[14px] font-medium transition-colors duration-300 whitespace-nowrap cursor-pointer ${textHoverBase}`}
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </div>
               ))}
             </nav>
             {/* Tablet Menu */}
@@ -95,3 +131,4 @@ export const Header: React.FC = () => {
     </>
   )
 }
+

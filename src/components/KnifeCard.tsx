@@ -8,13 +8,15 @@ interface KnifeCardProps {
   status?: string
   imageUrl?: string | null
   hoverImageUrl?: string | null
+  pathPrefix?: string
 }
 
-export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl }: KnifeCardProps) {
+export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl, pathPrefix }: KnifeCardProps) {
   const statusPath = status === 'in_stock' ? 'in-stock' : 'custom-order'
+  const href = pathPrefix ? `${pathPrefix}/${slug}` : `/knives/${statusPath}/${slug}`
   
   return (
-    <Link href={`/knives/${statusPath}/${slug}`} className="group flex flex-col">
+    <Link href={href} className="group flex flex-col">
       {/* Image */}
       <div className="aspect-[4/5] overflow-hidden relative mb-5">
         {imageUrl ? (
