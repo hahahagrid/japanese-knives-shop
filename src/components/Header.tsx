@@ -76,7 +76,7 @@ export const Header: React.FC = () => {
                 <div key={link.label} className="relative group p-4 -m-4">
                   {link.children ? (
                     <>
-                      <div className={`flex items-center gap-1 text-[14px] font-medium transition-colors duration-300 whitespace-nowrap cursor-pointer ${textHoverBase}`}>
+                      <div className={`flex items-center gap-1 text-nav transition-colors duration-300 whitespace-nowrap cursor-pointer ${textHoverBase}`}>
                         {link.label}
                         <ChevronDown className="w-3.5 h-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />
                       </div>
@@ -88,7 +88,7 @@ export const Header: React.FC = () => {
                             <Link
                               key={child.href}
                               href={child.href}
-                              className={`block px-6 py-3 text-[14px] font-medium transition-all duration-300 ${textHoverBase} ${dropdownItemHoverClass}`}
+                              className={`block px-6 py-3 text-nav font-medium transition-all duration-300 ${textHoverBase} ${dropdownItemHoverClass}`}
                             >
                               {child.label}
                             </Link>
@@ -99,7 +99,7 @@ export const Header: React.FC = () => {
                   ) : (
                     <Link
                       href={link.href!}
-                      className={`text-[14px] font-medium transition-colors duration-300 whitespace-nowrap cursor-pointer ${textHoverBase}`}
+                      className={`text-nav transition-colors duration-300 whitespace-nowrap cursor-pointer ${textHoverBase}`}
                     >
                       {link.label}
                     </Link>

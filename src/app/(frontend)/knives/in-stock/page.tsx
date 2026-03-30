@@ -15,11 +15,8 @@ export default async function InStockPage() {
 
   const { docs: knives } = await payload.find({
     collection: 'products',
-    where: { 
-      and: [
-        { status: { equals: 'in_stock' } },
-        { type: { equals: 'knife' } }
-      ]
+    where: {
+      and: [{ status: { equals: 'in_stock' } }, { type: { equals: 'knife' } }],
     },
     overrideAccess: false,
     depth: 1,
@@ -57,9 +54,6 @@ export default async function InStockPage() {
               Весь каталог ({knives.length})
             </h2>
           </div>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] hidden sm:block">
-            Сортування: За датою
-          </p>
         </AnimatedSection>
 
         {knives.length === 0 ? (

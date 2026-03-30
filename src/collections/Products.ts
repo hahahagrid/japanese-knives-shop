@@ -13,6 +13,10 @@ import { revalidateProduct, revalidateDelete } from '../hooks/revalidate'
 
 export const Products: CollectionConfig = {
   slug: 'products',
+  labels: {
+    singular: 'Товар',
+    plural: 'Товари',
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'type', 'status', 'price', 'updatedAt'],
@@ -35,6 +39,7 @@ export const Products: CollectionConfig = {
   fields: [
     {
       name: 'title',
+      label: 'Назва',
       type: 'text',
       required: true,
     },
@@ -51,10 +56,11 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'type',
+      label: 'Тип товару',
       type: 'select',
       options: [
-        { label: 'Ніж (Knife)', value: 'knife' },
-        { label: 'Аксесуар (Accessory)', value: 'accessory' },
+        { label: 'Ніж', value: 'knife' },
+        { label: 'Аксесуар', value: 'accessory' },
       ],
       defaultValue: 'knife',
       required: true,
@@ -64,10 +70,11 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'status',
+      label: 'Статус',
       type: 'select',
       options: [
-        { label: 'В наявності (In Stock)', value: 'in_stock' },
-        { label: 'Під замовлення (Custom Order)', value: 'custom_order' },
+        { label: 'В наявності', value: 'in_stock' },
+        { label: 'Під замовлення', value: 'custom_order' },
       ],
       defaultValue: 'in_stock',
       required: true,
@@ -84,6 +91,7 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'category',
+      label: 'Категорія',
       type: 'relationship',
       relationTo: 'categories',
       admin: {
@@ -92,6 +100,7 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'images',
+      label: 'Зображення',
       type: 'upload',
       relationTo: 'media',
       hasMany: true,
@@ -108,31 +117,33 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'description',
+      label: 'Опис',
       type: 'richText',
     },
     {
       name: 'specs',
+      label: 'Характеристики',
       type: 'group',
       admin: {
         condition: (data) => data.type === 'knife',
       },
       fields: [
-        { name: 'manufacturer', type: 'text', label: 'Виробник (Manufacturer)' },
-        { name: 'country', type: 'text', label: 'Країна виробник (Country)' },
-        { name: 'steel', type: 'text', label: 'Матеріал клинка / Сталь (Steel)' },
-        { name: 'hardness', type: 'text', label: 'Твердість сталі (Hardness)' },
-        { name: 'bladeLength', type: 'text', label: 'Довжина клинка (Blade Length)' },
-        { name: 'edgeLength', type: 'text', label: 'Довжина РК (Cutting Edge Length)' },
-        { name: 'handleLength', type: 'text', label: "Довжина руків'я (Handle Length)" },
-        { name: 'totalLength', type: 'text', label: 'Загальна довжина (Total Length)' },
-        { name: 'bladeHeight', type: 'text', label: 'Висота клинка (Blade Height)' },
-        { name: 'thickness', type: 'text', label: 'Товщина клинка (Thickness)' },
-        { name: 'weight', type: 'text', label: 'Вага (Weight)' },
-        { name: 'finish', type: 'text', label: 'Обробка клинка (Finish/Treatment)' },
-        { name: 'layers', type: 'text', label: 'Кількість шарів (Layers)' },
-        { name: 'handleMaterial', type: 'text', label: "Матеріал руків'я (Handle Material)" },
-        { name: 'bolster', type: 'text', label: 'Матеріал больстера (Bolster Material)' },
-        { name: 'sharpeningAngle', type: 'text', label: 'Кут загострення (Sharpening Angle)' },
+        { name: 'manufacturer', type: 'text', label: 'Виробник' },
+        { name: 'country', type: 'text', label: 'Країна виробник' },
+        { name: 'steel', type: 'text', label: 'Матеріал клинка / Сталь' },
+        { name: 'hardness', type: 'text', label: 'Твердість сталі (HRC)' },
+        { name: 'bladeLength', type: 'text', label: 'Довжина клинка (мм)' },
+        { name: 'edgeLength', type: 'text', label: 'Довжина РК (мм)' },
+        { name: 'handleLength', type: 'text', label: "Довжина руків'я (мм)" },
+        { name: 'totalLength', type: 'text', label: 'Загальна довжина (мм)' },
+        { name: 'bladeHeight', type: 'text', label: 'Висота клинка (мм)' },
+        { name: 'thickness', type: 'text', label: 'Товщина клинка (мм)' },
+        { name: 'weight', type: 'text', label: 'Вага (г)' },
+        { name: 'finish', type: 'text', label: 'Обробка клинка' },
+        { name: 'layers', type: 'text', label: 'Кількість шарів' },
+        { name: 'handleMaterial', type: 'text', label: "Матеріал руків'я" },
+        { name: 'bolster', type: 'text', label: 'Матеріал больстера' },
+        { name: 'sharpeningAngle', type: 'text', label: 'Кут загострення' },
       ],
     },
   ],

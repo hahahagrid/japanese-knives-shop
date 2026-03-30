@@ -28,6 +28,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
+    overscroll-behavior: none;
     overflow-x: hidden; 
   }
 
@@ -90,6 +91,41 @@ body {
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.02em;
+}
+
+@layer components {
+  /* Unified labels (About us, Collection, In stock, etc) */
+  .text-label {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    color: var(--muted);
+  }
+
+  /* Navigation links */
+  .text-nav {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* Price styling */
+  .text-price {
+    font-family: var(--font-playfair), serif;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* Secondary metadata (Card prices, specs labels) */
+  .text-metadata {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #4a4a47;
+  }
 }
 
 /* ── Animated underline nav link ─────────────── */
@@ -231,5 +267,15 @@ html.skip-intro #loading-screen {
 }
 .rotate-y-180 {
   transform: rotateY(180deg);
+}
+
+/* ── Image Protection ────────────────────────── */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 

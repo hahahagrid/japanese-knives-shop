@@ -4,6 +4,10 @@ import { revalidatePost } from '../hooks/revalidate'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
+  labels: {
+    singular: 'Стаття',
+    plural: 'Статті',
+  },
   admin: {
     useAsTitle: 'title',
   },
@@ -16,6 +20,7 @@ export const Posts: CollectionConfig = {
   fields: [
     {
       name: 'title',
+      label: 'Заголовок',
       type: 'text',
       required: true,
     },
@@ -29,15 +34,18 @@ export const Posts: CollectionConfig = {
     },
     {
       name: 'coverImage',
+      label: 'Обкладинка',
       type: 'upload',
       relationTo: 'media',
     },
     {
       name: 'content',
+      label: 'Контент',
       type: 'richText',
     },
     {
       name: 'publishedDate',
+      label: 'Дата публікації',
       type: 'date',
       admin: { position: 'sidebar' },
     },

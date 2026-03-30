@@ -4,6 +4,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { uk } from '@payloadcms/translations/languages/uk'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -39,5 +40,9 @@ export default buildConfig({
     migrationDir: path.resolve(dirname, 'migrations'),
   }),
   sharp,
+  i18n: {
+    supportedLanguages: { uk },
+    fallbackLanguage: 'uk',
+  },
   plugins: [],
 })

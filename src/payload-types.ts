@@ -308,11 +308,11 @@ export interface Order {
   email?: string | null;
   message?: string | null;
   /**
-   * Інформація про доставку (Місто, Відділення НП, тощо)
+   * Місто, відділення НП, ПІБ отримувача тощо
    */
   deliveryInfo?: string | null;
   /**
-   * Товари в замовленні
+   * Список товарів у замовленні
    */
   items?:
     | {
@@ -324,7 +324,7 @@ export interface Order {
       }[]
     | null;
   /**
-   * Сума замовлення
+   * Сума замовлення в гривнях
    */
   total?: number | null;
   status?: ('new' | 'processing' | 'completed' | 'cancelled') | null;

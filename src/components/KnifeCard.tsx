@@ -50,7 +50,7 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
         <h2 className="font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 group-hover:opacity-60">
           {title}
         </h2>
-        <p className="text-[13px] tracking-widest uppercase text-[var(--muted)] font-medium">
+        <p className="text-metadata">
           {price 
             ? `${price.toLocaleString('uk-UA')} грн`
             : (status === 'custom_order' ? 'Ціна за запитом' : 'Ціна уточнюється')}

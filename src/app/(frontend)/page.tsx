@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { KnifeCard } from '@/components/KnifeCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { ReviewsMarquee } from '@/components/ReviewsMarquee'
-import { ArrowDown } from 'lucide-react'
+import { ArrowDown, Plane, ShieldCheck, Truck, MessageSquare } from 'lucide-react'
 import { ManufacturerCard } from '@/components/ManufacturerCard'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { ChevronUp } from 'lucide-react'
@@ -60,11 +60,8 @@ export default async function HomePage() {
 
   const { docs: inStockKnives } = await payload.find({
     collection: 'products',
-    where: { 
-      and: [
-        { status: { equals: 'in_stock' } },
-        { type: { equals: 'knife' } }
-      ]
+    where: {
+      and: [{ status: { equals: 'in_stock' } }, { type: { equals: 'knife' } }],
     },
     limit: 4,
     overrideAccess: false,
@@ -73,11 +70,8 @@ export default async function HomePage() {
 
   const { docs: customKnives } = await payload.find({
     collection: 'products',
-    where: { 
-      and: [
-        { status: { equals: 'custom_order' } },
-        { type: { equals: 'knife' } }
-      ]
+    where: {
+      and: [{ status: { equals: 'custom_order' } }, { type: { equals: 'knife' } }],
     },
     limit: 4,
     overrideAccess: false,
@@ -99,7 +93,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       {/* ── Hero ──────────────────────────────────── */}
-      <section 
+      <section
         className="relative h-[92svh] md:h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white"
         style={{ height: 'calc(var(--vh, 1vh) * 92)' }}
       >
@@ -120,26 +114,24 @@ export default async function HomePage() {
         <div className="relative z-10 w-full pb-16 md:pb-24">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-2xl animate-fade-up" style={{ animationDelay: '100ms' }}>
-              <p className="text-[10px] tracking-[0.4em] uppercase text-neutral-400 mb-6">
-                Японські клинки ручної роботи
-              </p>
+              <p className="text-label text-white/50 mb-6">Мистецтво ідеального різу</p>
               <h1 className="heading-display text-5xl md:text-7xl lg:text-8xl text-white mb-8">
-                Мистецтво
+                Японські
                 <br />
-                Ідеального
+                Кухонні
                 <br />
-                Різу
+                Ножі
               </h1>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-row gap-4 w-full sm:w-auto">
                 <Link
                   href="/knives/in-stock"
-                  className="inline-block bg-white text-black px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-neutral-200 transition-colors duration-200"
+                  className="flex-1 sm:w-[180px] inline-flex items-center justify-center bg-white text-black py-4 text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-neutral-200 transition-colors duration-300 shadow-lg"
                 >
                   Каталог в наявності
                 </Link>
                 <Link
                   href="/knives/custom-order"
-                  className="inline-block bg-transparent border border-white/50 text-white px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase hover:bg-white/10 transition-colors duration-200"
+                  className="flex-1 sm:w-[180px] inline-flex items-center justify-center bg-transparent border border-white/50 text-white py-4 text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-white/10 transition-colors duration-300 shadow-lg"
                 >
                   Під замовлення
                 </Link>
@@ -159,15 +151,49 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Trust Bar ───────────────────────────────── */}
+      <section className="bg-white border-b border-black/[0.05] py-10 md:py-12">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-10 lg:gap-y-0">
+            {/* Item 1 */}
+            <div className="flex flex-col items-center text-center px-4 lg:border-r lg:border-black/[0.05] last:border-0">
+              <Plane className="h-6 w-6 mb-4 text-black stroke-[1px]" />
+              <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase leading-tight max-w-[140px]">
+                Прямі поставки з Японії
+              </p>
+            </div>
+            {/* Item 2 */}
+            <div className="flex flex-col items-center text-center px-4 lg:border-r lg:border-black/[0.05] last:border-0">
+              <ShieldCheck className="h-6 w-6 mb-4 text-black stroke-[1px]" />
+              <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase leading-tight max-w-[140px]">
+                100% оригінальні ножі
+              </p>
+            </div>
+            {/* Item 3 */}
+            <div className="flex flex-col items-center text-center px-4 lg:border-r lg:border-black/[0.05] last:border-0">
+              <Truck className="h-6 w-6 mb-4 text-black stroke-[1px]" />
+              <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase leading-tight max-w-[140px]">
+                Доставка по Україні 1–2 дні
+              </p>
+            </div>
+            {/* Item 4 */}
+            <div className="flex flex-col items-center text-center px-4 lg:border-r lg:border-black/[0.05] last:border-0">
+              <MessageSquare className="h-6 w-6 mb-4 text-black stroke-[1px]" />
+              <p className="text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase leading-tight max-w-[140px]">
+                Допомагаємо підібрати під задачу
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 2. In Stock Section ────────────────────────── */}
       {inStockKnives.length > 0 && (
         <section className="bg-[#FAFAF9] pt-16 md:pt-24 pb-12 md:pb-16 border-b border-black/[0.03]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <AnimatedSection className="flex justify-between items-end mb-10">
               <div>
-                <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-2">
-                  Колекція
-                </p>
+                <p className="text-label mb-2">Колекція</p>
                 <h2 className="heading-display text-3xl md:text-4xl">В наявності</h2>
               </div>
               <Link
@@ -214,9 +240,7 @@ export default async function HomePage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <AnimatedSection className="flex justify-between items-end mb-10">
               <div>
-                <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-2">
-                  Bespoke
-                </p>
+                <p className="text-label mb-2">Індивідуальні запити</p>
                 <h2 className="heading-display text-3xl md:text-4xl">Під замовлення</h2>
               </div>
               <Link
@@ -261,11 +285,9 @@ export default async function HomePage() {
       <section className="bg-white py-20 border-b border-black/[0.03]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <AnimatedSection className="mb-10">
-            <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
-              Клинки цих та багатьох інших майстрів ви маєте можливість замовити у нас
-            </p>
+            <p className="text-label mb-3">Клинки цих та інших майстрів доступні для замовлення</p>
             <h2 className="heading-display text-2xl md:text-4xl mb-4 text-left">
-              Які виробники входять в топ нашого магазину?
+              Виробники з топу нашого магазину
             </h2>
           </AnimatedSection>
 
@@ -281,7 +303,7 @@ export default async function HomePage() {
       <ReviewsMarquee reviews={reviewUrls} />
 
       {/* ── 6. Philosophy & Heritage (Immersive Editorial) ─────────── */}
-      <section className="bg-white pt-32 md:pt-40 pb-16 md:pb-24 flex flex-col gap-10 border-t border-[var(--border)] overflow-hidden relative">
+      <section className="bg-white pt-32 md:pt-40 pb-0 flex flex-col gap-10 border-t border-[var(--border)] overflow-hidden relative">
         {/* Heritage Watermark 01: 锻 (Forging) */}
         <div className="absolute left-[-5%] top-[10%] text-[40vw] font-serif opacity-[0.03] select-none pointer-events-none text-black leading-none">
           锻
@@ -290,9 +312,7 @@ export default async function HomePage() {
         {/* Section Header */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
           <AnimatedSection>
-            <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--muted)] mb-3">
-              Можливо тому наші покупці обирають саме нас :)
-            </p>
+            <p className="text-label mb-3">Вибір починається з розуміння</p>
             <h2 className="heading-display text-4xl md:text-4xl">
               Філософія вибору ножів в нашому магазині
             </h2>
@@ -315,7 +335,7 @@ export default async function HomePage() {
               <div className="space-y-10 font-serif text-lg md:text-[22px] leading-relaxed text-black/80 text-justify">
                 <AnimatedSection delay={0.2}>
                   <div className="relative pl-0">
-                    <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans font-bold">
+                    <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans">
                       Коваль
                     </strong>
                     Майстер, який створює ніж від початку і до кінця. Формування, кування,
@@ -326,7 +346,7 @@ export default async function HomePage() {
                 </AnimatedSection>
                 <AnimatedSection delay={0.3}>
                   <div className="relative pl-0">
-                    <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans font-bold">
+                    <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans">
                       Фабрика
                     </strong>
                     На фабриці ніж проходить через багато рук — кожен відповідає за окремий етап. Це
@@ -445,7 +465,7 @@ export default async function HomePage() {
                 <span className="whitespace-nowrap">Кожен коваль — винятковий"</span>
               </h3>
               <div className="flex justify-end pr-4 md:pr-10">
-                <p className="text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-black/40 font-sans font-bold translate-y-[-20px]">
+                <p className="text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-black/40 font-sans translate-y-[-20px]">
                   — Засновник Japanese Kitchen Knives
                 </p>
               </div>
@@ -456,7 +476,7 @@ export default async function HomePage() {
               тому кожен ніж має свій характер і не повторюється повністю.
             </p>
 
-            <div className="flex items-center justify-center gap-6 mb-16">
+            <div className="flex items-center justify-center gap-6 mb-20">
               <div className="w-16 h-[1px] bg-black/10 origin-right transition-transform hover:scale-x-150 duration-700"></div>
               <div className="w-2 h-2 border border-[var(--gold)] rotate-45 group-hover:bg-[var(--gold)] transition-colors duration-700"></div>
               <div className="w-16 h-[1px] bg-black/10 origin-left transition-transform hover:scale-x-150 duration-700"></div>
@@ -469,21 +489,21 @@ export default async function HomePage() {
       <section className="bg-[#BC002D] text-white py-12 md:py-16 text-center relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-20">
           <AnimatedSection>
-            <div className="flex flex-col gap-10 lg:gap-16 justify-center items-center">
+            <div className="flex flex-col gap-6 lg:gap-10 justify-center items-center">
               <h2 className="heading-display text-3xl md:text-4xl tracking-tight text-white leading-tight max-w-2xl">
-                Подорож у світ японських ножів разом з нами
+                Оберіть свій ідеальний ніж
               </h2>
 
               <div className="flex flex-row gap-4 w-full max-w-xs sm:max-w-none sm:w-auto justify-center items-stretch">
                 <Link
                   href="/knives/in-stock"
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center px-4 sm:px-8 py-4 bg-white text-[#BC002D] font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-neutral-100 shadow-lg"
+                  className="flex-1 sm:w-[220px] inline-flex items-center justify-center px-4 sm:px-8 py-4 bg-white text-[#BC002D] font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-neutral-100 shadow-lg"
                 >
                   Обрати ніж
                 </Link>
                 <Link
                   href="/knives/custom-order"
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center border-2 border-white/40 text-white px-4 sm:px-8 py-4 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-white/10 shadow-lg"
+                  className="flex-1 sm:w-[220px] inline-flex items-center justify-center border-2 border-white/40 text-white px-4 sm:px-8 py-4 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-white/10 shadow-lg"
                 >
                   Під замовлення
                 </Link>

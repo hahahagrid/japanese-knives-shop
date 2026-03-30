@@ -36,6 +36,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   sessionStorage.setItem('knives_intro_played', 'true');
                 }
               } catch (e) {}
+              
+              // Global Image & Content Protection
+              document.addEventListener('contextmenu', (e) => {
+                if (e.target.tagName === 'IMG' || e.target.closest('picture')) {
+                  e.preventDefault();
+                }
+              }, true);
+              
+              document.addEventListener('dragstart', (e) => {
+                if (e.target.tagName === 'IMG' || e.target.closest('picture')) {
+                  e.preventDefault();
+                }
+              }, true);
             `,
           }}
         />

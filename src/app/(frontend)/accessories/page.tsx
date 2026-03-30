@@ -36,7 +36,7 @@ export default async function AccessoriesPage() {
             </p>
             <h1 className="heading-display text-5xl md:text-6xl lg:text-8xl mb-6">Аксесуари</h1>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed font-light italic font-serif">
-              Професійні інструменти для догляду за вашими ножами. Все необхідне, щоб підтримувати 
+              Професійні інструменти для догляду за вашими ножами. Все необхідне, щоб підтримувати
               досконалу гостроту в одному місці.
             </p>
           </AnimatedSection>
@@ -52,9 +52,6 @@ export default async function AccessoriesPage() {
               Весь каталог ({products.length})
             </h2>
           </div>
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] hidden sm:block">
-            Сортування: За датою
-          </p>
         </AnimatedSection>
 
         {products.length === 0 ? (
@@ -76,7 +73,7 @@ export default async function AccessoriesPage() {
                 typeof secondImage === 'object' && secondImage !== null
                   ? (secondImage as { url?: string }).url
                   : null
-              
+
               // Note: using /accessories for accessories slug
               return (
                 <div key={product.id} className="animate-fade-up">

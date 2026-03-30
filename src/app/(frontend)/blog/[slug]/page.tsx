@@ -52,7 +52,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <h1 className="heading-display text-4xl md:text-5xl lg:text-6xl mb-12 leading-[1.1]">
             {post.title}
           </h1>
-          <div className="aspect-[21/9] bg-stone-50 overflow-hidden relative border border-[var(--border)]">
+          <div className="aspect-video md:aspect-[21/9] mx-auto bg-stone-50 overflow-hidden relative border border-[var(--border)] shadow-md">
             {post.coverImage && typeof post.coverImage === 'object' ? (
               <NextImage
                 src={(post.coverImage as any).url}
@@ -60,7 +60,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 fill
                 className="object-cover"
                 priority
-                sizes="100vw"
+                sizes="(max-width: 1024px) 100vw, 1200px"
               />
             ) : (
               <>

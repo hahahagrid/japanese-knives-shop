@@ -101,7 +101,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] mb-12">
+      <nav className="flex items-center gap-2 text-label mb-12">
         <Link href="/" className="hover:text-black transition-colors">
           Головна
         </Link>
@@ -113,7 +113,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
           {dbStatus === 'in_stock' ? 'В наявності' : 'Під замовлення'}
         </Link>
         <span className="opacity-30">/</span>
-        <span className="text-black font-semibold">{knife.title}</span>
+        <span className="text-black uppercase">{knife.title}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
@@ -128,13 +128,13 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
         <div className="lg:col-span-5">
           <AnimatedSection delay={0.15} className="flex flex-col">
             <div className="mb-10 lg:mb-14 border-b border-[var(--border)] pb-10">
-              <p className="text-[11px] tracking-[0.4em] uppercase text-[var(--muted)] mb-4 italic font-medium">
+              <p className="text-label mb-4">
                 {dbStatus === 'in_stock' ? 'В наявності' : 'Доступний під замовлення'}
               </p>
               <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-10 leading-tight">
                 {knife.title}
               </h1>
-              <p className="text-4xl font-serif italic text-[var(--gold)]">
+              <p className="text-4xl text-price">
                 {knife.price
                   ? `${knife.price.toLocaleString('uk-UA')} грн`
                   : dbStatus === 'custom_order'
@@ -144,7 +144,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-5 mb-14">
+            <div className="flex flex-row gap-5 mb-14">
               <AddToCartButton 
                 knife={{
                   id: String(knife.id),
@@ -156,18 +156,20 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
                   imageUrl: galleryImages[0]?.image?.url as string | null,
                 }} 
               />
-              <Link
-                href="/contacts"
-                className="flex-1 text-center bg-white border border-black/10 text-black py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] hover:bg-stone-50 transition-all active:scale-95"
-              >
-                Консультація
-              </Link>
+              {knife.price && (
+                <Link
+                  href="/contacts"
+                  className="flex-1 text-center bg-white border border-black/10 text-black py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] hover:bg-stone-50 transition-all active:scale-95"
+                >
+                  Консультація
+                </Link>
+              )}
             </div>
 
             {/* Description */}
             {hasDescription && (
               <div className="mb-14">
-                <h3 className="text-[11px] uppercase tracking-widest font-bold text-neutral-400 mb-6 italic border-l-2 border-[var(--gold)] pl-4">
+                <h3 className="text-label mb-6 border-l-2 border-[var(--gold)] pl-4">
                   Про виріб
                 </h3>
                 <div className="prose prose-neutral prose-md max-w-none leading-relaxed text-neutral-700 font-light">
@@ -181,14 +183,14 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
               <div className="mb-16 border-t border-[var(--border)] pt-12">
                 <div className="flex items-center gap-3 mb-10">
                   <Database className="w-4 h-4 text-[var(--gold)]" />
-                  <h3 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">
+                  <h3 className="text-label">
                     Технічні характеристики
                   </h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                   {specsList.map((spec, index) => (
                     <div key={index} className="group border-b border-black/5 pb-2">
-                      <dt className="text-[10px] uppercase tracking-widest text-[#B4B4B0] mb-2 italic">
+                      <dt className="text-label mb-2 text-[#B4B4B0]">
                         {spec.label}
                       </dt>
                       <dd className="text-base font-medium tracking-tight text-neutral-800">
