@@ -1,3 +1,5 @@
+export const revalidate = 86400
+
 import React from 'react'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import Image from 'next/image'
