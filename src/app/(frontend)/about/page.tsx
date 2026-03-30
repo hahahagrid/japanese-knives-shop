@@ -36,7 +36,7 @@ export default function AboutPage() {
         </p>
       </>
     ),
-    image: '/images/about-hero.jpg',
+    image: '/images/about-hero-1200.webp',
   }
 
   const offerings = [
@@ -97,7 +97,14 @@ export default function AboutPage() {
             </AnimatedSection>
             <AnimatedSection delay={0.2} className="order-1 lg:order-2">
               <div className="relative aspect-[4/5] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
-                <Image src={intro.image} alt={intro.title} fill className="object-cover" />
+                <Image
+                  src={intro.image}
+                  alt={intro.title}
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
                 <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-black/20 to-transparent" />
                 <div className="absolute inset-0 border-[1px] border-white/20 m-6" />
               </div>
