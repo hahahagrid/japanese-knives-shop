@@ -78,6 +78,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   e.preventDefault();
                 }
               }, true);
+              // Smart Page Refresh (Prevents stale content on mobile)
+              let lastVisibilityChange = Date.now();
+              document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                  const now = Date.now();
+                  // If away for more than 40 minutes, force a quick background check
+                  if (now - lastVisibilityChange > 1000 * 60 * 40) {
+                    window.location.reload(); 
+                  }
+                  lastVisibilityChange = now;
+                }
+              });
             `,
           }}
         />
