@@ -87,14 +87,14 @@ export const Media: CollectionConfig = {
       {
         name: 'thumbnail',
         width: 400,
-        height: 300,
+        height: 500,
         position: 'center',
         formatOptions: { format: 'webp', options: { quality: 82 } },
       },
       {
         name: 'card',
-        width: 768,
-        height: 1024,
+        width: 800,
+        height: 1000,
         position: 'center',
         formatOptions: { format: 'webp', options: { quality: 82 } },
       },

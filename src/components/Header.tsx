@@ -28,11 +28,17 @@ export const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
-  const isAlwaysDark = (pathname?.startsWith('/knives/') && pathname !== '/knives/in-stock' && pathname !== '/knives/custom-order') ||
-    (pathname?.startsWith('/accessories/') && pathname !== '/accessories') ||
-    (pathname?.startsWith('/blog/') && pathname !== '/blog') ||
-    pathname === '/contacts' || 
-    pathname === '/checkout'
+  const transparentHeadPaths = [
+    '/',
+    '/knives/in-stock',
+    '/knives/custom-order',
+    '/accessories',
+    '/about',
+    '/shipping',
+    '/blog'
+  ]
+
+  const isAlwaysDark = !transparentHeadPaths.includes(pathname || '')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,9 +51,11 @@ export const Header: React.FC = () => {
 
   const isDarkText = scrolled || isAlwaysDark
 
-  const bgClass = (scrolled || isAlwaysDark)
+  const bgClass = scrolled 
     ? 'bg-[#fbfbfd]/75 backdrop-blur-md border-[var(--border)]' 
-    : 'bg-transparent border-transparent'
+    : isAlwaysDark 
+      ? 'bg-transparent border-transparent' // Transparent for clean pages like Contacts/404
+      : 'bg-transparent border-transparent' // Transparent for Hero pages
 
   const textColorClass = isDarkText ? 'text-[#1d1d1f]' : 'text-white'
   const textMutedClass = isDarkText ? 'text-[#1d1d1f]/60' : 'text-white/60'

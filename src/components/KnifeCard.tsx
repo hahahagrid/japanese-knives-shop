@@ -47,9 +47,9 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
 
       {/* Info */}
       <div className="flex flex-col gap-2">
-        <h2 className="font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 group-hover:opacity-60">
+        <h3 className="font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 group-hover:opacity-60">
           {title}
-        </h2>
+        </h3>
         <p className="text-metadata">
           {price 
             ? `${price.toLocaleString('uk-UA')} грн`

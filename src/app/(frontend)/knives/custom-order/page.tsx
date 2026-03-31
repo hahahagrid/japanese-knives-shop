@@ -7,8 +7,8 @@ import { KnifeCard } from '@/components/KnifeCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
 
 export const metadata = {
-  title: 'Ножі під замовлення | K N I V E S',
-  description: 'Ексклюзивні японські ножі, які ми привеземо спеціально для вас.',
+  title: 'Японські ножі під замовлення | Есклюзивні клинки з Японії',
+  description: 'Замовлення ексклюзивних японських ножів безпосередньо від майстрів. Індивідуальний підбір сталі, довжини та руків’я. Привеземо будь-яку модель спеціально для вас.',
 }
 
 export default async function CustomOrderPage() {
@@ -77,11 +77,11 @@ export default async function CustomOrderPage() {
               const secondImage = knife.images?.[1]
               const imgUrl =
                 typeof firstImage === 'object' && firstImage !== null
-                  ? (firstImage as { url?: string }).url
+                  ? (firstImage.sizes?.card?.url || firstImage.url)
                   : null
               const hoverImgUrl =
                 typeof secondImage === 'object' && secondImage !== null
-                  ? (secondImage as { url?: string }).url
+                  ? (secondImage.sizes?.card?.url || secondImage.url)
                   : null
               return (
                 <div key={knife.id} className="animate-fade-up">

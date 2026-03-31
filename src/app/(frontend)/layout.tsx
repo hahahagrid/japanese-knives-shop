@@ -5,6 +5,9 @@ import { BrandFooter as Footer } from '@/components/BrandFooter'
 import { CartDrawer } from '@/components/Cart/CartDrawer'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { ViewportHandler } from '@/components/ViewportHandler'
+import { OrganizationSchema } from '@/components/SEO/OrganizationSchema'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 import './styles.css'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter', display: 'swap' })
@@ -17,10 +20,10 @@ const playfair = Playfair_Display({
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: 'KNIVES | Преміальні японські ножі в Україні',
-  description: 'Інтернет-магазин японських ножів ручної роботи. В наявності та під замовлення.',
+  description: 'Купити преміальні японські ножі ручної роботи в Україні. Великий асортимент кухонних ножів від майстрів Sakai, Sanjo та Echizen. В наявності та під замовлення. Швидка доставка та гарантія якості.',
   openGraph: {
     title: 'KNIVES | Преміальні японські ножі в Україні',
-    description: 'Інтернет-магазин японських ножів ручної роботи. В наявності та під замовлення.',
+    description: 'Купити преміальні японські ножі ручної роботи в Україні. Великий асортимент кухонних ножів від майстрів Sakai, Sanjo та Echizen.',
     url: './',
     siteName: 'KNIVES',
     images: [
@@ -35,11 +38,20 @@ export const metadata = {
     type: 'website',
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: ['/favicon.svg'],
   },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const payload = await getPayload({ config })
+  const settings = await payload.findGlobal({ slug: 'site-settings', overrideAccess: false })
+
   return (
     <html lang="uk" className={`${inter.variable} ${playfair.variable} light`}>
       <head>
@@ -71,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen bg-background text-foreground font-sans antialiased flex flex-col selection:bg-neutral-800 selection:text-white">
+        <OrganizationSchema phone={settings.contactPhone} email={settings.contactEmail} />
         <ViewportHandler />
         <LoadingScreen />
         <Header />
