@@ -1,4 +1,4 @@
-export const revalidate = 86400
+export const revalidate = 3600 // 1 hour cache fallback
 
 import { getPayload } from 'payload'
 import config from '@payload-config'
