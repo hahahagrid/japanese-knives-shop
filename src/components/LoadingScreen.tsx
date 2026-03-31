@@ -2,22 +2,35 @@
 
 import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 
 export function LoadingScreen() {
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(() => {
+    // Synchronous initial state check to prevent flicker
+    if (typeof document !== 'undefined' && document.documentElement.classList.contains('skip-intro')) {
+      return false
+    }
+    return true
+  })
+  const pathname = usePathname()
 
   useEffect(() => {
-    // Check if the script in layout.tsx head already marked the session as played
+    // If we're on a page that should skip intro, hide immediately
     if (document.documentElement.classList.contains('skip-intro')) {
       setShow(false)
-    } else {
-      // Automatically unmount after animation completes
-      const timer = setTimeout(() => {
-        setShow(false)
-      }, 2800)
-      return () => clearTimeout(timer)
+      return
     }
-  }, [])
+
+    const timer = setTimeout(() => {
+      setShow(false)
+    }, 2800)
+    return () => clearTimeout(timer)
+  }, [pathname])
+
+  // Critical: do not even render the initial frame if we already know we should skip
+  if (typeof window !== 'undefined' && document.documentElement.classList.contains('skip-intro')) {
+    return null
+  }
 
   return (
     <AnimatePresence>

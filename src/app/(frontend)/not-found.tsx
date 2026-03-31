@@ -31,7 +31,15 @@ export default function NotFound() {
         </div>
       </AnimatedSection>
 
-      {/* Скрипт-выключатель интро-анимации */}
+      {/* 
+        Ядерный способ убить анимацию: 
+        CSS срабатывает быстрее любого скрипта.
+      */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        #loading-screen { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
+      `}} />
+
+      {/* Скрипт-выключатель для следующих переходов */}
       <script
         dangerouslySetInnerHTML={{
           __html: `
