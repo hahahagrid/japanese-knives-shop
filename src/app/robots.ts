@@ -6,8 +6,11 @@ import { MetadataRoute } from 'next'
  * On DEV/STAGING server, explicitly block all crawlers with 'Disallow: /'.
  */
 export default function robots(): MetadataRoute.Robots {
-  // Logic: Block indexing if we're not in PROD or if basic-auth is enabled
-  const isDev = process.env.BASIC_AUTH_PASS !== undefined || process.env.NODE_ENV !== 'production'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+  const isDev = 
+    process.env.BASIC_AUTH_PASS !== undefined || 
+    process.env.NODE_ENV !== 'production' || 
+    siteUrl.includes('dev.')
   
   if (isDev) {
     // DEV MODE: Block indexing
