@@ -5,6 +5,7 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import Image from 'next/image'
 import { Sword, Gem, ShieldCheck, Zap, Mail, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
+import { customImageLoader } from '@/utils/customImageLoader'
 
 export const metadata = {
   title: 'Про нас | Japanese Knives Shop',
@@ -36,7 +37,7 @@ export default function AboutPage() {
         </p>
       </>
     ),
-    image: '/images/about-hero-1200.webp',
+    image: '/images/about-hero',
   }
 
   const offerings = [
@@ -98,6 +99,7 @@ export default function AboutPage() {
             <AnimatedSection delay={0.2} className="order-1 lg:order-2">
               <div className="relative aspect-[4/5] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
                 <Image
+                  loader={customImageLoader}
                   src={intro.image}
                   alt={intro.title}
                   fill
