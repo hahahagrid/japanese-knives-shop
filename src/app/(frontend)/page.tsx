@@ -358,7 +358,7 @@ export default async function HomePage() {
               <AnimatedSection variant="fade-in" delay={0.4} className="h-full">
                 <div className="relative aspect-[4/5] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
                   <Image
-                    src="/images/phil1.jpg"
+                    src="/images/master1.JPG"
                     alt="Japanese Master Blacksmith at work"
                     fill
                     className="object-cover transition-transform duration-1000"
@@ -395,7 +395,7 @@ export default async function HomePage() {
               <AnimatedSection variant="fade-in" className="h-full">
                 <div className="relative aspect-[4/5] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
                   <Image
-                    src="/images/phil2.jpg"
+                    src="/images/master2.JPG"
                     alt="Japanese Master examining quality"
                     fill
                     className="object-cover transition-transform duration-1000"
