@@ -3,7 +3,7 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 
 export default function NotFound() {
   return (
-    <div className="min-h-[80vh] flex items-center justify-center container mx-auto px-4">
+    <div className="min-h-[80vh] flex items-center justify-center container mx-auto px-4 pt-32 pb-32">
       <AnimatedSection className="text-center max-w-xl">
         <span className="text-[10px] tracking-[0.5em] uppercase text-[var(--gold)] mb-6 block font-bold">
           Помилка 404
@@ -12,7 +12,7 @@ export default function NotFound() {
           Сторінку не знайдено
         </h1>
         <p className="text-lg text-neutral-500 mb-12 italic font-serif leading-relaxed">
-          Можливо, ця модель ножа вже знайшла свого власника, або адреса була змінена. 
+          Можливо, цей виріб або стаття вже знайшли свого власника, або адреса була змінена. 
           Пропонуємо ознайомитись з нашою актуальною колекцією.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -26,10 +26,22 @@ export default function NotFound() {
             href="/knives/in-stock"
             className="w-full sm:w-auto border border-black/10 text-black px-12 py-5 text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-neutral-50 transition-all active:scale-95 text-center"
           >
-            В наявності
+            Усі товари
           </Link>
         </div>
       </AnimatedSection>
+
+      {/* Скрипт-выключатель интро-анимации */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            try {
+              sessionStorage.setItem('knives_intro_played', 'true');
+              document.documentElement.classList.add('skip-intro');
+            } catch (e) {}
+          `
+        }}
+      />
     </div>
   )
 }
