@@ -11,7 +11,6 @@ import { ArrowDown, Plane, ShieldCheck, Truck, MessageSquare } from 'lucide-reac
 import { ManufacturerCard } from '@/components/ManufacturerCard'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { ChevronUp } from 'lucide-react'
-import { customImageLoader } from '@/utils/customImageLoader'
 
 const manufacturers = [
   { en: 'Yoshimi Kato', jp: '加藤 義実' },
@@ -99,8 +98,7 @@ export default async function HomePage() {
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
-            loader={customImageLoader}
-            src="/images/hero_knife"
+            src="/images/hero_knife.png"
             alt="Premium Japanese Knife"
             fill
             priority
@@ -360,8 +358,7 @@ export default async function HomePage() {
               <AnimatedSection variant="fade-in" delay={0.4} className="h-full">
                 <div className="relative aspect-[4/5] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
                   <Image
-                    loader={customImageLoader}
-                    src="/images/master1"
+                    src="/images/phil1.jpg"
                     alt="Japanese Master Blacksmith at work"
                     fill
                     className="object-cover transition-transform duration-1000"
@@ -398,8 +395,7 @@ export default async function HomePage() {
               <AnimatedSection variant="fade-in" className="h-full">
                 <div className="relative aspect-[4/5] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
                   <Image
-                    loader={customImageLoader}
-                    src="/images/master2"
+                    src="/images/phil2.jpg"
                     alt="Japanese Master examining quality"
                     fill
                     className="object-cover transition-transform duration-1000"
