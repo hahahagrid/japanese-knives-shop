@@ -15,8 +15,25 @@ const playfair = Playfair_Display({
 })
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: 'KNIVES | Преміальні японські ножі в Україні',
   description: 'Інтернет-магазин японських ножів ручної роботи. В наявності та під замовлення.',
+  openGraph: {
+    title: 'KNIVES | Преміальні японські ножі в Україні',
+    description: 'Інтернет-магазин японських ножів ручної роботи. В наявності та під замовлення.',
+    url: './',
+    siteName: 'KNIVES',
+    images: [
+      {
+        url: '/images/hero_knife-1920.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Premium Japanese Knives',
+      },
+    ],
+    locale: 'uk_UA',
+    type: 'website',
+  },
   icons: {
     icon: '/favicon.svg',
   },

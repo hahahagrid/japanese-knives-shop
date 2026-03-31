@@ -9,6 +9,7 @@ import { KnifeGallery } from '@/components/KnifeGallery'
 import { RichText } from '@/components/RichText'
 import { AddToCartButton } from '@/components/Cart/AddToCartButton'
 import { Database } from 'lucide-react'
+import { ProductSchema } from '@/components/SEO/ProductSchema'
 
 // Map UI status to DB status
 const statusMap: Record<string, string> = {
@@ -100,6 +101,15 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
+      <ProductSchema 
+        id={String(knife.id)}
+        name={knife.title}
+        description={knife.description ? 'Японський ніж ручної роботи' : undefined}
+        image={galleryImages[0]?.image?.url}
+        price={knife.price || 0}
+        url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}` : `./`}
+        availability={dbStatus === 'in_stock' ? 'InStock' : 'PreOrder'}
+      />
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 text-label mb-12">
         <Link href="/" className="hover:text-black transition-colors">
