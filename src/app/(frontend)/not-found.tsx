@@ -12,7 +12,7 @@ export default function NotFound() {
           Сторінку не знайдено
         </h1>
         <p className="text-lg text-neutral-500 mb-12 italic font-serif leading-relaxed">
-          Можливо, цей виріб або стаття вже знайшли свого власника, або адреса була змінена. 
+          Можливо, цей виріб вже знайшов свого власника, або адреса сторінки була змінена.
           Пропонуємо ознайомитись з нашою актуальною колекцією.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -35,9 +35,13 @@ export default function NotFound() {
         Ядерный способ убить анимацию: 
         CSS срабатывает быстрее любого скрипта.
       */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         #loading-screen { display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; }
-      `}} />
+      `,
+        }}
+      />
 
       {/* Скрипт-выключатель для следующих переходов */}
       <script
@@ -47,7 +51,7 @@ export default function NotFound() {
               sessionStorage.setItem('knives_intro_played', 'true');
               document.documentElement.classList.add('skip-intro');
             } catch (e) {}
-          `
+          `,
         }}
       />
     </div>
