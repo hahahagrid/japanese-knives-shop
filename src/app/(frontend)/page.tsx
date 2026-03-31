@@ -11,6 +11,7 @@ import { ArrowDown, Plane, ShieldCheck, Truck, MessageSquare } from 'lucide-reac
 import { ManufacturerCard } from '@/components/ManufacturerCard'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { ChevronUp } from 'lucide-react'
+import { customImageLoader } from '@/utils/customImageLoader'
 
 const manufacturers = [
   { en: 'Yoshimi Kato', jp: '加藤 義実' },
@@ -98,7 +99,8 @@ export default async function HomePage() {
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
-            src="/images/hero_knife-1920.webp"
+            loader={customImageLoader}
+            src="/images/hero_knife"
             alt="Premium Japanese Knife"
             fill
             priority
@@ -208,11 +210,11 @@ export default async function HomePage() {
                 const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
-                    ? (firstImage.sizes?.card?.url || firstImage.url)
+                    ? firstImage.sizes?.card?.url || firstImage.url
                     : null
                 const hoverImgUrl =
                   typeof secondImage === 'object' && secondImage !== null
-                    ? (secondImage.sizes?.card?.url || secondImage.url)
+                    ? secondImage.sizes?.card?.url || secondImage.url
                     : null
                 return (
                   <div key={knife.id}>
@@ -255,11 +257,11 @@ export default async function HomePage() {
                 const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
-                    ? (firstImage.sizes?.card?.url || firstImage.url)
+                    ? firstImage.sizes?.card?.url || firstImage.url
                     : null
                 const hoverImgUrl =
                   typeof secondImage === 'object' && secondImage !== null
-                    ? (secondImage.sizes?.card?.url || secondImage.url)
+                    ? secondImage.sizes?.card?.url || secondImage.url
                     : null
                 return (
                   <div key={knife.id}>
@@ -356,10 +358,11 @@ export default async function HomePage() {
 
             <div className="lg:col-span-6 lg:col-start-7 relative w-full group">
               <AnimatedSection variant="fade-in" delay={0.4} className="h-full">
-                <div className="relative aspect-[4/5] md:aspect-[5/6] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
+                <div className="relative aspect-[4/5] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
                   <Image
-                    src="/images/phil1-1200.webp"
-                    alt="Hand-forging Process"
+                    loader={customImageLoader}
+                    src="/images/master1"
+                    alt="Japanese Master Blacksmith at work"
                     fill
                     className="object-cover transition-transform duration-1000"
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -393,10 +396,11 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-8 items-stretch">
             <div className="lg:col-span-7 order-2 lg:order-1 relative w-full group">
               <AnimatedSection variant="fade-in" className="h-full">
-                <div className="relative aspect-[5/4] h-full min-h-[360px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
+                <div className="relative aspect-[4/5] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
                   <Image
-                    src="/images/phil2-1200.webp"
-                    alt="Japanese Quality Commission Standards"
+                    loader={customImageLoader}
+                    src="/images/master2"
+                    alt="Japanese Master examining quality"
                     fill
                     className="object-cover transition-transform duration-1000"
                     sizes="(max-width: 768px) 100vw, 50vw"
