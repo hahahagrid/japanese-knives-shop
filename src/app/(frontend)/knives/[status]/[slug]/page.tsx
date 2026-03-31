@@ -31,7 +31,11 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
     },
   })
   if (!docs.length) return { title: 'Not Found' }
-  return { title: `${docs[0].title} | K N I V E S` }
+  const knife = docs[0]
+  return { 
+    title: `${knife.title} | Купити японський ніж в Україні`,
+    description: `Японський ніж ${knife.title} ручної роботи. Преміальна сталь, автентичне кування. Великий вибір ножів у наявності та під замовлення в магазині K N I V E S.`,
+  }
 }
 
 export default async function KnifePage({ params }: { params: Promise<{ status: string, slug: string }> }) {

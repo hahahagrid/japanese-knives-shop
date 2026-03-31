@@ -6,8 +6,8 @@ import { KnifeCard } from '@/components/KnifeCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
 
 export const metadata = {
-  title: 'Японські ножі в наявності | K N I V E S',
-  description: 'Шедеври японської майстерності ручної роботи. Готові до відправки вже сьогодні.',
+  title: 'Купити японські ножі в наявності | Преміум клинки в Україні',
+  description: 'Каталог автентичних японських ножів у наявності. Шедеври від Sakai, Sanjo та Echizen. Ручна робота, професійна сталь. Доставка по Україні 1-2 дні. Гарантія оригінальності.',
 }
 
 export default async function InStockPage() {
@@ -69,11 +69,11 @@ export default async function InStockPage() {
               const secondImage = knife.images?.[1]
               const imgUrl =
                 typeof firstImage === 'object' && firstImage !== null
-                  ? (firstImage as { url?: string }).url
+                  ? (firstImage.sizes?.card?.url || firstImage.url)
                   : null
               const hoverImgUrl =
                 typeof secondImage === 'object' && secondImage !== null
-                  ? (secondImage as { url?: string }).url
+                  ? (secondImage.sizes?.card?.url || secondImage.url)
                   : null
               return (
                 <div key={knife.id} className="animate-fade-up">

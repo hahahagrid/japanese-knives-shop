@@ -6,8 +6,8 @@ import { KnifeCard } from '@/components/KnifeCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
 
 export const metadata = {
-  title: 'Аксесуари для ножів | K N I V E S',
-  description: 'Доглядайте за своїми ножами правильно з нашою колекцією преміальних аксесуарів.',
+  title: 'Аксесуари для японських ножів | Чохли, камені та догляд',
+  description: 'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати. Все для ідеальної гостроти у магазині K N I V E S.',
 }
 
 export default async function AccessoriesPage() {
@@ -67,13 +67,13 @@ export default async function AccessoriesPage() {
               const secondImage = product.images?.[1]
               const imgUrl =
                 typeof firstImage === 'object' && firstImage !== null
-                  ? (firstImage as { url?: string }).url
+                  ? (firstImage.sizes?.card?.url || firstImage.url)
                   : null
               const hoverImgUrl =
                 typeof secondImage === 'object' && secondImage !== null
-                  ? (secondImage as { url?: string }).url
+                  ? (secondImage.sizes?.card?.url || secondImage.url)
                   : null
-
+              
               // Note: using /accessories for accessories slug
               return (
                 <div key={product.id} className="animate-fade-up">

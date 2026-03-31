@@ -8,6 +8,7 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import { KnifeGallery } from '@/components/KnifeGallery'
 import { RichText } from '@/components/RichText'
 import { AddToCartButton } from '@/components/Cart/AddToCartButton'
+import { ProductSchema } from '@/components/SEO/ProductSchema'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -23,7 +24,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
   })
   if (!docs.length) return { title: 'Not Found' }
-  return { title: `${docs[0].title} | K N I V E S` }
+  const product = docs[0]
+  return { 
+    title: `${product.title} | Аксесуари для японських ножів`,
+    description: `Купити ${product.title} для японських кухонних ножів. Преміальна якість, швидка доставка по Україні. Все для догляду та зберігання ваших ножів у магазині K N I V E S.`,
+  }
 }
 
 export default async function AccessoryPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -67,6 +72,15 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
+      <ProductSchema 
+        id={String(product.id)}
+        name={product.title}
+        description={product.description ? 'Аксесуар для японських ножів преміум класу' : undefined}
+        image={galleryImages[0]?.image?.url}
+        price={product.price || 0}
+        url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/accessories/${slug}` : `./`}
+        availability="InStock"
+      />
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] mb-12">
         <Link href="/" className="hover:text-black transition-colors">

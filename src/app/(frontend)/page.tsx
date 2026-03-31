@@ -208,11 +208,11 @@ export default async function HomePage() {
                 const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
-                    ? (firstImage as { url?: string }).url
+                    ? (firstImage.sizes?.card?.url || firstImage.url)
                     : null
                 const hoverImgUrl =
                   typeof secondImage === 'object' && secondImage !== null
-                    ? (secondImage as { url?: string }).url
+                    ? (secondImage.sizes?.card?.url || secondImage.url)
                     : null
                 return (
                   <div key={knife.id}>
@@ -255,11 +255,11 @@ export default async function HomePage() {
                 const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
-                    ? (firstImage as { url?: string }).url
+                    ? (firstImage.sizes?.card?.url || firstImage.url)
                     : null
                 const hoverImgUrl =
                   typeof secondImage === 'object' && secondImage !== null
-                    ? (secondImage as { url?: string }).url
+                    ? (secondImage.sizes?.card?.url || secondImage.url)
                     : null
                 return (
                   <div key={knife.id}>
