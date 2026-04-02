@@ -11,6 +11,7 @@ import { ArrowDown, Plane, ShieldCheck, Truck, MessageSquare } from 'lucide-reac
 import { ManufacturerCard } from '@/components/ManufacturerCard'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import { ChevronUp } from 'lucide-react'
+import { PageVersion } from '@/components/PageVersion'
 
 const manufacturers = [
   { en: 'Yoshimi Kato', jp: '加藤 義実' },
@@ -90,6 +91,7 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col">
+      <PageVersion />
       {/* ── Hero ──────────────────────────────────── */}
       <section
         className="relative h-[92svh] md:h-[92vh] min-h-[600px] flex items-end overflow-hidden bg-black text-white"

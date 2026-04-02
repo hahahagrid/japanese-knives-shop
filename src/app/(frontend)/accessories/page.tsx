@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { KnifeCard } from '@/components/KnifeCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
+import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Аксесуари для японських ножів | Чохли, камені та догляд',
@@ -22,6 +23,7 @@ export default async function AccessoriesPage() {
 
   return (
     <div className="flex flex-col">
+      <PageVersion />
       {/* Hero Banner */}
       <div className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
         {/* Subtle Background Pattern */}

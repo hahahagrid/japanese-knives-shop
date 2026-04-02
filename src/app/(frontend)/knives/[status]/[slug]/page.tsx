@@ -10,6 +10,7 @@ import { RichText } from '@/components/RichText'
 import { AddToCartButton } from '@/components/Cart/AddToCartButton'
 import { Database } from 'lucide-react'
 import { ProductSchema } from '@/components/SEO/ProductSchema'
+import { PageVersion } from '@/components/PageVersion'
 
 // Map UI status to DB status
 const statusMap: Record<string, string> = {
@@ -105,6 +106,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
+      <PageVersion />
       <ProductSchema 
         id={String(knife.id)}
         name={knife.title}

@@ -5,6 +5,7 @@ import config from '@payload-config'
 import Link from 'next/link'
 import NextImage from 'next/image'
 import { AnimatedSection } from '@/components/AnimatedSection'
+import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Блог | K N I V E S',
@@ -21,6 +22,7 @@ export default async function BlogPage() {
 
   return (
     <div className="flex flex-col">
+      <PageVersion />
       {/* Hero Banner */}
       <div className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
         <div className="absolute right-[-5%] top-[50%] -translate-y-1/2 text-[20vw] font-serif opacity-[0.06] select-none pointer-events-none">

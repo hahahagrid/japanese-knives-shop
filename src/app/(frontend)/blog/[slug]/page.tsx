@@ -8,6 +8,7 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import { RichText } from '@/components/RichText'
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
+import { PageVersion } from '@/components/PageVersion'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -37,6 +38,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <article className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl py-12 lg:py-24">
+      <PageVersion />
       <Link href="/blog" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold mb-12 hover:opacity-50 transition-opacity">
         <ChevronLeft className="h-3 w-3" />
         Назад до блогу
