@@ -35,6 +35,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   const post = docs[0]
+  const settings = await payload.findGlobal({
+    slug: 'site-settings',
+    overrideAccess: false,
+  })
 
   return (
     <article className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl py-12 lg:py-24">
@@ -84,7 +88,54 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </AnimatedSection>
       
-      <div className="mt-24 pt-12 border-t border-[var(--border)] text-center">
+      <div className="mt-24 pt-12 border-t border-[var(--border)] text-center flex flex-col items-center">
+        {/* Social Links */}
+        <div className="flex gap-4 mb-10">
+          {settings.instagramUrl && (
+            <a
+              href={settings.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
+              aria-label="Instagram"
+            >
+              <svg className="h-5 w-5 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+          )}
+          {settings.telegramUrl && (
+            <a
+              href={settings.telegramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
+              aria-label="Telegram"
+            >
+              <svg className="h-5 w-5 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </a>
+          )}
+          {settings.youtubeUrl && (
+            <a
+              href={settings.youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
+              aria-label="YouTube"
+            >
+              <svg className="h-5 w-5 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="20" height="14" x="2" y="5" rx="2" />
+                <path d="m10 15 5-3-5-3v6Z" />
+              </svg>
+            </a>
+          )}
+        </div>
+
         <h3 className="text-xl font-serif italic mb-6">Бажаєте дізнатися більше?</h3>
         <Link href="/contacts" className="inline-block bg-black text-white py-4 px-10 font-bold uppercase tracking-widest text-[10px] transition-all group/btn overflow-hidden relative">
           <span className="relative z-10">Отримати консультацію</span>

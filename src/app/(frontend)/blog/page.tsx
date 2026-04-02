@@ -20,6 +20,11 @@ export default async function BlogPage() {
     overrideAccess: false,
   })
 
+  const settings = await payload.findGlobal({
+    slug: 'site-settings',
+    overrideAccess: false,
+  })
+
   return (
     <div className="flex flex-col">
       <PageVersion />
@@ -102,37 +107,49 @@ export default async function BlogPage() {
 
                   {/* Separate Social Links */}
                   <div className="flex gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10">
-                    <a
-                      href="#"
-                      className="p-2.5 md:p-3 lg:p-3.5 xl:p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
-                      aria-label="Instagram"
-                    >
-                      <svg className="h-3.5 md:h-4 lg:h-5 xl:h-6 w-3.5 md:w-4 lg:w-5 xl:w-6 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                        <circle cx="12" cy="12" r="4" />
-                        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
-                      </svg>
-                    </a>
-                    <a
-                      href="#"
-                      className="p-2.5 md:p-3 lg:p-3.5 xl:p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
-                      aria-label="Telegram"
-                    >
-                      <svg className="h-3.5 md:h-4 lg:h-5 xl:h-6 w-3.5 md:w-4 lg:w-5 xl:w-6 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13" />
-                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                      </svg>
-                    </a>
-                    <a
-                      href="#"
-                      className="p-2.5 md:p-3 lg:p-3.5 xl:p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
-                      aria-label="YouTube"
-                    >
-                      <svg className="h-3.5 md:h-4 lg:h-5 xl:h-6 w-3.5 md:w-4 lg:w-5 xl:w-6 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <rect width="20" height="14" x="2" y="5" rx="2" />
-                        <path d="m10 15 5-3-5-3v6Z" />
-                      </svg>
-                    </a>
+                    {settings.instagramUrl && (
+                      <a
+                        href={settings.instagramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2.5 md:p-3 lg:p-3.5 xl:p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
+                        aria-label="Instagram"
+                      >
+                        <svg className="h-3.5 md:h-4 lg:h-5 xl:h-6 w-3.5 md:w-4 lg:w-5 xl:w-6 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                          <circle cx="12" cy="12" r="4" />
+                          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
+                        </svg>
+                      </a>
+                    )}
+                    {settings.telegramUrl && (
+                      <a
+                        href={settings.telegramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2.5 md:p-3 lg:p-3.5 xl:p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
+                        aria-label="Telegram"
+                      >
+                        <svg className="h-3.5 md:h-4 lg:h-5 xl:h-6 w-3.5 md:w-4 lg:w-5 xl:w-6 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="22" y1="2" x2="11" y2="13" />
+                          <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                      </a>
+                    )}
+                    {settings.youtubeUrl && (
+                      <a
+                        href={settings.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2.5 md:p-3 lg:p-3.5 xl:p-4 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-full group/icon"
+                        aria-label="YouTube"
+                      >
+                        <svg className="h-3.5 md:h-4 lg:h-5 xl:h-6 w-3.5 md:w-4 lg:w-5 xl:w-6 text-neutral-600 group-hover/icon:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect width="20" height="14" x="2" y="5" rx="2" />
+                          <path d="m10 15 5-3-5-3v6Z" />
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
