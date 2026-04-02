@@ -5,6 +5,7 @@ import config from '@payload-config'
 import Link from 'next/link'
 import { KnifeCard } from '@/components/KnifeCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
+import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Японські ножі під замовлення | Есклюзивні клинки з Японії',
@@ -25,6 +26,7 @@ export default async function CustomOrderPage() {
 
   return (
     <div>
+      <PageVersion />
       {/* Top CTA banner */}
       <div className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
         {/* Subtle Background Kanji Pattern */}

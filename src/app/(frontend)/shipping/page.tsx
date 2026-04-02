@@ -3,6 +3,7 @@ export const revalidate = 86400
 import React from 'react'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { CreditCard, Truck, ShieldCheck, Clock, Shield, RefreshCw } from 'lucide-react'
+import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Оплата та доставка | K N I V E S',
@@ -45,6 +46,7 @@ export default function ShippingPage() {
 
   return (
     <div className="flex flex-col">
+      <PageVersion />
       {/* Hero */}
       <section className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
         <div className="absolute left-[-5%] top-[50%] -translate-y-1/2 text-[25vw] font-serif opacity-[0.05] select-none pointer-events-none">

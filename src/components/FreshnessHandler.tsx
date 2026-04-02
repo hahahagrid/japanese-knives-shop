@@ -14,47 +14,56 @@ export function FreshnessHandler({ initialVersion }: FreshnessHandlerProps) {
   const lastChecked = useRef(0)
 
   useEffect(() => {
+    const isInitialMount = lastChecked.current === 0
+
     // On navigation or mount, check if we need to refresh
     const checkFreshness = async () => {
       const now = Date.now()
       
-      // If it's the very first mount (lastChecked is default), we check immediately
-      // Subsequent checks (navigations) are throttled to 5s
-      const isInitialMount = lastChecked.current === 0
-      if (!isInitialMount && now - lastChecked.current < 5000) return
+      // We check every navigation or on mount
+      // Throttling to 2.5s for better responsiveness in TG
+      if (!isInitialMount && now - lastChecked.current < 2500) return
 
       try {
         const res = await fetch('/api/freshness', { cache: 'no-store' })
         const data = await res.json()
+        const serverVersion = data.version
 
-        if (data.version && data.version !== currentVersion.current) {
-          console.log('[Freshness] Content version mismatch.', {
-            client: currentVersion.current,
-            server: data.version,
+        // 1. Get the version from the server-rendered page segment (PageVersion component)
+        const pageMarker = document.getElementById('page-version-marker')
+        const pageVersion = pageMarker?.getAttribute('data-version') || initialVersion
+
+        // 2. Compare against what the API says is the latest
+        if (serverVersion && serverVersion !== pageVersion) {
+          console.log('[Freshness] STALE PAGE DETECTED.', {
+            id: pathname,
+            page: pageVersion, // this is the version found in the DOM
+            latest: serverVersion, // this is the version on the server
             mode: isInitialMount ? 'hard-reload' : 'soft-refresh'
           })
           
-          const oldVersion = currentVersion.current
-          currentVersion.current = data.version
           lastChecked.current = Date.now()
           
           if (isInitialMount) {
-            // If the server GAVE us a stale HTML on mount, we need a hard refresh
-            // to bypass the stale-while-revalidate data cache.
-            // We wait a tiny bit to allow the server to finish its background revalidation if it was just triggered.
+            // If the server GAVE us stale HTML on mount, we reload hard
             setTimeout(() => {
               window.location.reload()
-            }, 500)
+            }, 600)
           } else {
-            // If we are just navigating between pages in an existing session
+            // If navigating between cached pages
             router.refresh()
           }
+        } else {
+          // All good, update our check time
+          lastChecked.current = Date.now()
         }
       } catch (err) {}
     }
 
-    checkFreshness()
-  }, [pathname, router])
+    // Small delay to ensure the page segment (children) is mounted and the marker is available
+    const timeout = setTimeout(checkFreshness, isInitialMount ? 0 : 300)
+    return () => clearTimeout(timeout)
+  }, [pathname, router, initialVersion])
 
   // Also check on visibility change (when tab becomes active)
   useEffect(() => {

@@ -5,6 +5,7 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import Image from 'next/image'
 import { Sword, Gem, ShieldCheck, Zap, Mail, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
+import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Про нас | Japanese Knives Shop',
@@ -64,6 +65,7 @@ export default function AboutPage() {
 
   return (
     <div className="flex flex-col">
+      <PageVersion />
       {/* Hero Section */}
       <section className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
         <div className="absolute right-[-10%] top-[50%] -translate-y-1/2 text-[30vw] font-serif opacity-[0.06] select-none pointer-events-none">

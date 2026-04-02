@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { ContactForm } from '@/components/ContactForm'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { Phone, Mail, Clock, MapPin } from 'lucide-react'
+import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Контакти | K N I V E S',
@@ -16,6 +17,7 @@ export default async function ContactsPage() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-28 pb-16 md:py-24">
+      <PageVersion />
       <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-24 items-start">
         {/* Unified Intro & Contact Info Block */}
         <AnimatedSection className="order-1">

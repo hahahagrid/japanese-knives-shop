@@ -9,6 +9,7 @@ import { KnifeGallery } from '@/components/KnifeGallery'
 import { RichText } from '@/components/RichText'
 import { AddToCartButton } from '@/components/Cart/AddToCartButton'
 import { ProductSchema } from '@/components/SEO/ProductSchema'
+import { PageVersion } from '@/components/PageVersion'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -72,6 +73,7 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
+      <PageVersion />
       <ProductSchema 
         id={String(product.id)}
         name={product.title}
