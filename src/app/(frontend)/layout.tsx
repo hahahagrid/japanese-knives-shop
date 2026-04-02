@@ -8,6 +8,7 @@ import { ViewportHandler } from '@/components/ViewportHandler'
 import { OrganizationSchema } from '@/components/SEO/OrganizationSchema'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { FreshnessHandler } from '@/components/FreshnessHandler'
 import './styles.css'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter', display: 'swap' })
@@ -78,24 +79,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   e.preventDefault();
                 }
               }, true);
-              // Smart Page Refresh (Prevents stale content on mobile)
-              let lastVisibilityChange = Date.now();
-              document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'visible') {
-                  const now = Date.now();
-                  // If away for more than 40 minutes, force a quick background check
-                  if (now - lastVisibilityChange > 1000 * 60 * 40) {
-                    window.location.reload(); 
-                  }
-                  lastVisibilityChange = now;
-                }
-              });
             `,
           }}
         />
       </head>
       <body className="min-h-screen bg-background text-foreground font-sans antialiased flex flex-col selection:bg-neutral-800 selection:text-white">
         <OrganizationSchema phone={settings.contactPhone} email={settings.contactEmail} />
+        <FreshnessHandler initialVersion={settings.contentVersion || 'init'} />
         <ViewportHandler />
         <LoadingScreen />
         <Header />

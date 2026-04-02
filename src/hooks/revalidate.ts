@@ -1,8 +1,26 @@
 import { revalidatePath } from 'next/cache'
 
-export const revalidateProduct: any = ({ doc, previousDoc }: any) => {
-  // Revalidate the specific product page
-  // If versioning is off, doc._status is undefined, so we assume it is published
+const updateContentVersion = async (req: any) => {
+  // Prevent infinite loops if we're already updating the version
+  if (req?.payload && !req.context?.skipVersionUpdate) {
+    try {
+      await req.payload.updateGlobal({
+        slug: 'site-settings',
+        data: {
+          contentVersion: new Date().toISOString(),
+        },
+        req,
+        context: { skipVersionUpdate: true }, // Set flag to prevent loop
+      })
+    } catch (err) {
+      console.error('Error updating contentVersion:', err)
+    }
+  }
+}
+
+export const revalidateProduct: any = async ({ doc, previousDoc, req }: any) => {
+  await updateContentVersion(req)
+
   const isPublished = !doc._status || doc._status === 'published'
   const wasPublished = !previousDoc || !previousDoc._status || previousDoc._status === 'published'
 
@@ -10,24 +28,19 @@ export const revalidateProduct: any = ({ doc, previousDoc }: any) => {
     const statusSlug = doc.status?.replace('_', '-') || 'in-stock'
     const prefix = doc.type === 'accessory' ? '/accessories' : `/knives/${statusSlug}`
     
-    // Clear specific page
     revalidatePath(`${prefix}/${doc.slug}`)
-    
-    // Clear listing pages with 'layout' type to be extremely aggressive
-    // This ensures that the catalogue listing (which might be cached in layouts) is refreshed
     revalidatePath('/knives/in-stock', 'page')
     revalidatePath('/knives/custom-order', 'page')
     revalidatePath('/accessories', 'page')
     revalidatePath('/blog', 'page')
-    
-    // Nuclear option for maximum consistency: revalidate the shared layout
-    // This tells Next.js to drop ALL client-side and server-side cached data for the frontend
     revalidatePath('/', 'layout')
   }
   return doc
 }
 
-export const revalidatePost: any = ({ doc, previousDoc }: any) => {
+export const revalidatePost: any = async ({ doc, previousDoc, req }: any) => {
+  await updateContentVersion(req)
+
   const isPublished = !doc._status || doc._status === 'published'
   const wasPublished = !previousDoc || !previousDoc._status || previousDoc._status === 'published'
 
@@ -40,15 +53,23 @@ export const revalidatePost: any = ({ doc, previousDoc }: any) => {
 }
 
 export const revalidateGlobal: any = (slug: string) => {
-  const hook: any = ({ doc }: any) => {
+  const hook: any = async ({ doc, req, context }: any) => {
+    // Don't update version if it was the version update itself
+    if (context?.skipVersionUpdate) return doc
+
+    // Update version for other globals (e.g. Navigation, Reviews)
+    if (slug !== 'site-settings') {
+      await updateContentVersion(req)
+    }
+    
     revalidatePath('/', 'layout')
     return doc
   }
   return hook
 }
 
-export const revalidateDelete: any = ({ doc }: any) => {
-  // When deleting, we want to clear everything to avoid ghost products in listings
+export const revalidateDelete: any = async ({ doc, req }: any) => {
+  await updateContentVersion(req)
   revalidatePath('/', 'layout')
   return doc
 }

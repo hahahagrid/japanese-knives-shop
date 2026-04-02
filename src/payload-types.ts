@@ -647,6 +647,7 @@ export interface SiteSetting {
    */
   workHours?: string | null;
   address?: string | null;
+  contentVersion?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -672,6 +673,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   youtubeUrl?: T;
   workHours?: T;
   address?: T;
+  contentVersion?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
