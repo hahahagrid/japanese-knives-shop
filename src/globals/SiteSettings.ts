@@ -19,5 +19,6 @@ export const SiteSettings: GlobalConfig = {
     { name: 'youtubeUrl', label: 'YouTube', type: 'text', admin: { description: 'Повне посилання на ваш YouTube (н.п. https://youtube.com/@user)' } },
     { name: 'workHours', label: 'Графік роботи', type: 'text', admin: { description: 'Наприклад: Пн-Пт 10:00-19:00' } },
     { name: 'address', label: 'Адреса / Загальна локація', type: 'text' },
+    { name: 'contentVersion', type: 'text', admin: { hidden: true } },
   ],
 }
