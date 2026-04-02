@@ -3,6 +3,7 @@ import * as migration_20260329_090000_add_youtube_url from './20260329_090000_ad
 import * as migration_20260329_112419_add_order_number from './20260329_112419_add_order_number';
 import * as migration_20260330_071532_knives_to_products from './20260330_071532_knives_to_products';
 import * as migration_20260330_181520_add_performance_indexes from './20260330_181520_add_performance_indexes';
+import * as migration_20260402_093827 from './20260402_093827';
 
 export const migrations = [
   {
@@ -28,6 +29,11 @@ export const migrations = [
   {
     up: migration_20260330_181520_add_performance_indexes.up,
     down: migration_20260330_181520_add_performance_indexes.down,
-    name: '20260330_181520_add_performance_indexes'
+    name: '20260330_181520_add_performance_indexes',
+  },
+  {
+    up: migration_20260402_093827.up,
+    down: migration_20260402_093827.down,
+    name: '20260402_093827'
   },
 ];
