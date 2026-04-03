@@ -108,7 +108,7 @@ export default async function BlogPage() {
 
                   {/* Separate Social Links */}
                   <div className="flex gap-2 md:gap-3 lg:gap-4 mt-6 md:mt-10">
-                    {settings.instagramUrl && (
+                    {settings?.instagramUrl && (
                       <a
                         href={settings.instagramUrl}
                         target="_blank"
@@ -123,7 +123,7 @@ export default async function BlogPage() {
                         </svg>
                       </a>
                     )}
-                    {settings.telegramUrl && (
+                    {settings?.telegramUrl && (
                       <a
                         href={settings.telegramUrl}
                         target="_blank"
@@ -137,7 +137,7 @@ export default async function BlogPage() {
                         </svg>
                       </a>
                     )}
-                    {settings.youtubeUrl && (
+                    {settings?.youtubeUrl && (
                       <a
                         href={settings.youtubeUrl}
                         target="_blank"
