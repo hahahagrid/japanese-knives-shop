@@ -49,6 +49,7 @@ export default buildConfig({
   plugins: [
     seoPlugin({
       collections: ['posts'],
+      uploadsCollection: 'media',
       generateTitle: ({ doc }: any) => (doc?.title ? `${doc.title} | Japanese Kitchen Knives` : 'Japanese Kitchen Knives'),
       generateDescription: ({ doc }: any) => (doc?.content ? 'Стаття про догляд та вибір японських ножів' : 'Japanese Kitchen Knives'),
     }),
