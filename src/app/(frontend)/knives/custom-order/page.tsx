@@ -22,6 +22,7 @@ export default async function CustomOrderPage() {
     },
     overrideAccess: false,
     depth: 1,
+    limit: 100,
   })
 
   return (

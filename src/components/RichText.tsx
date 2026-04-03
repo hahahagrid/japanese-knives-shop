@@ -52,6 +52,28 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
         return <blockquote key={index} className="border-l-4 border-gold pl-4 italic my-6">{children}</blockquote>
       case 'link':
         return <a key={index} href={node.fields?.url} target="_blank" rel="noopener noreferrer" className="text-gold underline">{children}</a>
+      case 'upload':
+        const value = node.value
+        if (node.relationTo === 'media' && value && typeof value === 'object') {
+          return (
+            <div key={index} className="my-12">
+              <figure className="relative aspect-video overflow-hidden border border-[var(--border)] shadow-sm bg-stone-50">
+                <img
+                  src={value.url}
+                  alt={value.alt || 'Japanese Kitchen Knives Image'}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                {value.caption && (
+                  <figcaption className="p-4 text-xs italic text-[var(--muted)] border-t border-[var(--border)]">
+                    {value.caption}
+                  </figcaption>
+                )}
+              </figure>
+            </div>
+          )
+        }
+        return null
       default:
         return <React.Fragment key={index}>{children}</React.Fragment>
     }

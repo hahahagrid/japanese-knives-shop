@@ -18,6 +18,7 @@ export default async function BlogPage() {
     collection: 'posts',
     sort: '-publishedDate',
     overrideAccess: false,
+    limit: 100,
   })
 
   const settings = await payload.findGlobal({

@@ -19,6 +19,7 @@ export default async function AccessoriesPage() {
     where: { type: { equals: 'accessory' } },
     overrideAccess: false,
     depth: 1,
+    limit: 100,
   })
 
   return (

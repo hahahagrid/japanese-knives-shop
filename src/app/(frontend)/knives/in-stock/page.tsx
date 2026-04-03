@@ -21,6 +21,7 @@ export default async function InStockPage() {
     },
     overrideAccess: false,
     depth: 1,
+    limit: 100,
   })
 
   return (
