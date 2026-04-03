@@ -4,6 +4,7 @@ import * as migration_20260329_112419_add_order_number from './20260329_112419_a
 import * as migration_20260330_071532_knives_to_products from './20260330_071532_knives_to_products';
 import * as migration_20260330_181520_add_performance_indexes from './20260330_181520_add_performance_indexes';
 import * as migration_20260402_093827 from './20260402_093827';
+import * as migration_20260403_190558_add_seo_fields from './20260403_190558_add_seo_fields';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20260402_093827.up,
     down: migration_20260402_093827.down,
-    name: '20260402_093827'
+    name: '20260402_093827',
+  },
+  {
+    up: migration_20260403_190558_add_seo_fields.up,
+    down: migration_20260403_190558_add_seo_fields.down,
+    name: '20260403_190558_add_seo_fields'
   },
 ];
