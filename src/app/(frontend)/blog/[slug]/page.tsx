@@ -91,7 +91,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <div className="mt-24 pt-12 border-t border-[var(--border)] text-center flex flex-col items-center">
         {/* Social Links */}
         <div className="flex gap-4 mb-10">
-          {settings.instagramUrl && (
+          {settings?.instagramUrl && (
             <a
               href={settings.instagramUrl}
               target="_blank"
@@ -106,7 +106,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </svg>
             </a>
           )}
-          {settings.telegramUrl && (
+          {settings?.telegramUrl && (
             <a
               href={settings.telegramUrl}
               target="_blank"
@@ -120,7 +120,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </svg>
             </a>
           )}
-          {settings.youtubeUrl && (
+          {settings?.youtubeUrl && (
             <a
               href={settings.youtubeUrl}
               target="_blank"
