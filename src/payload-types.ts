@@ -293,6 +293,10 @@ export interface Post {
     [k: string]: unknown;
   } | null;
   publishedDate?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -553,6 +557,12 @@ export interface PostsSelect<T extends boolean = true> {
   coverImage?: T;
   content?: T;
   publishedDate?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

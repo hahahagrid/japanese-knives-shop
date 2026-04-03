@@ -15,6 +15,8 @@ import { Orders } from './collections/Orders'
 import { SiteSettings } from './globals/SiteSettings'
 import { HomepageReviews } from './globals/HomepageReviews'
 
+import { seoPlugin } from '@payloadcms/plugin-seo'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -44,5 +46,11 @@ export default buildConfig({
     supportedLanguages: { uk },
     fallbackLanguage: 'uk',
   },
-  plugins: [],
+  plugins: [
+    seoPlugin({
+      collections: ['posts'],
+      generateTitle: ({ doc }: any) => (doc?.title ? `${doc.title} | Japanese Kitchen Knives` : 'Japanese Kitchen Knives'),
+      generateDescription: ({ doc }: any) => (doc?.content ? 'Стаття про догляд та вибір японських ножів' : 'Japanese Kitchen Knives'),
+    }),
+  ],
 })

@@ -204,6 +204,59 @@ body {
 .border-gold { border-color: var(--gold); }
 .bg-stone { background-color: var(--stone-50); }
 
+/* ── Rich Text Content ──────────────────────── */
+.rich-text h1, .heading-h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+.rich-text h2, .heading-h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+  margin-top: 2rem;
+}
+.rich-text h3, .heading-h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+}
+.rich-text h4, .heading-h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+.rich-text p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.rich-text ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.rich-text ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.rich-text li {
+  margin-bottom: 0.5rem;
+}
+
+.rich-text li p {
+  margin-bottom: 0 !important;
+}
+
 /* Prevent flash of Loading Screen on subsequent loads */
 html.skip-intro #loading-screen {
   display: none !important;

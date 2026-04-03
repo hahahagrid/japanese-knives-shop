@@ -33,11 +33,21 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
       case 'heading':
         const HeaderTag = (node.tag || 'h2') as React.ElementType
         return <HeaderTag key={index} className={`heading-${node.tag || 'h2'} mb-4 mt-8`}>{children}</HeaderTag>
-      case 'list':
-        const ListTag = node.listType === 'number' ? 'ol' : 'ul'
-        return <ListTag key={index} className={`list-${node.listType} ml-6 mb-4`}>{children}</ListTag>
+      case 'list': {
+        const isOrdered = node.listType === 'number' || node.tag === 'ol'
+        const ListTag = isOrdered ? 'ol' : 'ul'
+        return (
+          <ListTag key={index} className={`${isOrdered ? 'list-decimal' : 'list-disc'} ml-8 mb-6 space-y-2`}>
+            {children}
+          </ListTag>
+        )
+      }
       case 'listitem':
-        return <li key={index} className="mb-1">{children}</li>
+        return (
+          <li key={index} className="leading-relaxed">
+            {children}
+          </li>
+        )
       case 'quote':
         return <blockquote key={index} className="border-l-4 border-gold pl-4 italic my-6">{children}</blockquote>
       case 'link':
