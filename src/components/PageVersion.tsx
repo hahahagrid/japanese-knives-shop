@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+// Marker for content freshness detection
 export async function PageVersion() {
   const payload = await getPayload({ config })
   const settings = await payload.findGlobal({
