@@ -2,7 +2,7 @@ export function OrganizationSchema({ phone, email }: { phone?: string | null; em
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    'name': 'KNIVES | Преміальні японські ножі',
+    'name': 'Japanese Kitchen Knives | Преміальні японські ножі',
     'url': 'https://japanese-kitchen-knives.com.ua',
     'logo': 'https://japanese-kitchen-knives.com.ua/favicon.svg',
     'contactPoint': [
