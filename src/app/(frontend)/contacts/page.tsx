@@ -8,7 +8,7 @@ import { Phone, Mail, Clock, MapPin } from 'lucide-react'
 import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
-  title: 'Контакти | K N I V E S',
+  title: 'Контакти | Japanese Kitchen Knives',
 }
 
 export default async function ContactsPage() {

@@ -8,7 +8,7 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
-  title: 'Блог | K N I V E S',
+  title: 'Блог | Japanese Kitchen Knives',
 }
 
 export default async function BlogPage() {

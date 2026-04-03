@@ -6,7 +6,7 @@ import { CreditCard, Truck, ShieldCheck, Clock, Shield, RefreshCw } from 'lucide
 import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
-  title: 'Оплата та доставка | K N I V E S',
+  title: 'Оплата та доставка | Japanese Kitchen Knives',
   description: 'Інформація про способи оплати та умови доставки японських ножів.',
 }
 

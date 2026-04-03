@@ -20,16 +20,16 @@ const playfair = Playfair_Display({
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'),
-  title: 'KNIVES | Преміальні японські ножі в Україні',
+  title: 'Japanese Kitchen Knives | Преміальні японські ножі в Україні',
   description: 'Купити преміальні японські ножі ручної роботи в Україні. Великий асортимент кухонних ножів від майстрів Sakai, Sanjo та Echizen. В наявності та під замовлення. Швидка доставка та гарантія якості.',
   alternates: {
     canonical: './',
   },
   openGraph: {
-    title: 'KNIVES | Преміальні японські ножі в Україні',
+    title: 'Japanese Kitchen Knives | Преміальні японські ножі в Україні',
     description: 'Купити преміальні японські ножі ручної роботи в Україні. Великий асортимент кухонних ножів від майстрів Sakai, Sanjo та Echizen.',
     url: './',
-    siteName: 'KNIVES',
+    siteName: 'Japanese Kitchen Knives',
     images: [
       {
         url: '/images/hero_knife-1920.webp',
