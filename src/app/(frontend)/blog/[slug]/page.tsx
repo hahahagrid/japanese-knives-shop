@@ -81,9 +81,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </header>
         
         <div className="prose prose-neutral prose-lg mx-auto leading-relaxed text-neutral-700">
-          <p className="font-serif italic text-xl mb-8 border-l-2 border-[var(--gold)] pl-8 py-2">
-            Детальний погляд на мистецтво та традиції японського ковальства.
-          </p>
           <RichText content={post.content} className="text-lg leading-relaxed" />
         </div>
       </AnimatedSection>
