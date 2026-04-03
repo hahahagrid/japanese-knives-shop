@@ -21,6 +21,11 @@ const nextConfig: NextConfig = {
         hostname: 'japanese-knives-shop-development.up.railway.app',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'japanese-kitchen-knives.com.ua',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (webpackConfig) => {

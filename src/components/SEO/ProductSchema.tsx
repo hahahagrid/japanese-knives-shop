@@ -24,10 +24,14 @@ export function ProductSchema({
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    'ski': id,
+    'sku': id,
     'name': name,
     'description': description,
     'image': image,
+    'brand': {
+      '@type': 'Brand',
+      'name': 'Japanese Kitchen Knives',
+    },
     'offers': {
       '@type': 'Offer',
       'url': url,
