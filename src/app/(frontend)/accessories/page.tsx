@@ -8,7 +8,7 @@ import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Аксесуари для японських ножів | Чохли, камені та догляд',
-  description: 'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати. Все для ідеальної гостроти у магазині K N I V E S.',
+  description: 'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати. Все для ідеальної гостроти у магазині Japanese Kitchen Knives.',
 }
 
 export default async function AccessoriesPage() {

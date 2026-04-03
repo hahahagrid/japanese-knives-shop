@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     where: { slug: { equals: slug } },
   })
   if (!docs.length) return { title: 'Not Found' }
-  return { title: `${docs[0].title} | Блог | K N I V E S` }
+  return { title: `${docs[0].title} | Блог | Japanese Kitchen Knives` }
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

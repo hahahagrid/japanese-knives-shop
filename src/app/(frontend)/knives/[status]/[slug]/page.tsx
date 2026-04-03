@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
   const knife = docs[0]
   return { 
     title: `${knife.title} | Купити японський ніж в Україні`,
-    description: `Японський ніж ${knife.title} ручної роботи. Преміальна сталь, автентичне кування. Великий вибір ножів у наявності та під замовлення в магазині K N I V E S.`,
+    description: `Японський ніж ${knife.title} ручної роботи. Преміальна сталь, автентичне кування. Великий вибір ножів у наявності та під замовлення в магазині Japanese Kitchen Knives.`,
   }
 }
 
