@@ -2,7 +2,7 @@ import type { CollectionConfig } from 'payload'
 import sharp from 'sharp'
 import path from 'path'
 
-const processWatermark = async (req: any, file: any) => {
+const processImage = async (req: any, file: any) => {
   if (!file || !file.mimetype?.startsWith('image/')) return
 
   try {
@@ -10,27 +10,9 @@ const processWatermark = async (req: any, file: any) => {
       .rotate()
       .resize({ width: 2560, height: 2560, fit: 'inside', withoutEnlargement: true })
 
-    const wmFile = 'WATERMARK B.png'
-    const wmPath = path.join(process.cwd(), 'public', wmFile)
-
-    const metadata = await imageProcessor.metadata()
-    const width = metadata.width || 2560
-
-    // Full 100% width
-    const wmWidth = width
-
-    const wmBuffer = await sharp(wmPath).resize({ width: wmWidth }).toBuffer()
-
-    imageProcessor = imageProcessor.composite([
-      {
-        input: wmBuffer,
-        gravity: 'center',
-      },
-    ])
-
     const webpBuffer = await imageProcessor.webp({ quality: 85 }).toBuffer()
 
-    // Replace the file data with the watermarked WebP
+    // Replace the file data with the optimized WebP
     if (req.file) {
       req.file.data = webpBuffer
       req.file.mimetype = 'image/webp'
@@ -56,7 +38,7 @@ export const Media: CollectionConfig = {
       async ({ args, operation }) => {
         if (operation === 'create' || operation === 'update') {
           if (args.req.file) {
-            await processWatermark(args.req, args.req.file)
+            await processImage(args.req, args.req.file)
           }
         }
         return args
@@ -66,7 +48,7 @@ export const Media: CollectionConfig = {
       async ({ req, operation, data }) => {
         if (operation === 'create') {
           if (req.file) {
-            await processWatermark(req, req.file)
+            await processImage(req, req.file)
           }
         }
         return data
