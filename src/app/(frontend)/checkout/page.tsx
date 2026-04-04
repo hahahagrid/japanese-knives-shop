@@ -33,6 +33,7 @@ export default function CheckoutPage() {
       email: formData.get('email'),
       deliveryInfo: formData.get('deliveryInfo'),
       message: formData.get('message'),
+      honeypot: formData.get('honeypot'), // Bot trap
       items: items.map(item => ({
         productId: String(item.id),
         title: item.title,
@@ -185,6 +186,17 @@ export default function CheckoutPage() {
                   rows={2}
                   className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base resize-none placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
                   placeholder="Особливі побажання..."
+                />
+              </div>
+
+              {/* Honeypot field (hidden from humans) - Bot trap */}
+              <div className="hidden" aria-hidden="true">
+                <input
+                  type="text"
+                  name="honeypot"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  placeholder="Do not fill this field"
                 />
               </div>
             </div>
