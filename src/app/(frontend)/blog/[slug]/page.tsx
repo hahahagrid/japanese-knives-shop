@@ -106,14 +106,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       {(prevPost || nextPost) && (
         <div className="w-full py-12 mt-4 text-center">
-          <div className={`flex flex-col md:flex-row items-stretch justify-center gap-12 md:gap-0 relative ${!prevPost || !nextPost ? 'md:max-w-xl mx-auto' : ''}`}>
+          <div className={`flex flex-col md:flex-row items-stretch justify-center gap-8 md:gap-0 relative ${!prevPost || !nextPost ? 'md:max-w-xl mx-auto' : ''}`}>
             
             {/* Previous Post (Newer) */}
             {prevPost && (
-              <div className={`flex-1 flex flex-col ${nextPost ? 'md:pr-12 lg:pr-24 border-b md:border-b-0 border-black/5 pb-12 md:pb-0' : 'items-center text-center'}`}>
+              <div className={`flex-1 flex flex-col ${nextPost ? 'border-b md:border-b-0 border-black/5 pb-8 md:pb-0 md:pr-12 lg:pr-24' : 'items-center text-center'}`}>
                 <Link 
                   href={`/blog/${prevPost.slug}`} 
-                  className={`flex flex-col group transition-all duration-700 ${nextPost ? 'items-start text-left md:items-end md:text-right' : 'items-center text-center'}`}
+                  className={`flex flex-col group transition-all duration-700 items-center text-center ${nextPost ? 'md:items-end md:text-right' : ''}`}
                 >
                   <p className="text-[10px] tracking-[0.4em] uppercase text-black/30 mb-4 font-bold flex items-center gap-4 group-hover:text-[var(--gold)] transition-colors">
                     <ChevronLeft className="h-3 w-3" />
@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
             {/* Next Post (Older) */}
             {nextPost && (
-              <div className={`flex-1 flex flex-col ${prevPost ? 'md:pl-12 lg:pl-24 pt-12 md:pt-0' : 'items-center text-center'}`}>
+              <div className={`flex-1 flex flex-col ${prevPost ? 'pt-8 md:pt-0 md:pl-12 lg:pl-24' : 'items-center text-center'}`}>
                 <Link 
                   href={`/blog/${nextPost.slug}`} 
                   className={`flex flex-col group transition-all duration-700 items-center text-center ${prevPost ? 'md:items-start md:text-left' : ''}`}
