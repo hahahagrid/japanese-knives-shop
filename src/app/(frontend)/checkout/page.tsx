@@ -230,9 +230,14 @@ export default function CheckoutPage() {
                 </span>
                 <div className="absolute inset-0 bg-[#BC002D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
               </button>
-              <p className="text-center text-xs text-neutral-400 mt-6 italic">
-                Оплата здійснюється після підтвердження замовлення нашим менеджером.
+              <p className="text-center text-[10px] text-neutral-400 mt-6 leading-relaxed">
+                Натискаючи «Підтвердити замовлення», ви погоджуєтесь з <Link href="/privacy" className="underline hover:text-black transition-colors">Політикою конфіденційності</Link> та обробкою персональних даних.
               </p>
+              <div className="mt-8 p-4 bg-neutral-50 border border-neutral-100 rounded-sm">
+                <p className="text-center text-[11px] text-neutral-600 font-medium leading-relaxed">
+                  Оплата здійснюється після підтвердження замовлення нашим менеджером.
+                </p>
+              </div>
             </div>
           </form>
         </AnimatedSection>

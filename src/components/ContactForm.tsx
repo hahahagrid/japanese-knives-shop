@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 import { CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 
 export function ContactForm() {
@@ -174,17 +175,20 @@ export function ContactForm() {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full bg-black text-white py-6 font-bold uppercase tracking-[0.3em] text-[11px] transition-all disabled:bg-neutral-300 disabled:cursor-not-allowed flex items-center justify-center gap-4 group/btn overflow-hidden relative shadow-lg shadow-black/5"
+            className="w-full bg-black text-white py-6 font-bold uppercase tracking-[0.3em] text-[11px] transition-all disabled:bg-neutral-300 disabled:cursor-not-allowed group/btn overflow-hidden relative shadow-lg shadow-black/5"
           >
             <span className="relative z-10">
               {status === 'loading' ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
               ) : (
-                'Надіслати запит'
+                'Відправити запит'
               )}
             </span>
             <div className="absolute inset-0 bg-[#BC002D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
           </button>
+          <p className="text-center text-[10px] text-neutral-400 mt-6 leading-relaxed">
+            Натискаючи «Підтвердити замовлення», ви погоджуєтесь з <Link href="/privacy" className="underline hover:text-black transition-colors">Політикою конфіденційності</Link> та обробкою персональних даних.
+          </p>
         </div>
       </form>
 
