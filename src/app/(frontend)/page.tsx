@@ -205,7 +205,7 @@ export default async function HomePage() {
             </AnimatedSection>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-8">
-              {inStockKnives.map((knife) => {
+              {inStockKnives.map((knife, index) => {
                 const firstImage = knife.images?.[0]
                 const secondImage = knife.images?.[1]
                 const imgUrl =
@@ -225,6 +225,7 @@ export default async function HomePage() {
                       status={knife.status ?? 'in_stock'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
+                      priority={index < 4}
                     />
                   </div>
                 )
@@ -252,7 +253,7 @@ export default async function HomePage() {
             </AnimatedSection>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8 sm:gap-y-8">
-              {customKnives.map((knife) => {
+              {customKnives.map((knife, index) => {
                 const firstImage = knife.images?.[0]
                 const secondImage = knife.images?.[1]
                 const imgUrl =
@@ -272,6 +273,7 @@ export default async function HomePage() {
                       status={knife.status ?? 'custom'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
+                      priority={index < 4}
                     />
                   </div>
                 )

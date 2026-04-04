@@ -75,7 +75,7 @@ export default async function CustomOrderPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-14 stagger-children">
-            {knives.map((knife) => {
+            {knives.map((knife, index) => {
               const firstImage = knife.images?.[0]
               const secondImage = knife.images?.[1]
               const imgUrl =
@@ -95,6 +95,7 @@ export default async function CustomOrderPage() {
                     status={knife.status ?? 'custom_order'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
+                    priority={index < 4}
                   />
                 </div>
               )
