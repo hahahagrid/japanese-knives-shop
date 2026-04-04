@@ -3,11 +3,10 @@ export const revalidate = 86400
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
-import NextImage from 'next/image'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { RichText } from '@/components/RichText'
 import Link from 'next/link'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { PageVersion } from '@/components/PageVersion'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
@@ -24,17 +23,42 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const payload = await getPayload({ config })
-  const { docs } = await payload.find({
+  
+  // 1. Find the current post
+  const { docs: currentDocs } = await payload.find({
     collection: 'posts',
     where: { slug: { equals: slug } },
     overrideAccess: false,
   })
 
-  if (!docs.length) {
+  if (!currentDocs.length) {
     notFound()
   }
 
-  const post = docs[0]
+  const post = currentDocs[0]
+  
+  // 2. Fetch all posts in the SAME order as the blog list page (-publishedDate)
+  const { docs: allPosts } = await payload.find({
+    collection: 'posts',
+    sort: '-publishedDate', 
+    limit: 300, 
+    overrideAccess: false,
+  })
+
+  // 3. Find neighbors in the array
+  const currentIndex = allPosts.findIndex(p => p.id === post.id)
+  
+  /**
+   * Logical Flip for "Feed-style" navigation:
+   * Next (Наступна) = Older (Next article in the descending list) -> Index + 1
+   * Previous (Попередня) = Newer (Previous article in the descending list) -> Index - 1
+   */
+  const newerPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null; // Newer
+  const olderPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null; // Older
+
+  const prevPost = newerPost; // Newer is Previous (back to top of list)
+  const nextPost = olderPost; // Older is Next (further down the list)
+
   const settings = await payload.findGlobal({
     slug: 'site-settings',
     overrideAccess: false,
@@ -58,34 +82,77 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <h1 className="heading-display text-4xl md:text-5xl lg:text-6xl mb-12 leading-[1.1]">
             {post.title}
           </h1>
-          <div className="aspect-video md:aspect-[21/9] mx-auto bg-stone-50 overflow-hidden relative border border-[var(--border)] shadow-md">
+          <div className="mx-auto bg-stone-50 overflow-hidden relative border border-[var(--border)] shadow-md">
             {post.coverImage && typeof post.coverImage === 'object' ? (
-              <NextImage
+              <img
                 src={(post.coverImage as any).url}
                 alt={post.title}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 1024px) 100vw, 1200px"
+                className="w-full h-auto block"
               />
             ) : (
-              <>
-                <div className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden rounded-sm bg-neutral-900 mb-12 flex items-center justify-center">
-                  <div className="absolute inset-0 flex items-center justify-center opacity-[0.08]">
-                    <span className="font-serif text-[40vw] text-white">読</span>
-                  </div>
+              <div className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden rounded-sm bg-neutral-900 flex items-center justify-center">
+                <div className="absolute inset-0 flex items-center justify-center opacity-[0.08]">
+                  <span className="font-serif text-[40vw] text-white">読</span>
                 </div>
-              </>
+              </div>
             )}
           </div>
         </header>
         
         <div className="prose prose-neutral prose-lg mx-auto leading-relaxed text-neutral-700">
-          <RichText content={post.content} className="text-lg leading-relaxed" />
+          <RichText content={post.content} className="leading-relaxed" />
         </div>
       </AnimatedSection>
+
+      {/* Refined Post Navigation - Symmetric & Minimal */}
+      {(prevPost || nextPost) && (
+        <div className="w-full py-12 mt-4 text-center">
+          <div className={`flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24 relative ${!prevPost || !nextPost ? 'text-center' : ''}`}>
+            
+            {/* Previous Post (Newer) */}
+            {prevPost && (
+              <Link 
+                href={`/blog/${prevPost.slug}`} 
+                className={`flex flex-col group max-w-sm transition-all duration-700 ${prevPost && nextPost ? 'items-end text-right' : 'items-center text-center'}`}
+              >
+                <p className="text-[10px] tracking-[0.4em] uppercase text-black/30 mb-4 font-bold flex items-center gap-4 group-hover:text-[var(--gold)] transition-colors">
+                  <ChevronLeft className="h-3 w-3" />
+                  Попередня стаття
+                </p>
+                <h4 className="font-serif italic text-xl md:text-2xl text-black/80 group-hover:text-black transition-colors duration-500 leading-snug">
+                  {prevPost.title}
+                </h4>
+                <div className="h-[1px] w-0 group-hover:w-full bg-[var(--gold)] mt-3 transition-all duration-700 opacity-50" />
+              </Link>
+            )}
+
+            {/* Central Divider - only if both exist */}
+            {prevPost && nextPost && (
+                <div className="hidden md:block w-[1px] h-16 bg-black/5" />
+            )}
+
+            {/* Next Post (Older) */}
+            {nextPost && (
+              <Link 
+                href={`/blog/${nextPost.slug}`} 
+                className={`flex flex-col group max-w-sm transition-all duration-700 ${prevPost && nextPost ? 'items-start text-left' : 'items-center text-center'}`}
+              >
+                <p className="text-[10px] tracking-[0.4em] uppercase text-black/30 mb-4 font-bold flex items-center gap-4 group-hover:text-[var(--gold)] transition-colors">
+                  Наступна стаття
+                  <ChevronRight className="h-3 w-3" />
+                </p>
+                <h4 className="font-serif italic text-xl md:text-2xl text-black/80 group-hover:text-black transition-colors duration-500 leading-snug">
+                  {nextPost.title}
+                </h4>
+                <div className="h-[1px] w-0 group-hover:w-full bg-[var(--gold)] mt-3 transition-all duration-700 opacity-50" />
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
       
-      <div className="mt-24 pt-12 border-t border-[var(--border)] text-center flex flex-col items-center">
+      {/* Footer Details */}
+      <div className="mt-4 pt-12 border-t border-black/5 text-center flex flex-col items-center">
         {/* Social Links */}
         <div className="flex gap-4 mb-10">
           {settings?.instagramUrl && (

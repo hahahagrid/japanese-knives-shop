@@ -9,6 +9,7 @@ import { OrganizationSchema } from '@/components/SEO/OrganizationSchema'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { FreshnessHandler } from '@/components/FreshnessHandler'
+import { ScrollToTopFab } from '@/components/ScrollToTopFab'
 import './styles.css'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter', display: 'swap' })
@@ -95,6 +96,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main className="flex-1">{children}</main>
         <Footer />
         <CartDrawer />
+        <ScrollToTopFab />
       </body>
     </html>
   )
