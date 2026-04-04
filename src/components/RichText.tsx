@@ -29,7 +29,7 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
       case 'paragraph': {
         const hasContent = node.children && node.children.some((child: any) => child.text && child.text.trim().length > 0)
         return (
-          <p key={index} className={`mb-6 leading-relaxed ${!hasContent ? 'min-h-[1.5em]' : ''}`}>
+          <p key={index} className={`mb-6 leading-relaxed text-base md:text-[17px] text-black/85 ${!hasContent ? 'min-h-[1.5em]' : ''}`}>
             {children || <br />}
           </p>
         )
