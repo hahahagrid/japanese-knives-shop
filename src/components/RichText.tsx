@@ -26,13 +26,21 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
     switch (node.type) {
       case 'root':
         return <div key={index}>{children}</div>
-      case 'paragraph':
-        return <p key={index} className="mb-4">{children}</p>
+      case 'paragraph': {
+        const hasContent = node.children && node.children.some((child: any) => child.text && child.text.trim().length > 0)
+        return (
+          <p key={index} className={`mb-6 leading-relaxed ${!hasContent ? 'min-h-[1.5em]' : ''}`}>
+            {children || <br />}
+          </p>
+        )
+      }
       case 'linebreak':
         return <br key={index} />
       case 'heading':
         const HeaderTag = (node.tag || 'h2') as React.ElementType
-        return <HeaderTag key={index} className={`heading-${node.tag || 'h2'} mb-4 mt-8`}>{children}</HeaderTag>
+        return <HeaderTag key={index} className={`heading-${node.tag || 'h2'} mb-8 mt-14 first:mt-0 font-serif`}>{children}</HeaderTag>
+      case 'horizontalrule':
+        return <hr key={index} className="my-16 border-t border-[var(--border)] opacity-50" />
       case 'list': {
         const isOrdered = node.listType === 'number' || node.tag === 'ol'
         const ListTag = isOrdered ? 'ol' : 'ul'
