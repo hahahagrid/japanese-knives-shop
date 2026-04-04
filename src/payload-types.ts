@@ -337,6 +337,13 @@ export interface Order {
   total?: number | null;
   status?: ('new' | 'processing' | 'completed' | 'cancelled') | null;
   source?: string | null;
+  honeypot?: string | null;
+  metadata?: {
+    ip?: string | null;
+    userAgent?: string | null;
+    city?: string | null;
+    country?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -594,6 +601,15 @@ export interface OrdersSelect<T extends boolean = true> {
   total?: T;
   status?: T;
   source?: T;
+  honeypot?: T;
+  metadata?:
+    | T
+    | {
+        ip?: T;
+        userAgent?: T;
+        city?: T;
+        country?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

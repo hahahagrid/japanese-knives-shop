@@ -5,7 +5,7 @@ import config from '@payload-config'
 export async function POST(req: Request) {
   try {
     const data = await req.json()
-    const { name, phone, email, message, source = 'contact_form' } = data
+    const { name, phone, email, message, source = 'contact_form', honeypot } = data
 
     if (!name || !phone || !message) {
       return NextResponse.json(
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
       message,
       status: 'new',
       source,
+      honeypot,
     }
 
     if (email && email.trim() !== '') {
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
     await payload.create({
       collection: 'orders',
       data: orderData,
+      req, // Pass the Next.js request object for hooks to access headers
     })
 
     // In a real production environment, you could also send an email here using Resend/Nodemailer

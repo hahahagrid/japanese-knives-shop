@@ -18,6 +18,7 @@ export function ContactForm() {
       phone: formData.get('phone'),
       email: formData.get('email'),
       message: formData.get('message'),
+      honeypot: formData.get('honeypot'), // Include honeypot field
     }
 
     try {
@@ -141,6 +142,17 @@ export function ContactForm() {
             rows={4}
             className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base resize-none placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
             placeholder="Опишіть ваше питання чи деталі замовлення..."
+          />
+        </div>
+
+        {/* Honeypot field (hidden from humans) - Bot trap */}
+        <div className="hidden" aria-hidden="true">
+          <input
+            type="text"
+            name="honeypot"
+            tabIndex={-1}
+            autoComplete="off"
+            placeholder="Do not fill this field"
           />
         </div>
 

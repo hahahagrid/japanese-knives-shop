@@ -5,7 +5,7 @@ import config from '@payload-config'
 export async function POST(req: Request) {
   try {
     const data = await req.json()
-    const { name, phone, email, deliveryInfo, message, items, total } = data
+    const { name, phone, email, deliveryInfo, message, items, total, honeypot } = data
 
     if (!name || !phone || !items || !items.length) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
       total: Number(total),
       status: 'new',
       source: 'checkout',
+      honeypot,
     }
 
     if (email && email.trim() !== '') {
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
     const order = await payload.create({
       collection: 'orders',
       data: orderData,
+      req, // Pass the Next.js request object for hooks to access headers
     })
 
     return NextResponse.json({ success: true, orderId: order.id, orderNumber: (order as any).orderNumber }, { status: 201 })
