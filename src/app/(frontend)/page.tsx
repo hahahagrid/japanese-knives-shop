@@ -198,7 +198,7 @@ export default async function HomePage() {
               </div>
               <Link
                 href="/knives/in-stock"
-                className="hidden sm:inline-flex text-xs tracking-widest uppercase items-center gap-2 border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
+                className="inline-flex text-[10px] sm:text-xs tracking-widest uppercase items-center gap-2 border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
               >
                 Всі ножі
               </Link>
@@ -245,7 +245,7 @@ export default async function HomePage() {
               </div>
               <Link
                 href="/knives/custom-order"
-                className="hidden sm:inline-flex text-xs tracking-widest uppercase items-center gap-2 border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
+                className="inline-flex text-[10px] sm:text-xs tracking-widest uppercase items-center gap-2 border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
               >
                 Дізнатись більше
               </Link>
