@@ -65,7 +65,7 @@ export default async function AccessoriesPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-14 stagger-children">
-            {products.map((product) => {
+            {products.map((product, index) => {
               const firstImage = product.images?.[0]
               const secondImage = product.images?.[1]
               const imgUrl =
@@ -88,6 +88,7 @@ export default async function AccessoriesPage() {
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
                     pathPrefix="/accessories"
+                    priority={index < 4}
                   />
                 </div>
               )
