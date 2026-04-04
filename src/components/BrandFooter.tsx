@@ -29,7 +29,15 @@ export const BrandFooter: React.FC = async () => {
                   aria-label="Instagram"
                   className="p-3 border border-neutral-800 hover:border-neutral-500 hover:bg-neutral-900 transition-all duration-300 group rounded-sm"
                 >
-                  <svg className="h-5 w-5 text-neutral-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    className="h-5 w-5 text-neutral-400 group-hover:text-white transition-colors"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
                     <circle cx="12" cy="12" r="4" />
                     <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
@@ -55,7 +63,15 @@ export const BrandFooter: React.FC = async () => {
                   aria-label="YouTube"
                   className="p-3 border border-neutral-800 hover:border-neutral-500 hover:bg-neutral-900 transition-all duration-300 group rounded-sm"
                 >
-                  <svg className="h-5 w-5 text-neutral-400 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    className="h-5 w-5 text-neutral-400 group-hover:text-white transition-colors"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.14 1 12 1 12s0 3.86.46 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.86 23 12 23 12s0-3.86-.46-5.58z" />
                     <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" />
                   </svg>
@@ -68,23 +84,63 @@ export const BrandFooter: React.FC = async () => {
           <div className="flex gap-16">
             <div className="flex flex-col gap-3">
               <p className="text-[10px] uppercase tracking-widest text-neutral-600 mb-1">Каталог</p>
-              <Link href="/knives/in-stock" className="text-sm text-neutral-400 hover:text-white transition-colors">В наявності</Link>
-              <Link href="/knives/custom-order" className="text-sm text-neutral-400 hover:text-white transition-colors">Під замовлення</Link>
-              <Link href="/accessories" className="text-sm text-neutral-400 hover:text-white transition-colors">Аксесуари</Link>
-              <Link href="/blog" className="text-sm text-neutral-400 hover:text-white transition-colors">Блог</Link>
+              <Link
+                href="/knives/in-stock"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                В наявності
+              </Link>
+              <Link
+                href="/knives/custom-order"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                Під замовлення
+              </Link>
+              <Link
+                href="/accessories"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                Аксесуари
+              </Link>
+              <Link
+                href="/blog"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                Блог
+              </Link>
             </div>
             <div className="flex flex-col gap-3">
               <p className="text-[10px] uppercase tracking-widest text-neutral-600 mb-1">Інфо</p>
-              <Link href="/" className="text-sm text-neutral-400 hover:text-white transition-colors">Головна</Link>
-              <Link href="/about" className="text-sm text-neutral-400 hover:text-white transition-colors">Про нас</Link>
-              <Link href="/shipping" className="text-sm text-neutral-400 hover:text-white transition-colors">Оплата та доставка</Link>
-              <Link href="/contacts" className="text-sm text-neutral-400 hover:text-white transition-colors">Контакти</Link>
+              <Link
+                href="/"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                Головна
+              </Link>
+              <Link
+                href="/about"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                Про нас
+              </Link>
+              <Link
+                href="/shipping"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                Оплата та доставка
+              </Link>
+              <Link
+                href="/contacts"
+                className="text-sm text-neutral-400 hover:text-white transition-colors"
+              >
+                Контакти
+              </Link>
             </div>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-neutral-900 text-center text-xs text-neutral-700">
-          © {new Date().getFullYear()} KNIVES. Всі права захищені.
+          © {new Date().getFullYear()} Japanese Kitchen Knives. Всі права захищені.
         </div>
       </div>
     </footer>
