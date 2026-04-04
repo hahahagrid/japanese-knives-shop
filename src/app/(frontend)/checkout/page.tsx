@@ -233,9 +233,11 @@ export default function CheckoutPage() {
               <p className="text-center text-[10px] text-neutral-400 mt-6 leading-relaxed">
                 Натискаючи «Підтвердити замовлення», ви погоджуєтесь з <Link href="/privacy" className="underline hover:text-black transition-colors">Політикою конфіденційності</Link> та обробкою персональних даних.
               </p>
-              <p className="text-center text-[10px] text-neutral-300 mt-2 italic font-light">
-                Оплата здійснюється після підтвердження замовлення нашим менеджером.
-              </p>
+              <div className="mt-8 p-4 bg-neutral-50 border border-neutral-100 rounded-sm">
+                <p className="text-center text-[11px] text-neutral-600 font-medium leading-relaxed">
+                  Оплата здійснюється після підтвердження замовлення нашим менеджером.
+                </p>
+              </div>
             </div>
           </form>
         </AnimatedSection>
