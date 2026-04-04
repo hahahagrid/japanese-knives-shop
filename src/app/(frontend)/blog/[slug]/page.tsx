@@ -104,48 +104,51 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </AnimatedSection>
 
-      {/* Refined Post Navigation - Symmetric & Minimal */}
       {(prevPost || nextPost) && (
         <div className="w-full py-12 mt-4 text-center">
-          <div className={`flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24 relative ${!prevPost || !nextPost ? 'text-center' : ''}`}>
+          <div className={`flex flex-col md:flex-row items-stretch justify-center gap-12 md:gap-0 relative ${!prevPost || !nextPost ? 'md:max-w-xl mx-auto' : ''}`}>
             
             {/* Previous Post (Newer) */}
             {prevPost && (
-              <Link 
-                href={`/blog/${prevPost.slug}`} 
-                className={`flex flex-col group max-w-sm transition-all duration-700 ${prevPost && nextPost ? 'items-end text-right' : 'items-center text-center'}`}
-              >
-                <p className="text-[10px] tracking-[0.4em] uppercase text-black/30 mb-4 font-bold flex items-center gap-4 group-hover:text-[var(--gold)] transition-colors">
-                  <ChevronLeft className="h-3 w-3" />
-                  Попередня стаття
-                </p>
-                <h4 className="font-serif italic text-xl md:text-2xl text-black/80 group-hover:text-black transition-colors duration-500 leading-snug">
-                  {prevPost.title}
-                </h4>
-                <div className="h-[1px] w-0 group-hover:w-full bg-[var(--gold)] mt-3 transition-all duration-700 opacity-50" />
-              </Link>
+              <div className={`flex-1 flex flex-col ${nextPost ? 'md:pr-12 lg:pr-24 border-b md:border-b-0 border-black/5 pb-12 md:pb-0' : 'items-center text-center'}`}>
+                <Link 
+                  href={`/blog/${prevPost.slug}`} 
+                  className={`flex flex-col group transition-all duration-700 ${nextPost ? 'items-start text-left md:items-end md:text-right' : 'items-center text-center'}`}
+                >
+                  <p className="text-[10px] tracking-[0.4em] uppercase text-black/30 mb-4 font-bold flex items-center gap-4 group-hover:text-[var(--gold)] transition-colors">
+                    <ChevronLeft className="h-3 w-3" />
+                    Попередня стаття
+                  </p>
+                  <h4 className="font-serif italic text-xl md:text-2xl text-black/80 group-hover:text-black transition-colors duration-500 leading-snug">
+                    {prevPost.title}
+                  </h4>
+                  <div className="h-[1px] w-0 group-hover:w-full bg-[var(--gold)] mt-3 transition-all duration-700 opacity-50" />
+                </Link>
+              </div>
             )}
 
             {/* Central Divider - only if both exist */}
             {prevPost && nextPost && (
-                <div className="hidden md:block w-[1px] h-16 bg-black/5" />
+                <div className="hidden md:block w-[1px] bg-black/5 self-stretch" />
             )}
 
             {/* Next Post (Older) */}
             {nextPost && (
-              <Link 
-                href={`/blog/${nextPost.slug}`} 
-                className={`flex flex-col group max-w-sm transition-all duration-700 ${prevPost && nextPost ? 'items-start text-left' : 'items-center text-center'}`}
-              >
-                <p className="text-[10px] tracking-[0.4em] uppercase text-black/30 mb-4 font-bold flex items-center gap-4 group-hover:text-[var(--gold)] transition-colors">
-                  Наступна стаття
-                  <ChevronRight className="h-3 w-3" />
-                </p>
-                <h4 className="font-serif italic text-xl md:text-2xl text-black/80 group-hover:text-black transition-colors duration-500 leading-snug">
-                  {nextPost.title}
-                </h4>
-                <div className="h-[1px] w-0 group-hover:w-full bg-[var(--gold)] mt-3 transition-all duration-700 opacity-50" />
-              </Link>
+              <div className={`flex-1 flex flex-col ${prevPost ? 'md:pl-12 lg:pl-24 pt-12 md:pt-0' : 'items-center text-center'}`}>
+                <Link 
+                  href={`/blog/${nextPost.slug}`} 
+                  className={`flex flex-col group transition-all duration-700 items-center text-center ${prevPost ? 'md:items-start md:text-left' : ''}`}
+                >
+                  <p className="text-[10px] tracking-[0.4em] uppercase text-black/30 mb-4 font-bold flex items-center gap-4 group-hover:text-[var(--gold)] transition-colors">
+                    Наступна стаття
+                    <ChevronRight className="h-3 w-3" />
+                  </p>
+                  <h4 className="font-serif italic text-xl md:text-2xl text-black/80 group-hover:text-black transition-colors duration-500 leading-snug">
+                    {nextPost.title}
+                  </h4>
+                  <div className="h-[1px] w-0 group-hover:w-full bg-[var(--gold)] mt-3 transition-all duration-700 opacity-50" />
+                </Link>
+              </div>
             )}
           </div>
         </div>
