@@ -62,8 +62,10 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                 src={activeUrl}
                 alt={activeAlt || title}
                 fill
+                unoptimized
                 className="object-cover transition-transform duration-1000 ease-out hover:scale-105 will-change-transform"
                 priority={activeIndex === 0}
+                {...(activeIndex === 0 ? { fetchPriority: "high" } : {})}
                 sizes="(max-width: 1024px) 100vw, 800px"
               />
             )}
@@ -111,6 +113,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                     src={thumbUrl}
                     alt={`${title} - Thumbnail ${i + 1}`}
                     fill
+                    unoptimized
                     className="object-cover"
                     sizes="120px"
                   />
@@ -143,6 +146,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                   src={fullResUrl}
                   alt={activeAlt || title}
                   fill
+                  unoptimized
                   className="object-contain"
                   sizes="100vw"
                   quality={90}
