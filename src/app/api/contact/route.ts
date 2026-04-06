@@ -15,6 +15,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Contact form error:', error)
-    return NextResponse.json({ error: 'Failed to submit form' }, { status: 500 })
+    return NextResponse.json({ error: 'Не вдалося надіслати повідомлення. Спробуйте пізніше.' }, { status: 500 })
   }
 }

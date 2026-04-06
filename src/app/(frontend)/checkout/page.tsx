@@ -117,8 +117,8 @@ export default function CheckoutPage() {
                   required
                   minLength={2}
                   maxLength={50}
-                  pattern="^[A-Za-zА-Яа-яІіЇїЄєҐґ\s\-]+$"
-                  title="Ім'я може містити лише літери, пробіли та дефіси"
+                  pattern="^[A-Za-zА-Яа-яІіЇїЄєҐґ\s'’ʼ‘’\`´.\-–—−]+$"
+                  title="Ім'я може містити літери, пробіли, дефіси та апострофи"
                   className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
                   placeholder="Василь Симоненко"
                 />
