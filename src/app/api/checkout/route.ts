@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     const { name, phone, email, deliveryInfo, message, items, total, honeypot } = data
 
     if (!name || !phone || !items || !items.length) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+      return NextResponse.json({ error: 'Будь ласка, заповніть усі обов’язкові поля' }, { status: 400 })
     }
 
     const payload = await getPayload({ config })
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   } catch (err: any) {
     console.error('Checkout error:', err)
     return NextResponse.json(
-      { error: err.message || 'Failed to process checkout' },
+      { error: err.message || 'Не вдалося оформити замовлення. Спробуйте пізніше.' },
       { status: 500 }
     )
   }
