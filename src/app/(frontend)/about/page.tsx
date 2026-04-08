@@ -77,7 +77,7 @@ export default function AboutPage() {
     <div className="flex flex-col">
       <PageVersion />
       {/* Hero Section */}
-      <section className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
+      <section className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-48 md:pb-32 relative overflow-hidden">
         <div className="absolute right-[-10%] top-[50%] -translate-y-1/2 text-[30vw] font-serif opacity-[0.06] select-none pointer-events-none">
           魂
         </div>
@@ -93,7 +93,7 @@ export default function AboutPage() {
       </section>
 
       {/* Intro Section */}
-      <section className="py-24 md:py-40 bg-white">
+      <section className="py-20 md:py-32 bg-white">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <AnimatedSection className="order-2 lg:order-1">
@@ -153,7 +153,7 @@ export default function AboutPage() {
       </section>
 
       {/* Custom Order - Concierge Service */}
-      <section className="py-24 md:py-40 bg-white relative overflow-hidden">
+      <section className="py-20 md:py-32 bg-white relative overflow-hidden">
         <div className="absolute left-[-5%] bottom-0 text-[15vw] font-serif opacity-[0.03] select-none pointer-events-none">
           匠
         </div>
