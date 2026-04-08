@@ -27,26 +27,44 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   })
   if (!docs.length) return { title: 'Not Found' }
   const product = docs[0]
+
+  // Helper to extract plain text from Lexical
+  const getDescriptionSnippet = (desc: any) => {
+    if (!desc || !desc.root || !desc.root.children) return null
+    try {
+      const text = desc.root.children
+        .map((node: any) => node.children?.map((c: any) => c.text ?? '').join('') ?? '')
+        .join(' ')
+        .trim()
+      if (text.length > 10) return text.length > 160 ? `${text.substring(0, 157)}...` : text
+    } catch (e) { return null }
+    return null
+  }
+
+  const customDescription = getDescriptionSnippet(product.description)
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
   const pageUrl = `${siteUrl}/accessories/${slug}`
   const firstImage = (product.images as any[])?.[0]
   const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
 
-  // Smarter description for different accessory types
+  // Smarter fallback template
   const lowerTitle = product.title.toLowerCase()
   let prefix = 'Аксесуар'
   if (lowerTitle.includes('камінь') || lowerTitle.includes('whetstone')) prefix = 'Японський водний камінь'
   if (lowerTitle.includes('дошка')) prefix = 'Обробна дошка'
   if (lowerTitle.includes('підставка') || lowerTitle.includes('магніт')) prefix = 'Тримач для ножів'
 
-  const description = `${prefix} ${product.title} для професійного догляду за вашими ножами. Преміальна японська якість.${product.price ? ` Ціна: ${(product.price as number).toLocaleString('uk-UA')} грн.` : ''}`
+  const priceText = product.price ? `Ціна: ${(product.price as number).toLocaleString('uk-UA')} грн.` : ''
+  const fallback = `${prefix} ${product.title} преміальної якості для професійного догляду за вашими ножами. ${priceText}`
+
+  const finalDescription = customDescription || fallback
 
   return { 
     title: `${product.title} | Japanese Kitchen Knives`,
-    description,
+    description: finalDescription,
     openGraph: {
       title: product.title,
-      description,
+      description: finalDescription,
       url: pageUrl,
       siteName: 'Japanese Kitchen Knives',
       images: [{ url: ogImageUrl, width: 1200, height: 800, alt: product.title }],

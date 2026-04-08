@@ -32,23 +32,47 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
     },
     depth: 1,
   })
+
   if (!docs.length) return { title: 'Not Found' }
   const knife = docs[0]
+
+  // Helper to extract plain text from Lexical description
+  const getDescriptionSnippet = (desc: any) => {
+    if (!desc || !desc.root || !desc.root.children) return null
+    try {
+      const text = desc.root.children
+        .map((node: any) => node.children?.map((c: any) => c.text ?? '').join('') ?? '')
+        .join(' ')
+        .trim()
+      
+      if (text.length > 10) {
+        return text.length > 160 ? `${text.substring(0, 157)}...` : text
+      }
+    } catch (e) {
+      return null
+    }
+    return null
+  }
+
+  const customDescription = getDescriptionSnippet(knife.description)
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
   const pageUrl = `${siteUrl}/knives/${status}/${slug}`
   const firstImage = (knife.images as any[])?.[0]
   const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
   
-  // Clean up title for description: if it already starts with "Ніж", don't add another one
-  const cleanTitle = knife.title.toLowerCase().startsWith('ніж') ? knife.title : `Японський ніж ${knife.title}`
-  const description = `${cleanTitle} ручної роботи. Преміальна сталь, автентичне кування та бездоганна гострота. ${knife.price ? `Ціна: ${knife.price.toLocaleString('uk-UA')} грн.` : ''}`
+  // New improved description template
+  const priceText = knife.price ? `Ціна: ${knife.price.toLocaleString('uk-UA')} грн.` : ''
+  const fallbackDescription = `Автентичний японський ніж ручної роботи ${knife.title}. Преміальна сталь, бездоганна гострота та традиційне кування. ${priceText}`
+  
+  // Use custom description if available, otherwise fallback
+  const finalDescription = customDescription || fallbackDescription
 
   return { 
     title: `${knife.title} | Japanese Kitchen Knives`,
-    description,
+    description: finalDescription,
     openGraph: {
       title: knife.title,
-      description,
+      description: finalDescription,
       url: pageUrl,
       siteName: 'Japanese Kitchen Knives',
       images: [

@@ -6,35 +6,56 @@ import type { CollectionAfterChangeHook } from 'payload'
  */
 export const syncMediaAlt: CollectionAfterChangeHook = async ({
   doc, // Новий документ товару
-  req, // Об'єкт запиту (для доступу до Payload API)
-  operation, // 'create' або 'update'
+  req, // Об'єкт запиту
 }) => {
-  // Якщо немає картинок або назви - нічого не робимо
-  if (!doc.images || doc.images.length === 0 || !doc.title) {
+  // Якщо немає назви - нічого не робимо
+  if (!doc.title) {
     return doc
   }
 
-  const altText = doc.title
   const { payload } = req
+  const altText = doc.title
+  const imageIds = new Set<string>()
 
-  // Проходимо по масиву зображень
-  for (const image of doc.images) {
-    // В Payload зображення може бути як ID (string/number), так і об'єктом
-    const imageId = typeof image === 'object' && image !== null ? image.id : image
+  // 1. Прямий масив зображень (Gallery)
+  if (doc.images && Array.isArray(doc.images)) {
+    doc.images.forEach((image: any) => {
+      const id = typeof image === 'object' && image !== null ? image.id : image
+      if (id) imageIds.add(id)
+    })
+  }
 
-    if (imageId) {
-      try {
-        await payload.update({
-          collection: 'media',
-          id: imageId,
-          data: {
-            alt: altText,
-          },
-          req, // Обов'язково передаємо req для збереження транзакції
-        })
-      } catch (error) {
-        payload.logger.error({ error }, `[SyncMediaAlt] Помилка оновлення медіа ${imageId}`)
+  // 2. Зображення з Опису (Rich Text / Lexical)
+  if (doc.description) {
+    const traverse = (node: any) => {
+      if (!node) return
+      if (node.type === 'upload' && node.relationTo === 'media' && node.value) {
+        const id = typeof node.value === 'object' && node.value !== null ? node.value.id : node.value
+        if (id) imageIds.add(id)
       }
+      if (node.children && Array.isArray(node.children)) {
+        node.children.forEach(traverse)
+      }
+      if (node.root && node.root.children && Array.isArray(node.root.children)) {
+        node.root.children.forEach(traverse)
+      }
+    }
+    traverse(doc.description)
+  }
+
+  // Оновлюємо всі знайдені зображення
+  for (const id of imageIds) {
+    try {
+      await payload.update({
+        collection: 'media',
+        id,
+        data: {
+          alt: altText,
+        },
+        req,
+      })
+    } catch (error) {
+      payload.logger.error({ error }, `[SyncMediaAlt] Помилка оновлення медіа ${id}`)
     }
   }
 
