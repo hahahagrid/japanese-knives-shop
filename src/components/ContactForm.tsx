@@ -187,7 +187,11 @@ export function ContactForm() {
             <div className="absolute inset-0 bg-[#BC002D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
           </button>
           <p className="text-center text-[10px] text-neutral-400 mt-6 leading-relaxed">
-            Натискаючи «Підтвердити замовлення», ви погоджуєтесь з <Link href="/privacy" className="underline hover:text-black transition-colors">Політикою конфіденційності</Link> та обробкою персональних даних.
+            Натискаючи «Відправити запит», ви погоджуєтесь з{' '}
+            <Link href="/privacy" className="underline hover:text-black transition-colors">
+              Політикою конфіденційності
+            </Link>{' '}
+            та обробкою персональних даних.
           </p>
         </div>
       </form>

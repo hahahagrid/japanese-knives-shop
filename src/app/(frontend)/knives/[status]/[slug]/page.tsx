@@ -173,7 +173,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
         {/* Right: Info */}
         <div className="lg:col-span-5">
           <AnimatedSection delay={0.15} className="flex flex-col">
-            <div className="mb-10 lg:mb-14 border-b border-[var(--border)] pb-10">
+            <div className="mb-8 lg:mb-12 border-b border-[var(--border)] pb-10">
               <p className="text-label mb-4">
                 {dbStatus === 'in_stock' ? 'В наявності' : 'Доступний під замовлення'}
               </p>
@@ -190,7 +190,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
             </div>
 
             {/* Actions */}
-            <div className="flex flex-row gap-5 mb-14">
+            <div className="flex flex-row gap-5 mb-10 md:mb-12">
               <AddToCartButton 
                 knife={{
                   id: String(knife.id),
@@ -214,7 +214,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
 
             {/* Description */}
             {hasDescription && (
-              <div className="mb-14">
+              <div className="mb-4 lg:mb-8">
                 <h3 className="text-label mb-6 border-l-2 border-[var(--gold)] pl-4">
                   Про виріб
                 </h3>
