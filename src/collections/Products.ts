@@ -10,6 +10,7 @@ function slugify(text: string): string {
 }
 
 import { revalidateProduct, revalidateDelete } from '../hooks/revalidate'
+import { syncMediaAlt } from '../hooks/syncMediaAlt'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -33,7 +34,7 @@ export const Products: CollectionConfig = {
         return data
       },
     ],
-    afterChange: [revalidateProduct],
+    afterChange: [revalidateProduct, syncMediaAlt],
     afterDelete: [revalidateDelete],
   },
   fields: [
