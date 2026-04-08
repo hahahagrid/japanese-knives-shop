@@ -127,8 +127,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </div>
         </header>
         
-        <div className="prose prose-neutral prose-lg mx-auto leading-relaxed text-neutral-700">
-          <RichText content={post.content} className="leading-relaxed" />
+        <div className="prose prose-neutral prose-lg mx-auto text-neutral-800">
+          <RichText content={post.content} />
         </div>
       </AnimatedSection>
 

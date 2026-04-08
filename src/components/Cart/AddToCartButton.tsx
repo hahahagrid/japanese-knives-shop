@@ -22,7 +22,7 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
     return (
       <a
         href="/contacts"
-        className="flex-1 text-center bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 group/btn overflow-hidden relative"
+        className="w-full sm:flex-1 text-center bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 group/btn overflow-hidden relative"
       >
         <span className="relative z-10">Дізнатись ціну</span>
         <div className="absolute inset-0 bg-[#BC002D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
@@ -43,7 +43,7 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
           type: knife.type || 'knife',
         })
       }
-      className="flex-1 bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 flex items-center justify-center gap-3 group/btn overflow-hidden relative"
+      className="w-full sm:flex-1 bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 flex items-center justify-center gap-3 group/btn overflow-hidden relative"
     >
       <span className="relative z-10">{knife.status === 'in_stock' ? 'У кошик' : 'Передзамовити'}</span>
       <ShoppingBag className="w-4 h-4 relative z-10 opacity-70 group-hover/btn:opacity-100 transition-opacity" />

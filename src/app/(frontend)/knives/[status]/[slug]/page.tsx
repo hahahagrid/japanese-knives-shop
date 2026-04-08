@@ -190,7 +190,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
             </div>
 
             {/* Actions */}
-            <div className="flex flex-row gap-5 mb-10 md:mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 mb-10 md:mb-12">
               <AddToCartButton 
                 knife={{
                   id: String(knife.id),
@@ -205,7 +205,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
               {knife.price && (
                 <Link
                   href="/contacts"
-                  className="flex-1 text-center bg-white border border-black/10 text-black py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] hover:bg-stone-50 transition-all active:scale-95"
+                  className="w-full sm:flex-1 text-center bg-white border border-black/10 text-black py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] hover:bg-stone-50 transition-all active:scale-95"
                 >
                   Консультація
                 </Link>
@@ -218,8 +218,8 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
                 <h3 className="text-label mb-6 border-l-2 border-[var(--gold)] pl-4">
                   Про виріб
                 </h3>
-                <div className="prose prose-neutral prose-md max-w-none leading-relaxed text-neutral-700 font-light">
-                  <RichText content={knife.description} className="text-lg" />
+                <div className="prose prose-neutral prose-lg max-w-none text-neutral-800">
+                  <RichText content={knife.description} />
                 </div>
               </div>
             )}
