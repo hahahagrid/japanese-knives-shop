@@ -7,7 +7,15 @@ import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Оплата та доставка | Japanese Kitchen Knives',
-  description: 'Інформація про способи оплати та умови доставки японських ножів.',
+  description: 'Інформація про способи оплати та умови доставки японських ножів. Нова Пошта по всій Україні. Відправка протягом 24 годин.',
+  openGraph: {
+    title: 'Оплата та доставка | Japanese Kitchen Knives',
+    description: 'Інформація про способи оплати та умови доставки японських ножів. Нова Пошта по всій Україні. Відправка протягом 24 годин.',
+    url: 'https://japanese-kitchen-knives.com.ua/shipping',
+    siteName: 'Japanese Kitchen Knives',
+    locale: 'uk_UA',
+    type: 'website',
+  },
 }
 
 export default function ShippingPage() {

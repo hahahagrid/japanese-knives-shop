@@ -8,9 +8,17 @@ import Link from 'next/link'
 import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
-  title: 'Про нас | Japanese Knives Shop',
-  description:
-    'Дізнайтеся більше про Japanese Knives Shop — ваш провідник у світ справжньої японської майстерності з 2020 року.',
+  title: 'Про нас | Japanese Kitchen Knives',
+  description: 'З 2020 року ми привозимо оригінальні японські кухонні ножі від майстрів Sakai, Sanjo, Echizen та Tosa. Гарантія автентичності кожного виробу.',
+  openGraph: {
+    title: 'Про нас | Japanese Kitchen Knives',
+    description: 'З 2020 року ми привозимо оригінальні японські кухонні ножі від майстрів Sakai, Sanjo, Echizen та Tosa. Гарантія автентичності кожного виробу.',
+    url: 'https://japanese-kitchen-knives.com.ua/about',
+    siteName: 'Japanese Kitchen Knives',
+    images: [{ url: '/images/about-hero-1920.webp', width: 1200, height: 800, alt: 'Про нас — Japanese Kitchen Knives' }],
+    locale: 'uk_UA',
+    type: 'website',
+  },
 }
 
 export default function AboutPage() {

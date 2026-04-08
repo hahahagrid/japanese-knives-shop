@@ -15,10 +15,38 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { docs } = await payload.find({
     collection: 'posts',
     where: { slug: { equals: slug } },
+    depth: 1,
   })
   if (!docs.length) return { title: 'Not Found' }
-  return { title: `${docs[0].title} | Блог | Japanese Kitchen Knives` }
+  const post = docs[0]
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
+  const pageUrl = `${siteUrl}/blog/${slug}`
+
+  // SEO plugin fields take priority, fallback to coverImage / default text
+  const meta = post.meta as any
+  const metaTitle = meta?.title || `${post.title} | Блог | Japanese Kitchen Knives`
+  const description = meta?.description || `Читайте статтю «${post.title}» у блозі Japanese Kitchen Knives. Все про японські кухонні ножі, догляд, вибір та використання.`
+
+  const metaImage = meta?.image as any
+  const coverImage = post.coverImage as any
+  const ogImageUrl = metaImage?.url ?? coverImage?.url ?? `${siteUrl}/images/hero_knife-1920.webp`
+
+  return {
+    title: metaTitle,
+    description,
+    openGraph: {
+      title: meta?.title || post.title,
+      description,
+      url: pageUrl,
+      siteName: 'Japanese Kitchen Knives',
+      images: [{ url: ogImageUrl, width: 1200, height: 800, alt: post.title }],
+      locale: 'uk_UA',
+      type: 'article',
+      publishedTime: (post as any).publishedDate ?? undefined,
+    },
+  }
 }
+
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

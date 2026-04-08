@@ -39,6 +39,28 @@ export function ProductSchema({
       'price': price || 0,
       'availability': `https://schema.org/${availability}`,
       'itemCondition': 'https://schema.org/NewCondition',
+      'shippingDetails': {
+        '@type': 'OfferShippingDetails',
+        'shippingDestination': {
+          '@type': 'DefinedRegion',
+          'addressCountry': 'UA',
+        },
+        'deliveryTime': {
+          '@type': 'ShippingDeliveryTime',
+          'handlingTime': {
+            '@type': 'QuantitativeValue',
+            'minValue': 0,
+            'maxValue': 1,
+            'unitCode': 'd',
+          },
+          'transitTime': {
+            '@type': 'QuantitativeValue',
+            'minValue': 1,
+            'maxValue': 3,
+            'unitCode': 'd',
+          },
+        },
+      },
     },
   }
 

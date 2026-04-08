@@ -9,6 +9,16 @@ import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Блог | Japanese Kitchen Knives',
+  description: 'Статті про японські кухонні ножі: вибір, догляд, загострення та філософія японської майстерності.',
+  openGraph: {
+    title: 'Блог | Japanese Kitchen Knives',
+    description: 'Статті про японські кухонні ножі: вибір, догляд, загострення та філософія японської майстерності.',
+    url: 'https://japanese-kitchen-knives.com.ua/blog',
+    siteName: 'Japanese Kitchen Knives',
+    images: [{ url: '/images/hero_knife-1920.webp', width: 1200, height: 630, alt: 'Блог Japanese Kitchen Knives' }],
+    locale: 'uk_UA',
+    type: 'website',
+  },
 }
 
 export default async function BlogPage() {

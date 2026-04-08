@@ -23,14 +23,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         { type: { equals: 'accessory' } }
       ]
     },
+    depth: 1,
   })
   if (!docs.length) return { title: 'Not Found' }
   const product = docs[0]
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
+  const pageUrl = `${siteUrl}/accessories/${slug}`
+  const firstImage = (product.images as any[])?.[0]
+  const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
+  const description = `Купити ${product.title} для японських кухонних ножів.${product.price ? ` Ціна: ${(product.price as number).toLocaleString('uk-UA')} грн.` : ''} Преміальна якість, швидка доставка по Україні.`
+
   return { 
     title: `${product.title} | Аксесуари для японських ножів`,
-    description: `Купити ${product.title} для японських кухонних ножів. Преміальна якість, швидка доставка по Україні. Все для догляду та зберігання ваших ножів у магазині K N I V E S.`,
+    description,
+    openGraph: {
+      title: product.title,
+      description,
+      url: pageUrl,
+      siteName: 'Japanese Kitchen Knives',
+      images: [{ url: ogImageUrl, width: 1200, height: 800, alt: product.title }],
+      locale: 'uk_UA',
+      type: 'website',
+    },
   }
 }
+
 
 export default async function AccessoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

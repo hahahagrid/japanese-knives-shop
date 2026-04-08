@@ -9,7 +9,17 @@ import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Контакти | Japanese Kitchen Knives',
+  description: 'Зв\'яжіться з нами для консультації з вибору японського ножа або для замовлення. Телефон, email, Telegram та Instagram.',
+  openGraph: {
+    title: 'Контакти | Japanese Kitchen Knives',
+    description: 'Зв\'яжіться з нами для консультації з вибору японського ножа або для замовлення. Телефон, email, Telegram та Instagram.',
+    url: 'https://japanese-kitchen-knives.com.ua/contacts',
+    siteName: 'Japanese Kitchen Knives',
+    locale: 'uk_UA',
+    type: 'website',
+  },
 }
+
 
 export default async function ContactsPage() {
   const payload = await getPayload({ config })
