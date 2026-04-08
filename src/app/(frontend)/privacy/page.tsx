@@ -9,6 +9,7 @@ export const metadata = {
     description: 'Прозорі правила обробки ваших даних для безпечного замовлення японських ножів.',
     url: 'https://japanese-kitchen-knives.com.ua/privacy',
     siteName: 'Japanese Kitchen Knives',
+    images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',
     type: 'website',
   },

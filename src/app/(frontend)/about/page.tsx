@@ -15,7 +15,7 @@ export const metadata = {
     description: 'З 2020 року ми привозимо оригінальні японські кухонні ножі від майстрів Sakai, Sanjo, Echizen та Tosa. Гарантія автентичності кожного виробу.',
     url: 'https://japanese-kitchen-knives.com.ua/about',
     siteName: 'Japanese Kitchen Knives',
-    images: [{ url: '/images/about-hero-1920.webp', width: 1200, height: 800, alt: 'Про нас — Japanese Kitchen Knives' }],
+    images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',
     type: 'website',
   },

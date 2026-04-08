@@ -10,6 +10,15 @@ import { PageVersion } from '@/components/PageVersion'
 export const metadata = {
   title: 'Японські ножі під замовлення | Есклюзивні клинки з Японії',
   description: 'Замовлення ексклюзивних японських ножів безпосередньо від майстрів. Індивідуальний підбір сталі, довжини та руків’я. Привеземо будь-яку модель спеціально для вас.',
+  openGraph: {
+    title: 'Японські ножі під замовлення | Japanese Kitchen Knives',
+    description: 'Замовлення ексклюзивних японських ножів безпосередньо від майстрів. Індивідуальний підбір сталі, довжини та руків’я.',
+    url: 'https://japanese-kitchen-knives.com.ua/knives/custom-order',
+    siteName: 'Japanese Kitchen Knives',
+    images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
+    locale: 'uk_UA',
+    type: 'website',
+  },
 }
 
 export default async function CustomOrderPage() {

@@ -15,6 +15,7 @@ export const metadata = {
     description: 'Зв\'яжіться з нами для консультації з вибору японського ножа або для замовлення. Телефон, email, Telegram та Instagram.',
     url: 'https://japanese-kitchen-knives.com.ua/contacts',
     siteName: 'Japanese Kitchen Knives',
+    images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',
     type: 'website',
   },

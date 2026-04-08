@@ -9,6 +9,15 @@ import { PageVersion } from '@/components/PageVersion'
 export const metadata = {
   title: 'Аксесуари для японських ножів | Чохли, камені та догляд',
   description: 'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати. Все для ідеальної гостроти у магазині Japanese Kitchen Knives.',
+  openGraph: {
+    title: 'Аксесуари для японських ножів | Japanese Kitchen Knives',
+    description: 'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати.',
+    url: 'https://japanese-kitchen-knives.com.ua/accessories',
+    siteName: 'Japanese Kitchen Knives',
+    images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
+    locale: 'uk_UA',
+    type: 'website',
+  },
 }
 
 export default async function AccessoriesPage() {
