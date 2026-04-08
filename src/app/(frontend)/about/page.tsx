@@ -9,10 +9,12 @@ import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Про нас | Japanese Kitchen Knives',
-  description: 'З 2020 року ми привозимо оригінальні японські кухонні ножі від майстрів Sakai, Sanjo, Echizen та Tosa. Гарантія автентичності кожного виробу.',
+  description:
+    'З 2020 року ми привозимо оригінальні японські кухонні ножі від майстрів Sakai, Sanjo, Echizen та Tosa. Гарантія автентичності кожного виробу.',
   openGraph: {
     title: 'Про нас | Japanese Kitchen Knives',
-    description: 'З 2020 року ми привозимо оригінальні японські кухонні ножі від майстрів Sakai, Sanjo, Echizen та Tosa. Гарантія автентичності кожного виробу.',
+    description:
+      'З 2020 року ми привозимо оригінальні японські кухонні ножі від майстрів Sakai, Sanjo, Echizen та Tosa. Гарантія автентичності кожного виробу.',
     url: 'https://japanese-kitchen-knives.com.ua/about',
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
@@ -32,14 +34,14 @@ export default function AboutPage() {
     text: (
       <>
         <p className="mb-6">Вітаємо!</p>
-        <p className="mb-6">Ми — Japanese Knives Shop, магазин оригінальних японських ножів.</p>
+        <p className="mb-6">Ми - магазин оригінальних японських ножів.</p>
         <p className="mb-6">
           З 2020 року ми займаємось продажем японських кухонних ножів та аксесуарів. Усі ножі,
           представлені в нашому асортименті, придбані виключно в Японії:{' '}
           <strong>Sakai, Sanjo, Echizen, Tosa, Miki</strong> та інших регіонах.
         </p>
         <p>
-          Наша місія — зробити професійні інструменти доступними для кожного, хто цінує
+          Наша місія - зробити професійні інструменти доступними для кожного, хто цінує
           безкомпромісну якість та естетику в роботі. Ми гарантуємо автентичність кожного виробу, бо
           знаємо історію кожного майстра, з яким працюємо.
         </p>
@@ -81,9 +83,7 @@ export default function AboutPage() {
         </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
           <AnimatedSection>
-            <p className="text-label mb-4 text-neutral-500">
-              Наша Спадщина
-            </p>
+            <p className="text-label mb-4 text-neutral-500">Наша Спадщина</p>
             <h1 className="heading-display text-5xl md:text-6xl lg:text-8xl mb-6">{hero.title}</h1>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed font-light italic font-serif">
               {hero.subtitle}
@@ -97,9 +97,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <AnimatedSection className="order-2 lg:order-1">
-              <span className="text-label mb-6 block text-neutral-500">
-                Про нас
-              </span>
+              <span className="text-label mb-6 block text-neutral-500">Про нас</span>
               <h2 className="heading-display text-4xl md:text-6xl mb-10">{intro.title}</h2>
               <div className="prose prose-neutral max-w-none text-neutral-600 text-lg leading-relaxed">
                 {intro.text}
@@ -134,18 +132,20 @@ export default function AboutPage() {
           </AnimatedSection>
         </div>
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
             {offerings.map((item, i) => (
               <AnimatedSection
                 key={i}
                 delay={i * 0.1}
-                className="p-10 bg-white border border-[var(--border)] group hover:border-black transition-all duration-500"
+                className="p-6 sm:p-10 bg-white border border-[var(--border)] group hover:border-black transition-all duration-500 flex flex-col items-center text-center"
               >
-                <item.icon className="w-10 h-10 mb-8 text-black stroke-[1px]" />
-                <h3 className="heading-display text-2xl mb-4 group-hover:text-black transition-colors">
+                <item.icon className="w-8 h-8 md:w-10 md:h-10 mb-6 md:mb-8 text-black stroke-[1px]" />
+                <h3 className="heading-display text-lg md:text-2xl mb-4 group-hover:text-black transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-neutral-500 leading-relaxed text-sm">{item.description}</p>
+                <p className="text-neutral-500 leading-relaxed text-[11px] md:text-sm">
+                  {item.description}
+                </p>
               </AnimatedSection>
             ))}
           </div>
@@ -161,9 +161,7 @@ export default function AboutPage() {
           <AnimatedSection className="bg-[#0A0A09] text-white p-12 md:p-20 relative overflow-hidden shadow-2xl">
             <div className="relative z-10 flex flex-col md:flex-row gap-12 items-center">
               <div className="flex-1">
-                <span className="text-label mb-6 block text-neutral-500">
-                  Ексклюзивна послуга
-                </span>
+                <span className="text-label mb-6 block text-neutral-500">Ексклюзивна послуга</span>
                 <h2 className="heading-display text-3xl md:text-5xl mb-8">
                   Індивідуальний підбір та доставка
                 </h2>

@@ -69,9 +69,15 @@ export default async function BlogPage() {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-24">
+        <div className="flex flex-col">
           {posts.map((post, i) => (
-            <AnimatedSection delay={i * 0.1} key={post.id} className="border-t border-[var(--border)] pt-12 md:pt-16">
+            <AnimatedSection 
+              delay={i * 0.1} 
+              key={post.id} 
+              className={`border-t border-[var(--border)] pt-12 pb-12 md:pt-16 md:pb-16 ${
+                i === posts.length - 1 ? 'border-b' : ''
+              }`}
+            >
               <div className="flex flex-col md:flex-row gap-8 lg:gap-16 xl:gap-24 items-stretch">
                 
                 {/* Image Section (Fixed width on desktop, responsive on mobile) */}
