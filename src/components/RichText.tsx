@@ -29,7 +29,7 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
       case 'paragraph': {
         const hasContent = node.children && node.children.some((child: any) => child.text && child.text.trim().length > 0)
         return (
-          <p key={index} className={`mb-4 md:mb-6 leading-relaxed last:mb-0 ${!hasContent ? 'min-h-[1.5em]' : ''}`}>
+          <p key={index} className={!hasContent ? 'min-h-[1.5em]' : ''}>
             {children || <br />}
           </p>
         )
@@ -38,26 +38,26 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
         return <br key={index} />
       case 'heading':
         const HeaderTag = (node.tag || 'h2') as React.ElementType
-        return <HeaderTag key={index} className={`heading-${node.tag || 'h2'} mb-6 md:mb-8 mt-12 md:mt-16 first:mt-0 font-serif`}>{children}</HeaderTag>
+        return <HeaderTag key={index} className="font-serif">{children}</HeaderTag>
       case 'horizontalrule':
-        return <hr key={index} className="my-12 md:my-16 border-t border-[var(--border)] opacity-50" />
+        return <hr key={index} className="opacity-50" />
       case 'list': {
         const isOrdered = node.listType === 'number' || node.tag === 'ol'
         const ListTag = isOrdered ? 'ol' : 'ul'
         return (
-          <ListTag key={index} className={`${isOrdered ? 'list-decimal' : 'list-disc'} ml-8 mb-6 space-y-2`}>
+          <ListTag key={index}>
             {children}
           </ListTag>
         )
       }
       case 'listitem':
         return (
-          <li key={index} className="leading-relaxed">
+          <li key={index}>
             {children}
           </li>
         )
       case 'quote':
-        return <blockquote key={index} className="border-l-4 border-gold pl-4 italic my-8">{children}</blockquote>
+        return <blockquote key={index} className="border-l-4 border-gold pl-4">{children}</blockquote>
       case 'link':
         return <a key={index} href={node.fields?.url} target="_blank" rel="noopener noreferrer" className="text-gold underline">{children}</a>
       case 'upload':
