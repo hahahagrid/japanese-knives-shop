@@ -11,6 +11,8 @@ import { AddToCartButton } from '@/components/Cart/AddToCartButton'
 import { ProductSchema } from '@/components/SEO/ProductSchema'
 import { PageVersion } from '@/components/PageVersion'
 
+import { generateProductDescription } from '@/utils/seo'
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
@@ -25,39 +27,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     depth: 1,
   })
+
   if (!docs.length) return { title: 'Not Found' }
   const product = docs[0]
 
-  // Helper to extract plain text from Lexical
-  const getDescriptionSnippet = (desc: any) => {
-    if (!desc || !desc.root || !desc.root.children) return null
-    try {
-      const text = desc.root.children
-        .map((node: any) => node.children?.map((c: any) => c.text ?? '').join('') ?? '')
-        .join(' ')
-        .trim()
-      if (text.length > 10) return text.length > 160 ? `${text.substring(0, 157)}...` : text
-    } catch (e) { return null }
-    return null
-  }
-
-  const customDescription = getDescriptionSnippet(product.description)
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
   const pageUrl = `${siteUrl}/accessories/${slug}`
   const firstImage = (product.images as any[])?.[0]
   const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
 
-  // Smarter fallback template
-  const lowerTitle = product.title.toLowerCase()
-  let prefix = 'Аксесуар'
-  if (lowerTitle.includes('камінь') || lowerTitle.includes('whetstone')) prefix = 'Японський водний камінь'
-  if (lowerTitle.includes('дошка')) prefix = 'Обробна дошка'
-  if (lowerTitle.includes('підставка') || lowerTitle.includes('магніт')) prefix = 'Тримач для ножів'
-
-  const priceText = product.price ? `Ціна: ${(product.price as number).toLocaleString('uk-UA')} грн.` : ''
-  const fallback = `${prefix} ${product.title} преміальної якості для професійного догляду за вашими ножами. ${priceText}`
-
-  const finalDescription = customDescription || fallback
+  const finalDescription = generateProductDescription(product as any, 'accessory')
 
   return { 
     title: `${product.title} | Japanese Kitchen Knives`,
@@ -114,13 +93,15 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
     id: typeof img === 'object' && img !== null ? img.id : undefined,
   }))
 
+  const finalDescription = generateProductDescription(product as any, 'accessory')
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
       <PageVersion />
       <ProductSchema 
         id={String(product.id)}
         name={product.title}
-        description={product.description ? 'Аксесуар для японських ножів преміум класу' : undefined}
+        description={finalDescription}
         image={galleryImages[0]?.image?.url}
         price={product.price || 0}
         url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/accessories/${slug}` : `./`}

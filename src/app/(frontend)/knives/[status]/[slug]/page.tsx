@@ -12,6 +12,8 @@ import { Database } from 'lucide-react'
 import { ProductSchema } from '@/components/SEO/ProductSchema'
 import { PageVersion } from '@/components/PageVersion'
 
+import { generateProductDescription } from '@/utils/seo'
+
 // Map UI status to DB status
 const statusMap: Record<string, string> = {
   'in-stock': 'in_stock',
@@ -35,37 +37,13 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
 
   if (!docs.length) return { title: 'Not Found' }
   const knife = docs[0]
-
-  // Helper to extract plain text from Lexical description
-  const getDescriptionSnippet = (desc: any) => {
-    if (!desc || !desc.root || !desc.root.children) return null
-    try {
-      const text = desc.root.children
-        .map((node: any) => node.children?.map((c: any) => c.text ?? '').join('') ?? '')
-        .join(' ')
-        .trim()
-      
-      if (text.length > 10) {
-        return text.length > 160 ? `${text.substring(0, 157)}...` : text
-      }
-    } catch (e) {
-      return null
-    }
-    return null
-  }
-
-  const customDescription = getDescriptionSnippet(knife.description)
+  
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
   const pageUrl = `${siteUrl}/knives/${status}/${slug}`
   const firstImage = (knife.images as any[])?.[0]
   const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
   
-  // New improved description template
-  const priceText = knife.price ? `Ціна: ${knife.price.toLocaleString('uk-UA')} грн.` : ''
-  const fallbackDescription = `Автентичний японський ніж ручної роботи ${knife.title}. Преміальна сталь, бездоганна гострота та традиційне кування. ${priceText}`
-  
-  // Use custom description if available, otherwise fallback
-  const finalDescription = customDescription || fallbackDescription
+  const finalDescription = generateProductDescription(knife as any, 'knife')
 
   return { 
     title: `${knife.title} | Japanese Kitchen Knives`,
@@ -154,13 +132,15 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
     { label: 'Кут загострення', value: knife.specs?.sharpeningAngle, unit: '°' },
   ].filter((item) => item.value)
 
+  const finalDescription = generateProductDescription(knife as any, 'knife')
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
       <PageVersion />
       <ProductSchema 
         id={String(knife.id)}
         name={knife.title}
-        description={knife.description ? 'Японський ніж ручної роботи' : undefined}
+        description={finalDescription}
         image={galleryImages[0]?.image?.url}
         price={knife.price || 0}
         url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}` : `./`}
