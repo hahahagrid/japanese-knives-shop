@@ -38,10 +38,13 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
   const pageUrl = `${siteUrl}/knives/${status}/${slug}`
   const firstImage = (knife.images as any[])?.[0]
   const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
-  const description = `Японський ніж ${knife.title} ручної роботи. Преміальна сталь, автентичне кування. ${knife.price ? `Ціна: ${knife.price.toLocaleString('uk-UA')} грн. ` : ''}Купити у магазині Japanese Kitchen Knives.`
+  
+  // Clean up title for description: if it already starts with "Ніж", don't add another one
+  const cleanTitle = knife.title.toLowerCase().startsWith('ніж') ? knife.title : `Японський ніж ${knife.title}`
+  const description = `${cleanTitle} ручної роботи. Преміальна сталь, автентичне кування та бездоганна гострота. ${knife.price ? `Ціна: ${knife.price.toLocaleString('uk-UA')} грн.` : ''}`
 
   return { 
-    title: `${knife.title} | Купити японський ніж в Україні`,
+    title: `${knife.title} | Japanese Kitchen Knives`,
     description,
     openGraph: {
       title: knife.title,

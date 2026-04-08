@@ -31,10 +31,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const pageUrl = `${siteUrl}/accessories/${slug}`
   const firstImage = (product.images as any[])?.[0]
   const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
-  const description = `Купити ${product.title} для японських кухонних ножів.${product.price ? ` Ціна: ${(product.price as number).toLocaleString('uk-UA')} грн.` : ''} Преміальна якість, швидка доставка по Україні.`
+
+  // Smarter description for different accessory types
+  const lowerTitle = product.title.toLowerCase()
+  let prefix = 'Аксесуар'
+  if (lowerTitle.includes('камінь') || lowerTitle.includes('whetstone')) prefix = 'Японський водний камінь'
+  if (lowerTitle.includes('дошка')) prefix = 'Обробна дошка'
+  if (lowerTitle.includes('підставка') || lowerTitle.includes('магніт')) prefix = 'Тримач для ножів'
+
+  const description = `${prefix} ${product.title} для професійного догляду за вашими ножами. Преміальна японська якість.${product.price ? ` Ціна: ${(product.price as number).toLocaleString('uk-UA')} грн.` : ''}`
 
   return { 
-    title: `${product.title} | Аксесуари для японських ножів`,
+    title: `${product.title} | Japanese Kitchen Knives`,
     description,
     openGraph: {
       title: product.title,

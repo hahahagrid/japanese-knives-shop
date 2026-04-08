@@ -9,6 +9,15 @@ import { PageVersion } from '@/components/PageVersion'
 export const metadata = {
   title: 'Купити японські ножі в наявності | Преміум клинки в Україні',
   description: 'Каталог автентичних японських ножів у наявності. Шедеври від Sakai, Sanjo та Echizen. Ручна робота, професійна сталь. Доставка по Україні 1-2 дні. Гарантія оригінальності.',
+  openGraph: {
+    title: 'Купити японські ножі в наявності | Japanese Kitchen Knives',
+    description: 'Каталог автентичних японських ножів у наявності. Шедеври від Sakai, Sanjo та Echizen. Ручна робота, професійна сталь.',
+    url: 'https://japanese-kitchen-knives.com.ua/knives/in-stock',
+    siteName: 'Japanese Kitchen Knives',
+    images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
+    locale: 'uk_UA',
+    type: 'website',
+  },
 }
 
 export default async function InStockPage() {

@@ -1,5 +1,26 @@
 export const revalidate = 86400
 
+export const metadata = {
+  title: 'Japanese Kitchen Knives | Оригінальні японські кухонні ножі',
+  description: 'Найкращі японські кухонні ножі ручної роботи від майстрів Sakai, Sanjo та Echizen. 100% оригінал, прямі поставки з Японії.',
+  openGraph: {
+    title: 'Japanese Kitchen Knives | Оригінальні японські кухонні ножі',
+    description: 'Найкращі японські кухонні ножі ручної роботи від майстрів Sakai, Sanjo та Echizen. 100% оригінал, прямі поставки з Японії.',
+    url: 'https://japanese-kitchen-knives.com.ua',
+    siteName: 'Japanese Kitchen Knives',
+    images: [
+      {
+        url: '/images/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Japanese Kitchen Knives Logo',
+      },
+    ],
+    locale: 'uk_UA',
+    type: 'website',
+  },
+}
+
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import Image from 'next/image'

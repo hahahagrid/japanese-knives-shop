@@ -15,7 +15,7 @@ export const metadata = {
     description: 'Статті про японські кухонні ножі: вибір, догляд, загострення та філософія японської майстерності.',
     url: 'https://japanese-kitchen-knives.com.ua/blog',
     siteName: 'Japanese Kitchen Knives',
-    images: [{ url: '/images/hero_knife-1920.webp', width: 1200, height: 630, alt: 'Блог Japanese Kitchen Knives' }],
+    images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',
     type: 'website',
   },

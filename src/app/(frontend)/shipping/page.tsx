@@ -13,6 +13,7 @@ export const metadata = {
     description: 'Інформація про способи оплати та умови доставки японських ножів. Нова Пошта по всій Україні. Відправка протягом 24 годин.',
     url: 'https://japanese-kitchen-knives.com.ua/shipping',
     siteName: 'Japanese Kitchen Knives',
+    images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',
     type: 'website',
   },
