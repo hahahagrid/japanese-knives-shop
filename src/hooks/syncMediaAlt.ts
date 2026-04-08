@@ -33,7 +33,7 @@ export const syncMediaAlt: CollectionAfterChangeHook = async ({
           req, // Обов'язково передаємо req для збереження транзакції
         })
       } catch (error) {
-        payload.logger.error(`[SyncMediaAlt] Помилка оновлення медіа ${imageId}:`, error)
+        payload.logger.error({ error }, `[SyncMediaAlt] Помилка оновлення медіа ${imageId}`)
       }
     }
   }
