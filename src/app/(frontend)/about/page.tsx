@@ -132,18 +132,20 @@ export default function AboutPage() {
           </AnimatedSection>
         </div>
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
             {offerings.map((item, i) => (
               <AnimatedSection
                 key={i}
                 delay={i * 0.1}
-                className="p-10 bg-white border border-[var(--border)] group hover:border-black transition-all duration-500"
+                className="p-6 sm:p-10 bg-white border border-[var(--border)] group hover:border-black transition-all duration-500 flex flex-col items-center text-center"
               >
-                <item.icon className="w-10 h-10 mb-8 text-black stroke-[1px]" />
-                <h3 className="heading-display text-2xl mb-4 group-hover:text-black transition-colors">
+                <item.icon className="w-8 h-8 md:w-10 md:h-10 mb-6 md:mb-8 text-black stroke-[1px]" />
+                <h3 className="heading-display text-lg md:text-2xl mb-4 group-hover:text-black transition-colors">
                   {item.title}
                 </h3>
-                <p className="text-neutral-500 leading-relaxed text-sm">{item.description}</p>
+                <p className="text-neutral-500 leading-relaxed text-[11px] md:text-sm">
+                  {item.description}
+                </p>
               </AnimatedSection>
             ))}
           </div>
