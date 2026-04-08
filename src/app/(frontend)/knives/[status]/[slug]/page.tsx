@@ -19,7 +19,7 @@ const statusMap: Record<string, string> = {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ status: string, slug: string }> }) {
-  const { slug } = await params
+  const { status, slug } = await params
   const decodedSlug = decodeURIComponent(slug)
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
@@ -30,12 +30,35 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
         { type: { equals: 'knife' } }
       ]
     },
+    depth: 1,
   })
   if (!docs.length) return { title: 'Not Found' }
   const knife = docs[0]
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
+  const pageUrl = `${siteUrl}/knives/${status}/${slug}`
+  const firstImage = (knife.images as any[])?.[0]
+  const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
+  const description = `Японський ніж ${knife.title} ручної роботи. Преміальна сталь, автентичне кування. ${knife.price ? `Ціна: ${knife.price.toLocaleString('uk-UA')} грн. ` : ''}Купити у магазині Japanese Kitchen Knives.`
+
   return { 
     title: `${knife.title} | Купити японський ніж в Україні`,
-    description: `Японський ніж ${knife.title} ручної роботи. Преміальна сталь, автентичне кування. Великий вибір ножів у наявності та під замовлення в магазині Japanese Kitchen Knives.`,
+    description,
+    openGraph: {
+      title: knife.title,
+      description,
+      url: pageUrl,
+      siteName: 'Japanese Kitchen Knives',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 800,
+          alt: knife.title,
+        },
+      ],
+      locale: 'uk_UA',
+      type: 'website',
+    },
   }
 }
 

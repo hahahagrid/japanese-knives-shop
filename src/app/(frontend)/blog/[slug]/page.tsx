@@ -15,10 +15,39 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { docs } = await payload.find({
     collection: 'posts',
     where: { slug: { equals: slug } },
+    depth: 1,
   })
   if (!docs.length) return { title: 'Not Found' }
-  return { title: `${docs[0].title} | Блог | Japanese Kitchen Knives` }
+  const post = docs[0]
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
+  const pageUrl = `${siteUrl}/blog/${slug}`
+  const coverImage = post.coverImage as any
+  const ogImageUrl = coverImage?.url ?? `${siteUrl}/images/hero_knife-1920.webp`
+  const description = post.excerpt || `Читайте статтю «${post.title}» у блозі Japanese Kitchen Knives. Все про японські кухонні ножі, догляд, вибір та використання.`
+
+  return {
+    title: `${post.title} | Блог | Japanese Kitchen Knives`,
+    description,
+    openGraph: {
+      title: post.title,
+      description,
+      url: pageUrl,
+      siteName: 'Japanese Kitchen Knives',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 800,
+          alt: post.title,
+        },
+      ],
+      locale: 'uk_UA',
+      type: 'article',
+      publishedTime: (post as any).publishedDate ?? undefined,
+    },
+  }
 }
+
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

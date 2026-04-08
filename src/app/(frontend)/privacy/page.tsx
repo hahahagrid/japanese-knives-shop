@@ -2,8 +2,16 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Політика конфіденційності | Knives Shop',
+  title: 'Політика конфіденційності | Japanese Kitchen Knives',
   description: 'Прозорі правила обробки ваших даних для безпечного замовлення японських ножів.',
+  openGraph: {
+    title: 'Політика конфіденційності | Japanese Kitchen Knives',
+    description: 'Прозорі правила обробки ваших даних для безпечного замовлення японських ножів.',
+    url: 'https://japanese-kitchen-knives.com.ua/privacy',
+    siteName: 'Japanese Kitchen Knives',
+    locale: 'uk_UA',
+    type: 'website',
+  },
 }
 
 export default function PrivacyPage() {

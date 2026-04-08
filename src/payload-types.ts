@@ -293,6 +293,10 @@ export interface Post {
     [k: string]: unknown;
   } | null;
   publishedDate?: string | null;
+  /**
+   * До 160 символів. Відображається у Google та при відправці посилання у Telegram/WhatsApp.
+   */
+  excerpt?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -568,6 +572,7 @@ export interface PostsSelect<T extends boolean = true> {
   coverImage?: T;
   content?: T;
   publishedDate?: T;
+  excerpt?: T;
   meta?:
     | T
     | {
