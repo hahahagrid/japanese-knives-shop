@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   })
 
   return (
-    <article className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl py-12 lg:py-24">
+    <article className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pt-32 pb-20 md:pt-48 md:pb-32">
       <PageVersion />
       <Link href="/blog" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold mb-12 hover:opacity-50 transition-opacity">
         <ChevronLeft className="h-3 w-3" />

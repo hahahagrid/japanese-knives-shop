@@ -143,16 +143,16 @@ export default async function HomePage() {
                 <br />
                 Ножі
               </h1>
-              <div className="flex flex-row gap-4 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                 <Link
                   href="/knives/in-stock"
-                  className="flex-1 sm:w-[180px] inline-flex items-center justify-center bg-white text-black py-4 text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-neutral-200 transition-colors duration-300 shadow-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center bg-white text-black py-5 px-10 text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-neutral-200 transition-colors duration-300 shadow-lg"
                 >
                   Каталог в наявності
                 </Link>
                 <Link
                   href="/knives/custom-order"
-                  className="flex-1 sm:w-[180px] inline-flex items-center justify-center bg-transparent border border-white/50 text-white py-4 text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-white/10 transition-colors duration-300 shadow-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center bg-transparent border border-white/50 text-white py-5 px-10 text-[10px] sm:text-[11px] font-bold tracking-[0.2em] uppercase hover:bg-white/10 transition-colors duration-300 shadow-lg"
                 >
                   Під замовлення
                 </Link>
@@ -210,7 +210,7 @@ export default async function HomePage() {
 
       {/* ── 2. In Stock Section ────────────────────────── */}
       {inStockKnives.length > 0 && (
-        <section className="bg-[#FAFAF9] pt-16 md:pt-24 pb-12 md:pb-16 border-b border-black/[0.03]">
+        <section className="bg-[#FAFAF9] py-20 md:py-32 border-b border-black/[0.03]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <AnimatedSection className="flex justify-between items-end mb-10">
               <div>
@@ -258,7 +258,7 @@ export default async function HomePage() {
 
       {/* ── 3. Custom Order Section ────────────────────── */}
       {customKnives.length > 0 && (
-        <section className="bg-[#FAFAF9] pt-12 md:pt-16 pb-16 md:pb-24 border-b border-black/[0.03]">
+        <section className="bg-[#FAFAF9] py-20 md:py-32 border-b border-black/[0.03]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <AnimatedSection className="flex justify-between items-end mb-10">
               <div>
@@ -305,7 +305,7 @@ export default async function HomePage() {
       )}
 
       {/* ── 4. Featured Manufacturers ──────────────────────── */}
-      <section className="bg-white py-20 border-b border-black/[0.03]">
+      <section className="bg-white py-20 md:py-32 border-b border-black/[0.03]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <AnimatedSection className="mb-10">
             <p className="text-label mb-3">Клинки цих та інших майстрів доступні для замовлення</p>
@@ -517,16 +517,16 @@ export default async function HomePage() {
                 Оберіть свій ідеальний ніж
               </h2>
 
-              <div className="flex flex-row gap-4 w-full max-w-xs sm:max-w-none sm:w-auto justify-center items-stretch">
+              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center items-stretch">
                 <Link
                   href="/knives/in-stock"
-                  className="flex-1 sm:w-[220px] inline-flex items-center justify-center px-4 sm:px-8 py-4 bg-white text-[#BC002D] font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-neutral-100 shadow-lg"
+                  className="w-full sm:w-[220px] inline-flex items-center justify-center px-4 sm:px-8 py-5 bg-white text-[#BC002D] font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-neutral-100 shadow-lg"
                 >
                   Обрати ніж
                 </Link>
                 <Link
                   href="/knives/custom-order"
-                  className="flex-1 sm:w-[220px] inline-flex items-center justify-center border-2 border-white/40 text-white px-4 sm:px-8 py-4 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-white/10 shadow-lg"
+                  className="w-full sm:w-[220px] inline-flex items-center justify-center border-2 border-white/40 text-white px-4 sm:px-8 py-5 font-bold uppercase tracking-[0.2em] text-[10px] sm:text-[11px] transition-colors duration-300 hover:bg-white/10 shadow-lg"
                 >
                   Під замовлення
                 </Link>
