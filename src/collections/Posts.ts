@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
-
 import { revalidatePost } from '../hooks/revalidate'
+import { syncPostMediaAlt } from '../hooks/syncPostMediaAlt'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -15,7 +15,7 @@ export const Posts: CollectionConfig = {
     read: () => true,
   },
   hooks: {
-    afterChange: [revalidatePost],
+    afterChange: [revalidatePost, syncPostMediaAlt],
   },
   fields: [
     {
