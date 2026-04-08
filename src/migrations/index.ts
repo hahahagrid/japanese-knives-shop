@@ -7,7 +7,6 @@ import * as migration_20260402_093827 from './20260402_093827';
 import * as migration_20260403_190558_add_seo_fields from './20260403_190558_add_seo_fields';
 import * as migration_20260403_221734_add_seo_image from './20260403_221734_add_seo_image';
 import * as migration_20260404_143507_add_orders_metadata_and_honeypot from './20260404_143507_add_orders_metadata_and_honeypot';
-import * as migration_20260408_080114_add_excerpt_to_posts from './20260408_080114_add_excerpt_to_posts';
 
 export const migrations = [
   {
@@ -54,10 +53,5 @@ export const migrations = [
     up: migration_20260404_143507_add_orders_metadata_and_honeypot.up,
     down: migration_20260404_143507_add_orders_metadata_and_honeypot.down,
     name: '20260404_143507_add_orders_metadata_and_honeypot',
-  },
-  {
-    up: migration_20260408_080114_add_excerpt_to_posts.up,
-    down: migration_20260408_080114_add_excerpt_to_posts.down,
-    name: '20260408_080114_add_excerpt_to_posts'
   },
 ];

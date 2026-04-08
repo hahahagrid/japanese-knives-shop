@@ -50,16 +50,6 @@ export const Posts: CollectionConfig = {
       index: true,
       admin: { position: 'sidebar' },
     },
-    {
-      name: 'excerpt',
-      label: 'Короткий опис (для SEO та соцмереж)',
-      type: 'textarea',
-      maxLength: 160,
-      admin: {
-        description: 'До 160 символів. Відображається у Google та при відправці посилання у Telegram/WhatsApp.',
-        position: 'sidebar',
-      },
-    },
   ],
   timestamps: true,
 }
