@@ -67,7 +67,7 @@ export function ContactForm() {
     <div className="bg-white border border-neutral-100 p-8 md:p-12 shadow-sm rounded-sm relative overflow-hidden group/form">
       <h2 className="text-2xl font-serif font-bold mb-10 tracking-tight">Напишіть нам</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
+      <form id="form-contact" onSubmit={handleSubmit} className="space-y-10 relative z-10">
         <div className="relative group">
           <label
             htmlFor="name"
@@ -173,6 +173,7 @@ export function ContactForm() {
 
         <div className="pt-4">
           <button
+            id="btn-contact-submit"
             type="submit"
             disabled={status === 'loading'}
             className="w-full bg-black text-white py-6 font-bold uppercase tracking-[0.3em] text-[11px] transition-all disabled:bg-neutral-300 disabled:cursor-not-allowed group/btn overflow-hidden relative shadow-lg shadow-black/5"

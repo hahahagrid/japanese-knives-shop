@@ -130,6 +130,8 @@ export function CartDrawer() {
                               {(item.price * item.quantity).toLocaleString('uk-UA')} ₴
                             </span>
                             <button
+                              id="btn-remove-from-cart"
+                              data-product-name={item.title}
                               onClick={() => removeItem(item.id)}
                               className="text-[10px] uppercase tracking-wider text-neutral-400 hover:text-red-500 transition-colors"
                             >
@@ -157,6 +159,7 @@ export function CartDrawer() {
                 </div>
                 <Link
                   href="/checkout"
+                  id="btn-go-to-checkout"
                   onClick={() => setCartOpen(false)}
                   className="w-full bg-black text-white py-5 flex items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-[0.3em] transition-colors group/btn relative overflow-hidden"
                 >

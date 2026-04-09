@@ -24,6 +24,7 @@ export const BrandFooter: React.FC = async () => {
               {settings.instagramUrl && (
                 <a
                   href={settings.instagramUrl as string}
+                  id="link-footer-instagram"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
@@ -47,6 +48,7 @@ export const BrandFooter: React.FC = async () => {
               {settings.telegramUrl && (
                 <a
                   href={settings.telegramUrl as string}
+                  id="link-footer-telegram"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Telegram"
@@ -58,6 +60,7 @@ export const BrandFooter: React.FC = async () => {
               {settings.youtubeUrl && (
                 <a
                   href={settings.youtubeUrl as string}
+                  id="link-footer-youtube"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube"
@@ -86,12 +89,14 @@ export const BrandFooter: React.FC = async () => {
               <p className="text-[10px] uppercase tracking-widest text-neutral-600 mb-1">Каталог</p>
               <Link
                 href="/knives/in-stock"
+                id="link-footer-in-stock"
                 className="text-sm text-neutral-400 hover:text-white transition-colors"
               >
                 В наявності
               </Link>
               <Link
                 href="/knives/custom-order"
+                id="link-footer-custom-order"
                 className="text-sm text-neutral-400 hover:text-white transition-colors"
               >
                 Під замовлення
@@ -131,6 +136,7 @@ export const BrandFooter: React.FC = async () => {
               </Link>
               <Link
                 href="/contacts"
+                id="link-footer-contacts"
                 className="text-sm text-neutral-400 hover:text-white transition-colors"
               >
                 Контакти

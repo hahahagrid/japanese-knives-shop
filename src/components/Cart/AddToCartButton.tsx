@@ -22,6 +22,8 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
     return (
       <a
         href="/contacts"
+        id="btn-learn-price"
+        data-product-name={knife.title}
         className="w-full sm:flex-1 text-center bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 group/btn overflow-hidden relative"
       >
         <span className="relative z-10">Дізнатись ціну</span>
@@ -32,6 +34,8 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
 
   return (
     <button
+      id="btn-add-to-cart"
+      data-product-name={knife.title}
       onClick={() =>
         addItem({
           id: knife.id,
