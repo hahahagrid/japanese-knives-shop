@@ -112,7 +112,7 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   type="text"
-                  id="name"
+                  id="checkout-name"
                   name="name"
                   required
                   minLength={2}
@@ -130,7 +130,7 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   type="tel"
-                  id="phone"
+                  id="checkout-phone"
                   name="phone"
                   required
                   minLength={10}
@@ -167,7 +167,7 @@ export default function CheckoutPage() {
                   Місто та відділення (Нова Пошта) *
                 </label>
                 <textarea
-                  id="deliveryInfo"
+                  id="checkout-delivery"
                   name="deliveryInfo"
                   required
                   rows={2}
@@ -218,6 +218,7 @@ export default function CheckoutPage() {
             <div className="pt-8">
               <button
                 type="submit"
+                id="btn-place-order"
                 disabled={status === 'loading' || items.length === 0}
                 className="w-full bg-black text-white py-6 font-bold uppercase tracking-[0.3em] text-[11px] transition-all disabled:bg-neutral-300 disabled:cursor-not-allowed flex items-center justify-center gap-4 group/btn overflow-hidden relative shadow-lg shadow-black/5"
               >
