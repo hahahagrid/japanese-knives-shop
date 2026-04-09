@@ -57,6 +57,25 @@ export default function CheckoutPage() {
 
       const resData = await res.json()
       setOrderNumber(resData.orderNumber)
+      
+      // GTM: Success Purchase
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        ;(window as any).dataLayer.push({
+          event: 'purchase',
+          ecommerce: {
+            transaction_id: resData.orderNumber,
+            value: total,
+            currency: 'UAH',
+            items: items.map(item => ({
+              item_id: String(item.id),
+              item_name: item.title,
+              price: item.price,
+              quantity: item.quantity
+            }))
+          }
+        })
+      }
+
       setStatus('success')
       clearCart()
     } catch (err: any) {
@@ -112,9 +131,14 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   type="text"
-                  id="name"
+                  id="checkout-name"
                   name="name"
                   required
+                  onFocus={() => {
+                    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                      ;(window as any).dataLayer.push({ event: 'checkout_progress', step: 1, step_name: 'contact_info' })
+                    }
+                  }}
                   minLength={2}
                   maxLength={50}
                   pattern="^[A-Za-zА-Яа-яІіЇїЄєҐґ\s'’ʼ‘’\`´.\-–—−]+$"
@@ -130,7 +154,7 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   type="tel"
-                  id="phone"
+                  id="checkout-phone"
                   name="phone"
                   required
                   minLength={10}
@@ -167,9 +191,14 @@ export default function CheckoutPage() {
                   Місто та відділення (Нова Пошта) *
                 </label>
                 <textarea
-                  id="deliveryInfo"
+                  id="checkout-delivery"
                   name="deliveryInfo"
                   required
+                  onFocus={() => {
+                    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+                      ;(window as any).dataLayer.push({ event: 'checkout_progress', step: 2, step_name: 'shipping_info' })
+                    }
+                  }}
                   rows={2}
                   className="w-full px-0 py-2 bg-transparent border-b border-neutral-200 focus:outline-none focus:border-black transition-all text-base resize-none placeholder:text-neutral-300 placeholder:italic placeholder:font-light"
                   placeholder="м. Київ, Відділення №1"
@@ -218,6 +247,7 @@ export default function CheckoutPage() {
             <div className="pt-8">
               <button
                 type="submit"
+                id="btn-place-order"
                 disabled={status === 'loading' || items.length === 0}
                 className="w-full bg-black text-white py-6 font-bold uppercase tracking-[0.3em] text-[11px] transition-all disabled:bg-neutral-300 disabled:cursor-not-allowed flex items-center justify-center gap-4 group/btn overflow-hidden relative shadow-lg shadow-black/5"
               >
