@@ -10,6 +10,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { FreshnessHandler } from '@/components/FreshnessHandler'
 import { ScrollToTopFab } from '@/components/ScrollToTopFab'
+import Script from 'next/script'
 import './styles.css'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter', display: 'swap' })
@@ -61,7 +62,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="uk" className={`${inter.variable} ${playfair.variable} light`}>
       <head>
         {/* Google Tag Manager */}
-        <script
+        <Script
+          id="gtm-script"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
