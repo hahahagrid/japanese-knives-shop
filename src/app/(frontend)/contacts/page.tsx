@@ -92,6 +92,7 @@ export default async function ContactsPage() {
             {settings.instagramUrl && (
               <a
                 href={settings.instagramUrl}
+                id="link-contact-instagram"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-sm group/icon"
@@ -107,6 +108,7 @@ export default async function ContactsPage() {
             {settings.telegramUrl && (
               <a
                 href={settings.telegramUrl}
+                id="link-contact-telegram"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-sm group/icon"
@@ -121,6 +123,7 @@ export default async function ContactsPage() {
             {settings.youtubeUrl && (
               <a
                 href={settings.youtubeUrl}
+                id="link-contact-youtube"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 border border-neutral-200 hover:border-black hover:bg-black hover:text-white transition-all duration-300 rounded-sm group/icon"
