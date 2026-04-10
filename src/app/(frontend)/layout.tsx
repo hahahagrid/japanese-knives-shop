@@ -10,12 +10,10 @@ import { MobileMenu } from '@/components/MobileMenu'
 import Script from 'next/script'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { ScrollToTopFab } from '@/components/ScrollToTopFab'
-import { LazyMotion } from 'framer-motion'
+import { FramerMotionProvider } from '@/components/FramerMotionProvider'
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter' })
 const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'], variable: '--font-playfair' })
-
-const loadFeatures = () => import('@/lib/framer-features').then((res) => res.default)
 
 export const metadata: Metadata = {
   title: 'Японські кухонні ножі | Магазин ексклюзивних ножів',
@@ -82,7 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col pt-20">
-        <LazyMotion features={loadFeatures} strict>
+        <FramerMotionProvider>
           <Header />
           <main className="flex-grow">{children}</main>
           <BrandFooter />
@@ -90,7 +88,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <MobileMenu />
           <LoadingScreen />
           <ScrollToTopFab />
-        </LazyMotion>
+        </FramerMotionProvider>
       </body>
     </html>
   )
