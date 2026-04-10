@@ -79,11 +79,11 @@ export default async function AccessoriesPage() {
               const secondImage = product.images?.[1]
               const imgUrl =
                 typeof firstImage === 'object' && firstImage !== null
-                  ? (firstImage.sizes?.card?.url || firstImage.url)
+                  ? (firstImage.sizes?.thumbnail?.url || firstImage.sizes?.card?.url || firstImage.url)
                   : null
               const hoverImgUrl =
                 typeof secondImage === 'object' && secondImage !== null
-                  ? (secondImage.sizes?.card?.url || secondImage.url)
+                  ? (secondImage.sizes?.thumbnail?.url || secondImage.sizes?.card?.url || secondImage.url)
                   : null
               
               // Note: using /accessories for accessories slug
