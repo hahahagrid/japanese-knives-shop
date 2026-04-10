@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
 interface KnifeCardProps {
   slug: string
@@ -13,13 +16,22 @@ interface KnifeCardProps {
 }
 
 export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl, pathPrefix, priority }: KnifeCardProps) {
+  const [canHover, setCanHover] = useState(false)
+  
+  useEffect(() => {
+    // Detect if device supports hover (Desktop)
+    if (typeof window !== 'undefined') {
+      setCanHover(window.matchMedia('(hover: hover)').matches)
+    }
+  }, [])
+
   const statusPath = status === 'in_stock' ? 'in-stock' : 'custom-order'
   const href = pathPrefix ? `${pathPrefix}/${slug}` : `/knives/${statusPath}/${slug}`
   
   return (
     <Link href={href} className="group flex flex-col">
-      {/* Image */}
-      <div className="aspect-[4/5] overflow-hidden relative mb-5">
+      {/* Image Container */}
+      <div className="aspect-[4/5] overflow-hidden relative mb-5 bg-neutral-100">
         {imageUrl ? (
           <>
             <Image
@@ -29,17 +41,17 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
               priority={priority}
               {...(priority ? { fetchPriority: "high" } : {})}
               className={`object-cover transition-all duration-1000 ease-out-expo group-hover:scale-[1.05] will-change-transform ${
-                hoverImageUrl ? 'md:group-hover:opacity-0' : ''
+                canHover && hoverImageUrl ? 'md:group-hover:opacity-0' : 'opacity-100'
               }`}
               sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
               quality={55}
             />
-            {hoverImageUrl && (
+            {/* Only render hover image for desktop to save mobile bandwidth */}
+            {canHover && hoverImageUrl && (
               <Image
                 src={hoverImageUrl}
                 alt={`${title} - view 2`}
                 fill
-                loading="lazy"
                 className="hidden md:block object-cover transition-all duration-1000 ease-out-expo opacity-0 group-hover:opacity-100 group-hover:scale-[1.05] will-change-transform"
                 sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
                 quality={55}
@@ -51,7 +63,7 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
         )}
       </div>
 
-      {/* Info */}
+      {/* Info Container */}
       <div className="flex flex-col gap-2">
         <h3 className="font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 group-hover:opacity-60">
           {title}
