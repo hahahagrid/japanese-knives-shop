@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
+import { m, Variants } from 'framer-motion'
 
 interface Props {
   children: React.ReactNode
@@ -9,44 +10,34 @@ interface Props {
   variant?: 'fade-up' | 'fade-in' | 'slide-in'
 }
 
+const variants: Record<string, Variants> = {
+  'fade-up': {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  },
+  'fade-in': {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 }
+  },
+  'slide-in': {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 }
+  }
+}
+
 export const AnimatedSection = ({ children, delay = 0, className = '', variant = 'fade-up' }: Props) => {
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    // Apply delay via CSS custom property
-    if (delay > 0) {
-      el.style.transitionDelay = `${delay}s`
-    }
-
-    // Use IntersectionObserver to trigger animation when element enters viewport
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            // Once animated, stop observing (once: true behavior)
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.05, rootMargin: '-50px' }
-    )
-
-    observer.observe(el)
-
-    return () => observer.disconnect()
-  }, [delay])
+  const currentVariant = variants[variant as string] || variants['fade-up']
 
   return (
-    <div
-      ref={ref}
-      data-variant={variant}
-      className={`animated-section ${className}`}
+    <m.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+      variants={currentVariant}
+      transition={{ duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+      className={className}
     >
       {children}
-    </div>
+    </m.div>
   )
 }
