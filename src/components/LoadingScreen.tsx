@@ -5,14 +5,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 
 export function LoadingScreen() {
-  const [show, setShow] = useState(() => {
-    // Synchronous initial state check to prevent flicker
-    if (typeof document !== 'undefined' && document.documentElement.classList.contains('skip-intro')) {
-      return false
-    }
-    return true
-  })
   const pathname = usePathname()
+  const [show, setShow] = useState(true)
+
+  // DISABLED GLOBALLY PER USER REQUEST
+  // Setting show to false immediately and returning null
+  // Keep the component for future use but don't play animations
+  return null;
 
   useEffect(() => {
     // If we're on a page that should skip intro, hide immediately
@@ -38,9 +37,7 @@ export function LoadingScreen() {
       {show && (
         <motion.div
           id="loading-screen"
-          key="loading-screen"
-          className="fixed inset-0 z-[99999] flex pointer-events-none"
-          initial={{ opacity: 1 }}
+          className="fixed inset-0 z-[9999] flex pointer-events-none"
           exit={{ opacity: 0, transition: { duration: 0.5 } }}
         >
           {/* Left Paper Half */}
@@ -68,30 +65,30 @@ export function LoadingScreen() {
           >
             {/* The Cut Line - grows down with the knife */}
             <motion.div
-              className="absolute top-0 w-[1px] bg-black/15 shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+              className="w-[1px] bg-[var(--gold)] opacity-30"
               initial={{ height: 0 }}
-              animate={{ height: 'calc(var(--vh, 1vh) * 100)' }}
-              transition={{ duration: 0.9, ease: 'linear' }}
+              animate={{ height: '100%' }}
+              transition={{ duration: 0.5, ease: 'linear' }}
             />
 
-            {/* The Knife SVG */}
+            {/* The Knife SVG - moves down along the cut line */}
             <motion.div
-              className="absolute top-0 flex justify-center w-12"
-              initial={{ y: '-100%' }} 
-              animate={{ y: 'calc(var(--vh, 1vh) * 100)' }}
-              transition={{ duration: 0.9, ease: 'linear' }}
+              className="absolute top-0 left-1/2 -translate-x-1/2 text-[var(--gold)]"
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: '100vh', opacity: 1 }}
+              transition={{ duration: 0.5, ease: 'linear' }}
             >
-              <div className="relative -top-40 flex flex-col items-center drop-shadow-2xl">
-                {/* Knife Handle */}
-                <div className="w-3.5 h-16 bg-[#1f1610] rounded-t-sm shadow-inner" />
-                {/* Knife Bolster */}
-                <div className="w-5 h-2.5 bg-[#4b5563]" />
-                {/* Knife Blade (Silhouette top-down minimalist) */}
-                <svg width="24" height="140" viewBox="0 0 24 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                   <path d="M4 0 L20 0 L20 100 C20 120 12 140 12 140 C12 140 4 120 4 100 L4 0 Z" fill="#9ca3af" />
-                   <path d="M4 0 L12 0 L12 140 C12 140 4 120 4 100 L4 0 Z" fill="#d1d5db" />
-                </svg>
-              </div>
+              <svg 
+                width="24" 
+                height="120" 
+                viewBox="0 0 24 120" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
+                className="translate-y-[-100%]"
+              >
+                <path d="M12 4L14 12L14 100C14 105 12 110 12 110C12 110 10 105 10 100L10 12L12 4Z" fill="currentColor" />
+                <rect x="11.5" y="0" width="1" height="120" fill="currentColor" opacity="0.2" />
+              </svg>
             </motion.div>
           </motion.div>
         </motion.div>
