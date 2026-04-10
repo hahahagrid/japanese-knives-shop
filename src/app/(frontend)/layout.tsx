@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
-import './globals.css'
 import './styles.css'
 import { getPayload } from 'payload'
 import config from '@payload-config'
@@ -9,8 +8,6 @@ import { BrandFooter } from '@/components/BrandFooter'
 import { CartDrawer } from '@/components/Cart/CartDrawer'
 import { MobileMenu } from '@/components/MobileMenu'
 import Script from 'next/script'
-import { GTMNoScript } from '@/components/GTMNoScript'
-import { QuickView } from '@/components/QuickView'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { ScrollToTopFab } from '@/components/ScrollToTopFab'
 import { LazyMotion } from 'framer-motion'
@@ -36,8 +33,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const payload = await getPayload({ config })
-  const settings = await payload.findGlobal({ slug: 'site-settings', overrideAccess: false })
-
+  
   return (
     <html lang="uk" className={`${inter.variable} ${playfair.variable} light`}>
       <head>
@@ -87,13 +83,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className="antialiased min-h-screen flex flex-col pt-20">
         <LazyMotion features={loadFeatures} strict>
-          <GTMNoScript />
           <Header />
           <main className="flex-grow">{children}</main>
           <BrandFooter />
           <CartDrawer />
           <MobileMenu />
-          <QuickView />
           <LoadingScreen />
           <ScrollToTopFab />
         </LazyMotion>
