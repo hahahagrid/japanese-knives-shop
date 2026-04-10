@@ -121,17 +121,17 @@ export default async function HomePage() {
         style={{ height: 'calc(var(--vh, 1vh) * 92)' }}
       >
         {/* Background image */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0 z-0 overflow-hidden bg-black">
           <Image
             src="/images/hero_knife-1920.webp"
             alt="Premium Japanese Knife"
             fill
             priority
             {...({ fetchPriority: 'high' } as any)}
-            className="object-cover opacity-55 animate-slow-zoom"
+            className="object-cover opacity-55"
             style={{ objectPosition: 'center 40%' }}
             sizes="100vw"
-            quality={65}
+            quality={50}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
         </div>
