@@ -62,6 +62,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                 src={activeUrl}
                 alt={activeAlt || title}
                 fill
+                unoptimized
                 className="object-cover transition-transform duration-1000 ease-out hover:scale-105 will-change-transform"
                 priority={activeIndex === 0}
                 {...(activeIndex === 0 ? { fetchPriority: "high" } : {})}
@@ -96,7 +97,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
           {images.map((img, i) => {
             const thumbUrl = typeof img.image === 'object' 
               ? (img.image.sizes?.thumbnail?.url || img.image.url) 
-              : null
+              : img.image
             return (
               <button
                 key={img.id || i}
@@ -112,6 +113,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                     src={thumbUrl}
                     alt={`${title} - Thumbnail ${i + 1}`}
                     fill
+                    unoptimized
                     className="object-cover"
                     sizes="120px"
                   />
