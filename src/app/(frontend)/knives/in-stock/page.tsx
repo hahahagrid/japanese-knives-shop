@@ -8,10 +8,12 @@ import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Купити японські ножі в наявності | Преміум клинки в Україні',
-  description: 'Каталог автентичних японських ножів у наявності. Шедеври від Sakai, Sanjo та Echizen. Ручна робота, професійна сталь. Доставка по Україні 1-2 дні. Гарантія оригінальності.',
+  description:
+    'Каталог автентичних японських ножів у наявності. Шедеври від Sakai, Sanjo та Echizen. Ручна робота, професійна сталь. Доставка по Україні 1-2 дні. Гарантія оригінальності.',
   openGraph: {
     title: 'Купити японські ножі в наявності | Japanese Kitchen Knives',
-    description: 'Каталог автентичних японських ножів у наявності. Шедеври від Sakai, Sanjo та Echizen. Ручна робота, професійна сталь.',
+    description:
+      'Каталог автентичних японських ножів у наявності. Шедеври від Sakai, Sanjo та Echizen. Ручна робота, професійна сталь.',
     url: 'https://japanese-kitchen-knives.com.ua/knives/in-stock',
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
@@ -51,7 +53,7 @@ export default async function InStockPage() {
             <h1 className="heading-display text-5xl md:text-6xl lg:text-8xl mb-6">В наявності</h1>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed font-light italic font-serif">
               Шедеври японської майстерності, відібрані вручну та готові до відправки вже сьогодні.
-              Кожен ніж — це історія традицій та досконалого балансу.
+              Кожен ніж - це історія традицій та досконалого балансу.
             </p>
           </AnimatedSection>
         </div>
@@ -81,11 +83,15 @@ export default async function InStockPage() {
               const secondImage = knife.images?.[1]
               const imgUrl =
                 typeof firstImage === 'object' && firstImage !== null
-                  ? (firstImage.sizes?.thumbnail?.url || firstImage.sizes?.card?.url || firstImage.url)
+                  ? firstImage.sizes?.thumbnail?.url ||
+                    firstImage.sizes?.card?.url ||
+                    firstImage.url
                   : null
               const hoverImgUrl =
                 typeof secondImage === 'object' && secondImage !== null
-                  ? (secondImage.sizes?.thumbnail?.url || secondImage.sizes?.card?.url || secondImage.url)
+                  ? secondImage.sizes?.thumbnail?.url ||
+                    secondImage.sizes?.card?.url ||
+                    secondImage.url
                   : null
               return (
                 <div key={knife.id} className="animate-fade-up">

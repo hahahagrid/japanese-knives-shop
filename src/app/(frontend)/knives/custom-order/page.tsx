@@ -9,10 +9,12 @@ import { PageVersion } from '@/components/PageVersion'
 
 export const metadata = {
   title: 'Японські ножі під замовлення | Есклюзивні клинки з Японії',
-  description: 'Замовлення ексклюзивних японських ножів безпосередньо від майстрів. Індивідуальний підбір сталі, довжини та руків’я. Привеземо будь-яку модель спеціально для вас.',
+  description:
+    'Замовлення ексклюзивних японських ножів безпосередньо від майстрів. Індивідуальний підбір сталі, довжини та руків’я. Привеземо будь-яку модель спеціально для вас.',
   openGraph: {
     title: 'Японські ножі під замовлення | Japanese Kitchen Knives',
-    description: 'Замовлення ексклюзивних японських ножів безпосередньо від майстрів. Індивідуальний підбір сталі, довжини та руків’я.',
+    description:
+      'Замовлення ексклюзивних японських ножів безпосередньо від майстрів. Індивідуальний підбір сталі, довжини та руків’я.',
     url: 'https://japanese-kitchen-knives.com.ua/knives/custom-order',
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
@@ -53,7 +55,7 @@ export default async function CustomOrderPage() {
               Під замовлення
             </h1>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed font-light italic font-serif">
-              Оберіть модель зі списку або опишіть свій ідеальний ніж — конкретну сталь, довжину
+              Оберіть модель зі списку або опишіть свій ідеальний ніж - конкретну сталь, довжину
               леза, тип руків'я, улюбленого майстра. Ми знайдемо, привеземо та доставимо шедевр
               спеціально для вас.
             </p>
@@ -89,11 +91,15 @@ export default async function CustomOrderPage() {
               const secondImage = knife.images?.[1]
               const imgUrl =
                 typeof firstImage === 'object' && firstImage !== null
-                  ? (firstImage.sizes?.thumbnail?.url || firstImage.sizes?.card?.url || firstImage.url)
+                  ? firstImage.sizes?.thumbnail?.url ||
+                    firstImage.sizes?.card?.url ||
+                    firstImage.url
                   : null
               const hoverImgUrl =
                 typeof secondImage === 'object' && secondImage !== null
-                  ? (secondImage.sizes?.thumbnail?.url || secondImage.sizes?.card?.url || secondImage.url)
+                  ? secondImage.sizes?.thumbnail?.url ||
+                    secondImage.sizes?.card?.url ||
+                    secondImage.url
                   : null
               return (
                 <div key={knife.id} className="animate-fade-up">
