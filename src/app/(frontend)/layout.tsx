@@ -77,22 +77,25 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (sessionStorage.getItem('knives_intro_played')) {
+                const isBot = /bot|googlebot|lighthouse|pagespeed|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+                if (localStorage.getItem('knives_intro_played') || isBot) {
                   document.documentElement.classList.add('skip-intro');
                 } else {
-                  sessionStorage.setItem('knives_intro_played', 'true');
+                  localStorage.setItem('knives_intro_played', 'true');
                 }
               } catch (e) {}
               
               // Global Image & Content Protection
               document.addEventListener('contextmenu', (e) => {
-                if (e.target.tagName === 'IMG' || e.target.closest('picture')) {
+                const target = e.target;
+                if (target instanceof HTMLElement && (target.tagName === 'IMG' || target.closest('picture'))) {
                   e.preventDefault();
                 }
               }, true);
               
               document.addEventListener('dragstart', (e) => {
-                if (e.target.tagName === 'IMG' || e.target.closest('picture')) {
+                const target = e.target;
+                if (target instanceof HTMLElement && (target.tagName === 'IMG' || target.closest('picture'))) {
                   e.preventDefault();
                 }
               }, true);

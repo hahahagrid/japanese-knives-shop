@@ -21,9 +21,10 @@ export function LoadingScreen() {
       return
     }
 
+    // Drastically reduced timeout for better UX and performance scores
     const timer = setTimeout(() => {
       setShow(false)
-    }, 2800)
+    }, 1200)
     return () => clearTimeout(timer)
   }, [pathname])
 

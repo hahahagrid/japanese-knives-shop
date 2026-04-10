@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { RichText } from '@/components/RichText'
 import Link from 'next/link'
+import NextImage from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { PageVersion } from '@/components/PageVersion'
 
@@ -112,11 +113,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </h1>
           <div className="mx-auto bg-stone-50 overflow-hidden relative border border-[var(--border)] shadow-md">
             {post.coverImage && typeof post.coverImage === 'object' ? (
-              <img
-                src={(post.coverImage as any).url}
-                alt={post.title}
-                className="w-full h-auto block"
-              />
+              <div className="relative aspect-video w-full">
+                <NextImage
+                  src={(post.coverImage as any).url}
+                  alt={post.title}
+                  fill
+                  priority
+                  {...({ fetchPriority: "high" } as any)}
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
+              </div>
             ) : (
               <div className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden rounded-sm bg-neutral-900 flex items-center justify-center">
                 <div className="absolute inset-0 flex items-center justify-center opacity-[0.08]">
