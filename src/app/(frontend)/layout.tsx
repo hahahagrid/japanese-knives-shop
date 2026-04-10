@@ -61,14 +61,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="uk" className={`${inter.variable} ${playfair.variable} light`}>
       <head>
-        {/* Preload Critical Hero Image for LCP */}
-        <link
-          rel="preload"
-          href="/images/hero_knife-1920.webp"
-          as="image"
-          type="image/webp"
-          fetchPriority="high"
-        />
         {/* Google Tag Manager */}
         <Script
           id="gtm-script"

@@ -125,6 +125,7 @@ export default async function HomePage() {
             alt="Premium Japanese Knife"
             fill
             priority
+            unoptimized
             {...({ fetchPriority: "high" } as any)}
             className="object-cover opacity-55 animate-slow-zoom"
             style={{ objectPosition: 'center 40%' }}
