@@ -8,7 +8,9 @@ export function LoadingScreen() {
   const pathname = usePathname()
   const [show, setShow] = useState(true)
 
-  // Re-enabled for performance testing
+  // DISABLED GLOBALLY: returning null to skip all JS and rendering
+  // The polished animation code is preserved below.
+  return null;
 
   useEffect(() => {
     // If we're on a page that should skip intro, hide immediately

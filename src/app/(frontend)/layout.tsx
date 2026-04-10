@@ -77,10 +77,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                // Temporarily disabled skip logic to test performance impact
-                const isBot = false; 
-                if (false) {
+                const isBot = /bot|googlebot|lighthouse|pagespeed|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+                if (localStorage.getItem('knives_intro_played') || isBot) {
                   document.documentElement.classList.add('skip-intro');
+                } else {
+                  localStorage.setItem('knives_intro_played', 'true');
                 }
               } catch (e) {}
               
@@ -115,7 +116,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <OrganizationSchema phone={settings.contactPhone} email={settings.contactEmail} />
         <FreshnessHandler initialVersion={settings.contentVersion || 'init'} />
         <ViewportHandler />
-        <LoadingScreen />
+        {/* <LoadingScreen /> */}
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
