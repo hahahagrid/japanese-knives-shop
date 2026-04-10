@@ -125,11 +125,11 @@ export default async function HomePage() {
             alt="Premium Japanese Knife"
             fill
             priority
-            unoptimized
             {...({ fetchPriority: "high" } as any)}
             className="object-cover opacity-55 animate-slow-zoom"
             style={{ objectPosition: 'center 40%' }}
             sizes="100vw"
+            quality={65}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
         </div>
