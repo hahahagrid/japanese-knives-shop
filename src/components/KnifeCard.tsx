@@ -31,8 +31,8 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
               className={`object-cover transition-all duration-1000 ease-out-expo group-hover:scale-[1.05] will-change-transform ${
                 hoverImageUrl ? 'md:group-hover:opacity-0' : ''
               }`}
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              quality={65}
+              sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
+              quality={55}
             />
             {hoverImageUrl && (
               <Image
@@ -41,8 +41,8 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
                 fill
                 loading="lazy"
                 className="hidden md:block object-cover transition-all duration-1000 ease-out-expo opacity-0 group-hover:opacity-100 group-hover:scale-[1.05] will-change-transform"
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                quality={65}
+                sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
+                quality={55}
               />
             )}
           </>
