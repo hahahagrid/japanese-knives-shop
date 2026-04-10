@@ -8,10 +8,7 @@ export function LoadingScreen() {
   const pathname = usePathname()
   const [show, setShow] = useState(true)
 
-  // DISABLED GLOBALLY PER USER REQUEST
-  // Setting show to false immediately and returning null
-  // Keep the component for future use but don't play animations
-  return null;
+  // Re-enabled for performance testing
 
   useEffect(() => {
     // If we're on a page that should skip intro, hide immediately
