@@ -1,24 +1,51 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
-interface AnimatedSectionProps {
+interface Props {
   children: React.ReactNode
-  className?: string
   delay?: number
-  variant?: 'fade-up' | 'fade-in'
+  className?: string
+  variant?: 'fade-up' | 'fade-in' | 'slide-in'
 }
 
-/**
- * AnimatedSection: Simplified to a static wrapper to eliminate mobile jitter.
- * We are removing all Framer Motion logic as per user request for absolute stability.
- */
-export function AnimatedSection({
-  children,
-  className,
-}: AnimatedSectionProps) {
+export const AnimatedSection = ({ children, delay = 0, className = '', variant = 'fade-up' }: Props) => {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    // Apply delay via CSS custom property
+    if (delay > 0) {
+      el.style.transitionDelay = `${delay}s`
+    }
+
+    // Use IntersectionObserver to trigger animation when element enters viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            // Once animated, stop observing (once: true behavior)
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.05, rootMargin: '-50px' }
+    )
+
+    observer.observe(el)
+
+    return () => observer.disconnect()
+  }, [delay])
+
   return (
-    <div className={className}>
+    <div
+      ref={ref}
+      data-variant={variant}
+      className={`animated-section ${className}`}
+    >
       {children}
     </div>
   )

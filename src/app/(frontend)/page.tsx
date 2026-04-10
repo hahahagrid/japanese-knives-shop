@@ -126,7 +126,7 @@ export default async function HomePage() {
             fill
             priority
             {...({ fetchPriority: "high" } as any)}
-            className="object-cover opacity-55 animate-slow-zoom"
+            className="object-cover opacity-55 md:animate-slow-zoom"
             style={{ objectPosition: 'center 40%' }}
             sizes="100vw"
             quality={65}

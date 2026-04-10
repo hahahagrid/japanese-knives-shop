@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── AnimatedSection: CSS-only scroll animations (replaces framer-motion) ── */
+.animated-section {
+  opacity: 0;
+  will-change: opacity, transform;
+  transition: opacity 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+              transform 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+}
+.animated-section[data-variant="fade-up"] {
+  transform: translateY(20px);
+}
+.animated-section[data-variant="fade-in"] {
+  transform: none;
+}
+.animated-section[data-variant="slide-in"] {
+  transform: translateX(-20px);
+}
+.animated-section.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 @layer base {
   :root {
     --background: #FAFAF8;
