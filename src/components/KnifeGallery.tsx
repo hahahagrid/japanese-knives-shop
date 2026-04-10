@@ -32,9 +32,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
   if (!images || images.length === 0) return null
 
   const activeImage = images[activeIndex]?.image
-  const activeUrl = typeof activeImage === 'object' 
-    ? (activeImage.sizes?.tablet?.url || activeImage.url) 
-    : null
+  const activeUrl = typeof activeImage === 'object' ? activeImage.url : null
   const activeAlt = typeof activeImage === 'object' ? activeImage.alt : title
   const fullResUrl = typeof activeImage === 'object' ? activeImage.url : null
 
@@ -45,7 +43,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
     <div className="flex flex-col gap-4">
       {/* Main Image View */}
       <div 
-        className="relative aspect-[4/5] overflow-hidden group cursor-zoom-in"
+        className="relative aspect-[4/5] overflow-hidden group cursor-zoom-in bg-neutral-100"
         onClick={() => setIsZoomed(true)}
       >
         <AnimatePresence mode="wait">
@@ -62,11 +60,11 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                 src={activeUrl}
                 alt={activeAlt || title}
                 fill
-                unoptimized
                 className="object-cover transition-transform duration-1000 ease-out hover:scale-105 will-change-transform"
                 priority={activeIndex === 0}
                 {...(activeIndex === 0 ? { fetchPriority: "high" } : {})}
-                sizes="(max-width: 1024px) 100vw, 800px"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 600px"
+                quality={65}
               />
             )}
           </motion.div>
@@ -95,9 +93,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
       {images.length > 1 && (
         <div className="flex flex-wrap gap-2 md:gap-3">
           {images.map((img, i) => {
-            const thumbUrl = typeof img.image === 'object' 
-              ? (img.image.sizes?.thumbnail?.url || img.image.url) 
-              : img.image
+            const thumbUrl = typeof img.image === 'object' ? img.image.url : img.image
             return (
               <button
                 key={img.id || i}
@@ -110,12 +106,12 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
               >
                 {thumbUrl && (
                   <Image
-                    src={thumbUrl}
+                    src={thumbUrl as string}
                     alt={`${title} - Thumbnail ${i + 1}`}
                     fill
-                    unoptimized
                     className="object-cover"
-                    sizes="120px"
+                    sizes="(max-width: 768px) 80px, 120px"
+                    quality={50}
                   />
                 )}
               </button>
