@@ -138,7 +138,7 @@ export default async function HomePage() {
 
         <div className="relative z-10 w-full pb-16 md:pb-24">
           <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl animate-fade-up" style={{ animationDelay: '100ms' }}>
+            <div className="max-w-2xl">
               <p className="text-label text-white/50 mb-6">Мистецтво ідеального різу</p>
               <h1 className="heading-display text-5xl md:text-7xl lg:text-8xl text-white mb-8">
                 Японські
