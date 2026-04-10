@@ -121,10 +121,11 @@ export default async function HomePage() {
         {/* Background image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
-            src="/images/hero_knife.png"
+            src="/images/hero_knife-1920.webp"
             alt="Premium Japanese Knife"
             fill
             priority
+            {...({ fetchPriority: "high" } as any)}
             className="object-cover opacity-55 animate-slow-zoom"
             style={{ objectPosition: 'center 40%' }}
             sizes="100vw"

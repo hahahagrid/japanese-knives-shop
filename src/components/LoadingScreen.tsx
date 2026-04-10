@@ -24,7 +24,7 @@ export function LoadingScreen() {
     // Drastically reduced timeout for better UX and performance scores
     const timer = setTimeout(() => {
       setShow(false)
-    }, 1200)
+    }, 800)
     return () => clearTimeout(timer)
   }, [pathname])
 
@@ -48,7 +48,7 @@ export function LoadingScreen() {
             className="h-full w-1/2 bg-[#fbfbfd] border-r border-black/5 relative overflow-hidden"
             initial={{ x: 0 }}
             animate={{ x: '-100%' }}
-            transition={{ delay: 1.0, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           />
 
           {/* Right Paper Half */}
@@ -56,7 +56,7 @@ export function LoadingScreen() {
             className="h-full w-1/2 bg-[#fbfbfd] border-l border-black/5 relative overflow-hidden"
             initial={{ x: 0 }}
             animate={{ x: '100%' }}
-            transition={{ delay: 1.0, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           />
 
           {/* Central Cut Line & Knife Container */}
@@ -64,7 +64,7 @@ export function LoadingScreen() {
             className="absolute inset-0 flex justify-center pointer-events-none"
             initial={{ opacity: 1 }}
             animate={{ opacity: 0 }}
-            transition={{ delay: 1.2, duration: 0.4 }}
+            transition={{ delay: 0.4, duration: 0.3 }}
           >
             {/* The Cut Line - grows down with the knife */}
             <motion.div
