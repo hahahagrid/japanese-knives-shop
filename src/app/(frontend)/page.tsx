@@ -2,10 +2,12 @@ export const revalidate = 86400
 
 export const metadata = {
   title: 'Japanese Kitchen Knives | Оригінальні японські кухонні ножі',
-  description: 'Найкращі японські кухонні ножі ручної роботи від майстрів Sakai, Sanjo та Echizen. 100% оригінал, прямі поставки з Японії.',
+  description:
+    'Найкращі японські кухонні ножі ручної роботи від майстрів Sakai, Sanjo та Echizen. 100% оригінал, прямі поставки з Японії.',
   openGraph: {
     title: 'Japanese Kitchen Knives | Оригінальні японські кухонні ножі',
-    description: 'Найкращі японські кухонні ножі ручної роботи від майстрів Sakai, Sanjo та Echizen. 100% оригінал, прямі поставки з Японії.',
+    description:
+      'Найкращі японські кухонні ножі ручної роботи від майстрів Sakai, Sanjo та Echizen. 100% оригінал, прямі поставки з Японії.',
     url: 'https://japanese-kitchen-knives.com.ua',
     siteName: 'Japanese Kitchen Knives',
     images: [
@@ -66,7 +68,7 @@ const advantages = [
   {
     num: '02',
     title: 'Ручна робота',
-    text: 'Унікальний процес кування та заточки. Кожен виріб — результат багаторічного досвіду.',
+    text: 'Унікальний процес кування та заточки. Кожен виріб - результат багаторічного досвіду.',
   },
   {
     num: '03',
@@ -125,7 +127,7 @@ export default async function HomePage() {
             alt="Premium Japanese Knife"
             fill
             priority
-            {...({ fetchPriority: "high" } as any)}
+            {...({ fetchPriority: 'high' } as any)}
             className="object-cover opacity-55 animate-slow-zoom"
             style={{ objectPosition: 'center 40%' }}
             sizes="100vw"
@@ -233,11 +235,15 @@ export default async function HomePage() {
                 const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
-                    ? firstImage.sizes?.thumbnail?.url || firstImage.sizes?.card?.url || firstImage.url
+                    ? firstImage.sizes?.thumbnail?.url ||
+                      firstImage.sizes?.card?.url ||
+                      firstImage.url
                     : null
                 const hoverImgUrl =
                   typeof secondImage === 'object' && secondImage !== null
-                    ? secondImage.sizes?.thumbnail?.url || secondImage.sizes?.card?.url || secondImage.url
+                    ? secondImage.sizes?.thumbnail?.url ||
+                      secondImage.sizes?.card?.url ||
+                      secondImage.url
                     : null
                 return (
                   <div key={knife.id}>
@@ -281,11 +287,15 @@ export default async function HomePage() {
                 const secondImage = knife.images?.[1]
                 const imgUrl =
                   typeof firstImage === 'object' && firstImage !== null
-                    ? firstImage.sizes?.thumbnail?.url || firstImage.sizes?.card?.url || firstImage.url
+                    ? firstImage.sizes?.thumbnail?.url ||
+                      firstImage.sizes?.card?.url ||
+                      firstImage.url
                     : null
                 const hoverImgUrl =
                   typeof secondImage === 'object' && secondImage !== null
-                    ? secondImage.sizes?.thumbnail?.url || secondImage.sizes?.card?.url || secondImage.url
+                    ? secondImage.sizes?.thumbnail?.url ||
+                      secondImage.sizes?.card?.url ||
+                      secondImage.url
                     : null
                 return (
                   <div key={knife.id}>
@@ -364,7 +374,7 @@ export default async function HomePage() {
                       Коваль
                     </strong>
                     Майстер, який створює ніж від початку і до кінця. Формування, кування,
-                    шліфування, нанесення ієрогліфів — кожен етап проходить через його руки. Це не
+                    шліфування, нанесення ієрогліфів - кожен етап проходить через його руки. Це не
                     просто процес, а цілісна робота однієї людини, в яку вкладено досвід, характер і
                     власний підхід.
                   </div>
@@ -374,7 +384,7 @@ export default async function HomePage() {
                     <strong className="text-black block mb-2 uppercase text-[10px] tracking-[0.2em] font-sans">
                       Фабрика
                     </strong>
-                    На фабриці ніж проходить через багато рук — кожен відповідає за окремий етап. Це
+                    На фабриці ніж проходить через багато рук - кожен відповідає за окремий етап. Це
                     інший підхід: швидший, стандартизований і передбачуваний за результатом.
                   </div>
                 </AnimatedSection>
@@ -460,7 +470,7 @@ export default async function HomePage() {
 
                   <p>
                     Фабричне виробництво дає стабільність і повторюваність результату. Ручна робота
-                    — це індивідуальність і особистий почерк майстра.
+                    - це індивідуальність і особистий почерк майстра.
                   </p>
                 </div>
               </AnimatedSection>
@@ -491,7 +501,7 @@ export default async function HomePage() {
               </h3>
               <div className="flex justify-end pr-4 md:pr-10">
                 <p className="text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-black/40 font-sans translate-y-[-20px]">
-                  — Засновник Japanese Kitchen Knives
+                  - Засновник Japanese Kitchen Knives
                 </p>
               </div>
             </div>
