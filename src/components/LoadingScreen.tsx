@@ -12,19 +12,18 @@ export function LoadingScreen() {
 
   useEffect(() => {
     // If we're on a page that should skip intro, hide immediately
-    if (document.documentElement.classList.contains('skip-intro')) {
+    if (typeof window !== 'undefined' && document.documentElement.classList.contains('skip-intro')) {
       setShow(false)
       return
     }
 
-    // Drastically reduced timeout for better UX and performance scores
+    // Increased timeout to allow full animation sequence to finish (Knife + Doors)
     const timer = setTimeout(() => {
       setShow(false)
-    }, 800)
+    }, 1600) // Sequence: Knife (0.6s) -> Doors start (0.4s) -> Doors finish (1.4s) -> Fade out
     return () => clearTimeout(timer)
   }, [pathname])
 
-  // Critical: do not even render the initial frame if we already know we should skip
   if (typeof window !== 'undefined' && document.documentElement.classList.contains('skip-intro')) {
     return null
   }
@@ -34,23 +33,25 @@ export function LoadingScreen() {
       {show && (
         <motion.div
           id="loading-screen"
-          className="fixed inset-0 z-[9999] flex pointer-events-none"
-          exit={{ opacity: 0, transition: { duration: 0.5 } }}
+          className="fixed inset-0 z-[9999] flex bg-transparent"
+          exit={{ opacity: 0, transition: { duration: 0.6, ease: 'easeInOut' } }}
         >
           {/* Left Paper Half */}
           <motion.div
             className="h-full w-1/2 bg-[#fbfbfd] border-r border-black/5 relative overflow-hidden"
             initial={{ x: 0 }}
             animate={{ x: '-100%' }}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          />
+            transition={{ delay: 0.5, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {/* Subtle paper texture overlay could be added here */}
+          </motion.div>
 
           {/* Right Paper Half */}
           <motion.div
             className="h-full w-1/2 bg-[#fbfbfd] border-l border-black/5 relative overflow-hidden"
             initial={{ x: 0 }}
             animate={{ x: '100%' }}
-            transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ delay: 0.5, duration: 1, ease: [0.22, 1, 0.36, 1] }}
           />
 
           {/* Central Cut Line & Knife Container */}
@@ -58,22 +59,22 @@ export function LoadingScreen() {
             className="absolute inset-0 flex justify-center pointer-events-none"
             initial={{ opacity: 1 }}
             animate={{ opacity: 0 }}
-            transition={{ delay: 0.4, duration: 0.3 }}
+            transition={{ delay: 0.8, duration: 0.4 }}
           >
             {/* The Cut Line - grows down with the knife */}
             <motion.div
               className="w-[1px] bg-[var(--gold)] opacity-30"
               initial={{ height: 0 }}
               animate={{ height: '100%' }}
-              transition={{ duration: 0.5, ease: 'linear' }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             />
 
             {/* The Knife SVG - moves down along the cut line */}
             <motion.div
               className="absolute top-0 left-1/2 -translate-x-1/2 text-[var(--gold)]"
-              initial={{ y: -50, opacity: 0 }}
-              animate={{ y: '100vh', opacity: 1 }}
-              transition={{ duration: 0.5, ease: 'linear' }}
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: '110vh', opacity: 1 }}
+              transition={{ duration: 0.7, ease: 'linear' }}
             >
               <svg 
                 width="24" 
