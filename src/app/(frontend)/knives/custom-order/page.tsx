@@ -104,7 +104,7 @@ export default async function CustomOrderPage() {
                     status={knife.status ?? 'custom_order'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
-                    priority={index < 4}
+                    priority={index < 2}
                   />
                 </div>
               )
