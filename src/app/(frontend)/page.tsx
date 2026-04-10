@@ -126,7 +126,7 @@ export default async function HomePage() {
             fill
             priority
             {...({ fetchPriority: "high" } as any)}
-            className="object-cover opacity-55 animate-slow-zoom"
+            className="object-cover opacity-55 md:animate-slow-zoom"
             style={{ objectPosition: 'center 40%' }}
             sizes="100vw"
             quality={65}
@@ -248,7 +248,7 @@ export default async function HomePage() {
                       status={knife.status ?? 'in_stock'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
-                      priority={index < 2}
+                      priority={index < 4}
                     />
                   </div>
                 )
@@ -296,7 +296,7 @@ export default async function HomePage() {
                       status={knife.status ?? 'custom'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
-                      priority={index < 2}
+                      priority={index < 4}
                     />
                   </div>
                 )

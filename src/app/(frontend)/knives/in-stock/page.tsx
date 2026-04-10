@@ -96,7 +96,7 @@ export default async function InStockPage() {
                     status={knife.status ?? 'in_stock'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
-                    priority={index < 2}
+                    priority={index < 4}
                   />
                 </div>
               )

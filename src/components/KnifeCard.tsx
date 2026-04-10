@@ -28,7 +28,7 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
               fill
               priority={priority}
               {...(priority ? { fetchPriority: "high" } : {})}
-              className={`object-cover transition-all duration-1000 ease-out-expo group-hover:scale-[1.05] will-change-transform ${
+              className={`object-cover transition-all duration-1000 ease-out-expo md:group-hover:scale-[1.05] will-change-transform ${
                 hoverImageUrl ? 'md:group-hover:opacity-0' : ''
               }`}
               sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
@@ -40,7 +40,7 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
                 alt={`${title} - view 2`}
                 fill
                 loading="lazy"
-                className="hidden md:block object-cover transition-all duration-1000 ease-out-expo opacity-0 group-hover:opacity-100 group-hover:scale-[1.05] will-change-transform"
+                className="hidden md:block object-cover transition-all duration-1000 ease-out-expo opacity-0 md:group-hover:opacity-100 md:group-hover:scale-[1.05] will-change-transform"
                 sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
                 quality={55}
               />
