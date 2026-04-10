@@ -54,41 +54,45 @@ export function LoadingScreen() {
             transition={{ delay: 0.5, duration: 1, ease: [0.22, 1, 0.36, 1] }}
           />
 
-          {/* Central Cut Line & Knife Container */}
-          <motion.div
-            className="absolute inset-0 flex justify-center pointer-events-none"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 0 }}
-            transition={{ delay: 0.8, duration: 0.4 }}
-          >
-            {/* The Cut Line - grows down with the knife */}
+          {/* Central Knife Container */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* The Knife - Smaller, faster and high-contrast */}
             <motion.div
-              className="w-[1px] bg-[var(--gold)] opacity-30"
-              initial={{ height: 0 }}
-              animate={{ height: '100%' }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            />
-
-            {/* The Knife SVG - moves down along the cut line */}
-            <motion.div
-              className="absolute top-0 left-1/2 -translate-x-1/2 text-[var(--gold)]"
-              initial={{ y: -100, opacity: 0 }}
-              animate={{ y: '110vh', opacity: 1 }}
+              className="absolute left-1/2 top-0 z-10"
+              style={{ x: '-50%' }}
+              initial={{ y: -220, opacity: 1 }}
+              animate={{ y: '110vh' }}
               transition={{ duration: 0.7, ease: 'linear' }}
             >
               <svg 
-                width="24" 
-                height="120" 
-                viewBox="0 0 24 120" 
+                width="32" 
+                height="200" 
+                viewBox="0 0 32 200" 
                 fill="none" 
                 xmlns="http://www.w3.org/2000/svg"
-                className="translate-y-[-100%]"
+                style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.25))' }}
               >
-                <path d="M12 4L14 12L14 100C14 105 12 110 12 110C12 110 10 105 10 100L10 12L12 4Z" fill="currentColor" />
-                <rect x="11.5" y="0" width="1" height="120" fill="currentColor" opacity="0.2" />
+                {/* Octagonal Handle - Pure Black */}
+                <path d="M12 0H20L22 45V70H10V45L12 0Z" fill="#000000" />
+                
+                {/* Bolster - High-contrast Steel */}
+                <rect x="9" y="70" width="14" height="8" fill="#222222" />
+                
+                {/* Premium Blade - Polished Steel */}
+                <path 
+                  d="M10 78 H22 V180 C22 190 16 200 16 200 C16 200 10 190 10 180 V78Z" 
+                  fill="#D4D4D4" 
+                />
+                
+                {/* Blade Highlight - For that sharp look */}
+                <path 
+                  d="M16 78 H22 V180 C22 190 16 200 16 200 Z" 
+                  fill="white" 
+                  fillOpacity="0.4" 
+                />
               </svg>
             </motion.div>
-          </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
