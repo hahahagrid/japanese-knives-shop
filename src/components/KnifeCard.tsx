@@ -26,7 +26,6 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
               src={imageUrl}
               alt={title}
               fill
-              unoptimized
               priority={priority}
               {...(priority ? { fetchPriority: "high" } : {})}
               className={`object-cover transition-all duration-1000 ease-out-expo group-hover:scale-[1.05] will-change-transform ${
@@ -39,7 +38,6 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
                 src={hoverImageUrl}
                 alt={`${title} - view 2`}
                 fill
-                unoptimized
                 loading="lazy"
                 className="hidden md:block object-cover transition-all duration-1000 ease-out-expo opacity-0 group-hover:opacity-100 group-hover:scale-[1.05] will-change-transform"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

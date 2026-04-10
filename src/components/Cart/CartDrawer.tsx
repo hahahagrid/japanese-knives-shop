@@ -88,7 +88,6 @@ export function CartDrawer() {
                             src={item.imageUrl}
                             alt={item.title}
                             fill
-                            unoptimized
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                             sizes="96px"
                           />
