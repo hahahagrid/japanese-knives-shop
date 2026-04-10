@@ -77,11 +77,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                const isBot = /bot|googlebot|lighthouse|pagespeed|crawler|spider|robot|crawling/i.test(navigator.userAgent);
-                if (localStorage.getItem('knives_intro_played') || isBot) {
+                // Temporarily disabled skip logic to test performance impact
+                const isBot = false; 
+                if (false) {
                   document.documentElement.classList.add('skip-intro');
-                } else {
-                  localStorage.setItem('knives_intro_played', 'true');
                 }
               } catch (e) {}
               
