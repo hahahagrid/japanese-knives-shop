@@ -191,24 +191,55 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="relative w-full h-full p-4 md:p-12 flex items-center justify-center"
+              className="relative w-full h-full p-4 md:p-12 flex items-center justify-center pointer-events-none"
             >
-              <div className="relative w-full h-full max-w-[90vw] max-h-[90vh]">
-                <Image
-                  src={activeUrl as string}
-                  alt={activeAlt || title}
-                  fill
-                  loading="lazy"
-                  className="object-contain"
-                  sizes="(max-width: 768px) 100vw, 1440px"
-                  quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 75 : 80}
-                />
+              <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIndex}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-full h-full flex items-center justify-center p-4"
+                  >
+                    <Image
+                      src={activeUrl as string}
+                      alt={activeAlt || title}
+                      fill
+                      loading="lazy"
+                      className="object-contain pointer-events-auto"
+                      sizes="100vw"
+                      quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 75 : 85}
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </motion.div>
+
+            {/* Modal Navigation Arrows */}
+            {images.length > 1 && (
+              <div className="absolute inset-x-4 md:inset-x-10 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none z-[110]">
+                <button
+                  onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                  className="p-4 md:p-6 bg-black/5 hover:bg-black/10 backdrop-blur-md rounded-full pointer-events-auto transition-all active:scale-90"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-black/40" />
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                  className="p-4 md:p-6 bg-black/5 hover:bg-black/10 backdrop-blur-md rounded-full pointer-events-auto transition-all active:scale-90"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-8 h-8 md:w-10 md:h-10 text-black/40" />
+                </button>
+              </div>
+            )}
             
             <button
               onClick={() => setIsZoomed(false)}
-              className="absolute top-10 right-10 p-4 bg-black/5 rounded-full hover:bg-black/10 transition-colors shadow-sm"
+              className="absolute top-6 right-6 md:top-10 md:right-10 p-4 bg-black/5 rounded-full hover:bg-black/10 transition-colors shadow-sm z-[110]"
               aria-label="Close zoom"
             >
               <X className="w-8 h-8 text-black/60" />
