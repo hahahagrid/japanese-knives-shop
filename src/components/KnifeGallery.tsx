@@ -137,7 +137,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                   src={galleryUrl}
                   alt={activeAlt || title}
                   fill
-                  className="object-cover transition-transform duration-1000 ease-out hover:scale-105 will-change-transform"
+                  className="object-cover transition-transform duration-1000 ease-out lg:hover:scale-105 will-change-transform"
                   priority={activeIndex === 0}
                   {...(activeIndex === 0 ? { fetchPriority: "high" } : {})}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 600px"
@@ -151,16 +151,16 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
 
         {/* Overlay Navigation Arrows */}
         {images.length > 1 && (
-          <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300">
+          <div className="absolute inset-x-3 sm:inset-x-6 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none transition-all duration-300">
             <button
               onClick={(e) => { e.stopPropagation(); prevImage(); }}
-              className="p-3 bg-white/90 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto hover:bg-white transition-all shadow-lg"
+              className="p-3 bg-white/80 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto hover:bg-white transition-all shadow-md active:scale-95"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); nextImage(); }}
-              className="p-3 bg-white/90 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto hover:bg-white transition-all shadow-lg"
+              className="p-3 bg-white/80 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto hover:bg-white transition-all shadow-md active:scale-95"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
