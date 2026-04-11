@@ -73,11 +73,14 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
   useEffect(() => {
     if (isZoomed) {
       document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
     }
     return () => {
       document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
     }
   }, [isZoomed])
 
@@ -180,7 +183,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-white/98 backdrop-blur-xl flex items-center justify-center cursor-zoom-out"
+            className="fixed inset-0 z-[100] bg-white/98 backdrop-blur-xl flex items-center justify-center cursor-zoom-out touch-pinch-zoom overscroll-none"
             onClick={() => setIsZoomed(false)}
           >
             <motion.div
