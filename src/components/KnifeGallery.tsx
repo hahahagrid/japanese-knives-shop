@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react'
@@ -28,13 +28,65 @@ interface KnifeGalleryProps {
 export function KnifeGallery({ images, title }: KnifeGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
+  // Map of index → optimized zoom URL (prefetched in background)
+  const [prefetchedZoomUrls, setPrefetchedZoomUrls] = useState<Record<number, string>>({})
+
+  // After page loads, silently prefetch all zoom images via Next.js optimizer
+  // This turns ~1.5MB originals into ~150-200KB WebP cached in the browser
+  useEffect(() => {
+    const doPrefetch = () => {
+      images.forEach((img, index) => {
+        const rawUrl = typeof img.image === 'object' ? img.image.url : null
+        if (!rawUrl) return
+
+        const optimizedUrl = `/_next/image?url=${encodeURIComponent(rawUrl)}&w=1440&q=80`
+        const preloadImg = new window.Image()
+        preloadImg.src = optimizedUrl
+        preloadImg.onload = () => {
+          setPrefetchedZoomUrls(prev => ({ ...prev, [index]: optimizedUrl }))
+        }
+      })
+    }
+
+    // Schedule prefetch: wait for window.load (ALL resources done, LCP guaranteed)
+    // then wait for next browser idle period. 100% safe, zero competition with LCP.
+    const scheduleAfterLoad = () => {
+      if (typeof window.requestIdleCallback === 'function') {
+        window.requestIdleCallback(doPrefetch, { timeout: 3000 })
+      } else {
+        window.setTimeout(doPrefetch, 500)
+      }
+    }
+
+    let idleHandle: number | undefined
+
+    if (document.readyState === 'complete') {
+      // Page already fully loaded (e.g. navigated via client-side routing)
+      scheduleAfterLoad()
+    } else {
+      window.addEventListener('load', scheduleAfterLoad, { once: true })
+    }
+
+    return () => {
+      window.removeEventListener('load', scheduleAfterLoad)
+      if (idleHandle !== undefined) {
+        if (typeof window.cancelIdleCallback === 'function') {
+          window.cancelIdleCallback(idleHandle)
+        } else {
+          window.clearTimeout(idleHandle)
+        }
+      }
+    }
+  }, [images])
 
   if (!images || images.length === 0) return null
 
   const activeImage = images[activeIndex]?.image
   const activeUrl = typeof activeImage === 'object' ? activeImage.url : null
   const activeAlt = typeof activeImage === 'object' ? activeImage.alt : title
-  const fullResUrl = typeof activeImage === 'object' ? activeImage.url : null
+
+  // Use prefetched optimized URL if ready, fallback to already-loaded gallery image
+  const zoomUrl = prefetchedZoomUrls[activeIndex] || activeUrl
 
   const nextImage = () => setActiveIndex((prev) => (prev + 1) % images.length)
   const prevImage = () => setActiveIndex((prev) => (prev - 1 + images.length) % images.length)
@@ -122,7 +174,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
 
       {/* Full-screen Zoom Modal */}
       <AnimatePresence>
-        {isZoomed && fullResUrl && (
+      {isZoomed && zoomUrl && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -139,12 +191,13 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
             >
               <div className="relative w-full h-full max-w-[90vw] max-h-[90vh]">
                 <Image
-                  src={fullResUrl}
+                  src={zoomUrl}
                   alt={activeAlt || title}
                   fill
+                  loading="lazy"
                   className="object-contain"
-                  sizes="100vw"
-                  quality={90}
+                  sizes="(max-width: 768px) 100vw, 1440px"
+                  quality={80}
                 />
               </div>
             </motion.div>
