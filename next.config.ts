@@ -8,7 +8,9 @@ const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
   experimental: {
-    optimizeCss: true,
+    optimizeCss: {
+      fonts: true,
+    },
   },
   // output: 'standalone',
   images: {
