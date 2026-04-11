@@ -50,12 +50,6 @@ export const metadata = {
   },
 }
 
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  minimumScale: 1,
-}
-
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const payload = await getPayload({ config })
   const settings = await payload.findGlobal({ slug: 'site-settings', overrideAccess: false })
