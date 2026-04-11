@@ -40,7 +40,9 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
               fill
               priority={priority}
               {...(priority ? { fetchPriority: "high" } : {})}
-              className={`object-cover transition-all duration-1000 ease-out-expo group-hover:scale-[1.05] will-change-transform ${
+              className={`object-cover transition-all duration-1000 ease-out-expo will-change-transform ${
+                canHover ? 'group-hover:scale-[1.05]' : ''
+              } ${
                 canHover && hoverImageUrl ? 'md:group-hover:opacity-0' : 'opacity-100'
               }`}
               sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
