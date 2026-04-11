@@ -28,44 +28,58 @@ interface KnifeGalleryProps {
 export function KnifeGallery({ images, title }: KnifeGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
-  const [canPrefetch, setCanPrefetch] = useState(false)
+    const [canPrefetchUrgent, setCanPrefetchUrgent] = useState(false)
+    const [canPrefetchIdle, setCanPrefetchIdle] = useState(false)
 
-  // After page loads, silently prefetch all zoom images via Next.js optimizer
-  // This turns ~1.5MB originals into ~150-200KB WebP cached in the browser
-  useEffect(() => {
-    const doPrefetch = () => {
-      // Just set a flag to render the hidden prefetch images
-      // This is more reliable as Next.js handles the same URL generation
-      setCanPrefetch(true)
-    }
+    useEffect(() => {
+      let idleHandle: number | undefined
+      let urgentTimeout: number | undefined
 
-    let idleHandle: number | undefined
-    const scheduleAfterLoad = () => {
-      if (typeof window !== 'undefined' && typeof window.requestIdleCallback === 'function') {
-        idleHandle = window.requestIdleCallback(doPrefetch, { timeout: 3000 })
-      } else {
-        idleHandle = window.setTimeout(doPrefetch, 1000) as unknown as number
-      }
-    }
+      const doPrefetchUrgent = () => setCanPrefetchUrgent(true)
+      const doPrefetchIdle = () => setCanPrefetchIdle(true)
 
-    if (document.readyState === 'complete') {
-      // Page already fully loaded (e.g. navigated via client-side routing)
-      scheduleAfterLoad()
-    } else {
-      window.addEventListener('load', scheduleAfterLoad, { once: true })
-    }
+      const scheduleAfterLoad = () => {
+        // Stage 1: Urgent prefetch for the NEXT image (index 1) after 500ms
+        urgentTimeout = window.setTimeout(doPrefetchUrgent, 500)
 
-    return () => {
-      window.removeEventListener('load', scheduleAfterLoad)
-      if (idleHandle !== undefined) {
-        if (typeof window.cancelIdleCallback === 'function') {
-          window.cancelIdleCallback(idleHandle)
+        // Stage 2: Idle prefetch for everything else
+        if (typeof window.requestIdleCallback === 'function') {
+          idleHandle = window.requestIdleCallback(doPrefetchIdle, { timeout: 4000 })
         } else {
-          window.clearTimeout(idleHandle)
+          idleHandle = window.setTimeout(doPrefetchIdle, 2000) as unknown as number
         }
       }
+
+      if (document.readyState === 'complete') {
+        scheduleAfterLoad()
+      } else {
+        window.addEventListener('load', scheduleAfterLoad, { once: true })
+      }
+
+      return () => {
+        window.removeEventListener('load', scheduleAfterLoad)
+        if (urgentTimeout) window.clearTimeout(urgentTimeout)
+        if (idleHandle !== undefined) {
+          if (typeof window.cancelIdleCallback === 'function') {
+            window.cancelIdleCallback(idleHandle)
+          } else {
+            window.clearTimeout(idleHandle)
+          }
+        }
+      }
+    }, [images])
+
+  // Scroll Lock when zoomed
+  useEffect(() => {
+    if (isZoomed) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
     }
-  }, [images])
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isZoomed])
 
   if (!images || images.length === 0) return null
 
@@ -101,7 +115,9 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                   priority={activeIndex === 0}
                   {...(activeIndex === 0 ? { fetchPriority: "high" } : {})}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 600px"
-                  quality={activeIndex === 0 ? 65 : (typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 65)}
+                  quality={activeIndex === 0 
+                    ? (typeof window !== 'undefined' && window.innerWidth < 768 ? 55 : 65) 
+                    : (typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 65)}
                 />
               )}
           </motion.div>
@@ -198,24 +214,46 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
         )}
       </AnimatePresence>
 
-      {/* Background Prefetch Layer - Hidden, runs after page is idle */}
-      {canPrefetch && (
+      {/* Background Prefetch Layer - URGEANT (Index 1) */}
+      {canPrefetchUrgent && images[1] && (
+        <div className="hidden pointer-events-none opacity-0" aria-hidden="true">
+          {(() => {
+            const url = typeof images[1].image === 'object' ? images[1].image.url : null
+            if (!url) return null
+            return (
+              <Image
+                src={url}
+                alt="prefetch-urgent"
+                width={828}
+                height={1035}
+                priority={false}
+                quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 65}
+              />
+            )
+          })()}
+        </div>
+      )}
+
+      {/* Background Prefetch Layer - IDLE (Index 2+ and Zoom) */}
+      {canPrefetchIdle && (
         <div className="hidden pointer-events-none opacity-0" aria-hidden="true">
           {images.map((img, i) => {
             const url = typeof img.image === 'object' ? img.image.url : null
-            if (!url || i === 0) return null 
+            if (!url) return null 
             return (
               <React.Fragment key={i}>
-                {/* Prefetch for Gallery View */}
-                <Image
-                  src={url}
-                  alt="prefetch"
-                  width={828}
-                  height={1035}
-                  priority={false}
-                  quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 65}
-                />
-                {/* Prefetch for Zoom View */}
+                {/* Prefetch for Gallery View (excluding the ones already handled) */}
+                {i > 1 && (
+                  <Image
+                    src={url}
+                    alt="prefetch"
+                    width={828}
+                    height={1035}
+                    priority={false}
+                    quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 65}
+                  />
+                )}
+                {/* Prefetch for Zoom View (all images) */}
                 <Image
                   src={url}
                   alt="prefetch-zoom"
