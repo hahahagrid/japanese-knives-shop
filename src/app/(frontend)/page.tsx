@@ -260,7 +260,6 @@ export default async function HomePage() {
                       status={knife.status ?? 'in_stock'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
-                      priority={index < 4}
                     />
                   </div>
                 )
@@ -312,7 +311,6 @@ export default async function HomePage() {
                       status={knife.status ?? 'custom'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
-                      priority={index < 4}
                     />
                   </div>
                 )

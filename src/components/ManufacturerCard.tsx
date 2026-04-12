@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { AnimatedSection } from './AnimatedSection'
+import './ManufacturerCard.css'
 
 interface ManufacturerCardProps {
   en: string

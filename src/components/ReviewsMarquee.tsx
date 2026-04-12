@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { motion, useAnimationFrame, useMotionValue, wrap } from 'framer-motion'
 import { AnimatedSection } from './AnimatedSection'
 import Image from 'next/image'
+import './ReviewsMarquee.css'
 
 // Temporary colors to simulate photos touching each other
 // The user will replace these with actual <Image> components
