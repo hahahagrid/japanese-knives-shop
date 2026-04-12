@@ -1,4 +1,5 @@
 import React from 'react'
+import './RichText.css'
 
 export const RichText: React.FC<{ content: any; className?: string }> = ({ content, className }) => {
   if (!content) return null
