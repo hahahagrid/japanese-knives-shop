@@ -220,27 +220,27 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
               <div className="absolute inset-x-4 md:inset-x-10 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none z-[110]">
                 <button
                   onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                  className="p-4 md:p-6 bg-black/5 hover:bg-black/10 backdrop-blur-md rounded-full pointer-events-auto transition-all active:scale-90"
+                  className="p-4 md:p-5 bg-white/90 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto transition-all shadow-lg hover:bg-white active:scale-90"
                   aria-label="Previous image"
                 >
-                  <ChevronLeft className="w-8 h-8 md:w-10 md:h-10 text-black/40" />
+                  <ChevronLeft className="w-6 h-6 md:w-8 h-8 text-black" />
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                  className="p-4 md:p-6 bg-black/5 hover:bg-black/10 backdrop-blur-md rounded-full pointer-events-auto transition-all active:scale-90"
+                  className="p-4 md:p-5 bg-white/90 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto transition-all shadow-lg hover:bg-white active:scale-90"
                   aria-label="Next image"
                 >
-                  <ChevronRight className="w-8 h-8 md:w-10 md:h-10 text-black/40" />
+                  <ChevronRight className="w-6 h-6 md:w-8 h-8 text-black" />
                 </button>
               </div>
-            )}
+            ) /* Modal Navigation Arrows End */}
             
             <button
               onClick={() => setIsZoomed(false)}
-              className="absolute top-6 right-6 md:top-10 md:right-10 p-4 bg-black/5 rounded-full hover:bg-black/10 transition-colors shadow-sm z-[110]"
+              className="absolute top-6 right-6 md:top-10 md:right-10 p-4 bg-white/90 backdrop-blur-md border border-[var(--border)] rounded-full hover:bg-white transition-all shadow-lg z-[110] active:scale-90"
               aria-label="Close zoom"
             >
-              <X className="w-8 h-8 text-black/60" />
+              <X className="w-6 h-6 md:w-8 h-8 text-black" />
             </button>
           </motion.div>
         )}
