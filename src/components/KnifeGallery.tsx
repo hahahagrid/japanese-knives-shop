@@ -154,7 +154,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                 onClick={() => setActiveIndex(i)}
                 className={`relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 border overflow-hidden transition-all duration-300 ${
                   activeIndex === i 
-                    ? 'border-[var(--gold)] scale-[1.02] z-10 shadow-sm' 
+                    ? 'border-[var(--accent)] scale-[1.02] z-10 shadow-sm' 
                     : 'border-black/5 opacity-60 hover:opacity-100'
                 }`}
               >

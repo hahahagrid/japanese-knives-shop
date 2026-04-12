@@ -101,7 +101,7 @@ export function CartDrawer() {
                             : `/knives/${item.status === 'in_stock' ? 'in-stock' : 'custom-order'}/${item.slug}`
                           }
                           onClick={() => setCartOpen(false)}
-                          className="font-serif font-bold text-lg leading-snug hover:text-[var(--gold)] transition-colors mb-1 line-clamp-2"
+                          className="font-serif font-bold text-lg leading-snug hover:text-[var(--accent)] transition-colors mb-1 line-clamp-2"
                         >
                           {item.title}
                         </Link>

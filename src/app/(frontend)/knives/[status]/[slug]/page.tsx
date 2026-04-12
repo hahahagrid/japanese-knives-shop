@@ -215,9 +215,9 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
             {/* Description */}
             {hasDescription && (
               <div className="mb-4 lg:mb-8">
-                <h3 className="text-label mb-6 border-l-2 border-[var(--gold)] pl-4">
+                <h2 className="text-label mb-6 border-l-2 border-[var(--accent)] pl-4">
                   Про виріб
-                </h3>
+                </h2>
                 <div className="prose prose-neutral prose-lg max-w-none text-neutral-800">
                   <RichText content={knife.description} />
                 </div>
@@ -228,12 +228,12 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
             {specsList.length > 0 && (
               <div className="mb-16 border-t border-[var(--border)] pt-12">
                 <div className="flex items-center gap-3 mb-10">
-                  <Database className="w-4 h-4 text-[var(--gold)]" />
-                  <h3 className="text-label">
+                  <Database className="w-4 h-4 text-[var(--accent)]" />
+                  <h2 className="text-label">
                     Технічні характеристики
-                  </h3>
+                  </h2>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                   {specsList.map((spec, index) => (
                     <div key={index} className="group border-b border-black/5 pb-2">
                       <dt className="text-label mb-2 text-[#B4B4B0]">
@@ -249,7 +249,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
                       </dd>
                     </div>
                   ))}
-                </div>
+                </dl>
               </div>
             )}
           </AnimatedSection>

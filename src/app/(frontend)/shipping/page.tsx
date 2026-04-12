@@ -83,13 +83,13 @@ export default function ShippingPage() {
             {/* Payment */}
             <AnimatedSection className="p-10 border border-[var(--border)] bg-[var(--stone-50)]">
               <div className="flex items-center gap-4 mb-8">
-                <CreditCard className="w-8 h-8 text-[var(--gold)]" />
+                <CreditCard className="w-8 h-8 text-[var(--accent)]" />
                 <h2 className="heading-display text-3xl">{payment.title}</h2>
               </div>
               <ul className="space-y-4">
                 {payment.methods.map((m, i) => (
                   <li key={i} className="flex items-start gap-3 text-[var(--muted)]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--gold)] mt-2 shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
                     <span className="text-lg">{m.method}</span>
                   </li>
                 ))}
@@ -102,13 +102,13 @@ export default function ShippingPage() {
               className="p-10 border border-[var(--border)] bg-[var(--stone-50)]"
             >
               <div className="flex items-center gap-4 mb-8">
-                <Truck className="w-8 h-8 text-[var(--gold)]" />
+                <Truck className="w-8 h-8 text-[var(--accent)]" />
                 <h2 className="heading-display text-3xl">{delivery.title}</h2>
               </div>
               <ul className="space-y-4">
                 {delivery.methods.map((m, i) => (
                   <li key={i} className="flex items-start gap-3 text-[var(--muted)]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--gold)] mt-2 shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
                     <span className="text-lg">{m.method}</span>
                   </li>
                 ))}
@@ -129,7 +129,7 @@ export default function ShippingPage() {
                 delay={i * 0.1}
                 className="text-center p-6 grayscale hover:grayscale-0 transition-all"
               >
-                <item.icon className="w-10 h-10 mx-auto mb-4 text-[var(--gold)]" />
+                <item.icon className="w-10 h-10 mx-auto mb-4 text-[var(--accent)]" />
                 <h3 className="font-serif font-bold text-lg mb-2">{item.title}</h3>
                 <p className="text-sm text-[var(--muted)]">{item.text}</p>
               </AnimatedSection>

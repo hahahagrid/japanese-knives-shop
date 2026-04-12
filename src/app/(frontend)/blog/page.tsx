@@ -103,7 +103,7 @@ export default async function BlogPage() {
                 <div className="flex-1 flex flex-col justify-between py-1 md:py-2">
                   <Link href={`/blog/${post.slug}`} className="group flex flex-col">
                     {post.publishedDate && (
-                      <time className="heading-display text-lg md:text-xl xl:text-2xl mb-2 md:mb-4 block text-[var(--gold)]">
+                      <time className="heading-display text-lg md:text-xl xl:text-2xl mb-2 md:mb-4 block text-[var(--accent)]">
                         {new Date(post.publishedDate).toLocaleDateString('uk-UA', {
                           day: 'numeric',
                           month: 'long',

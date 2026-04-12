@@ -58,9 +58,9 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
           </li>
         )
       case 'quote':
-        return <blockquote key={index} className="border-l-4 border-gold pl-4">{children}</blockquote>
+        return <blockquote key={index} className="border-l-4 border-accent pl-4">{children}</blockquote>
       case 'link':
-        return <a key={index} href={node.fields?.url} target="_blank" rel="noopener noreferrer" className="text-gold underline">{children}</a>
+        return <a key={index} href={node.fields?.url} target="_blank" rel="noopener noreferrer" className="text-accent underline">{children}</a>
       case 'upload':
         const value = node.value
         if (node.relationTo === 'media' && value && typeof value === 'object') {
