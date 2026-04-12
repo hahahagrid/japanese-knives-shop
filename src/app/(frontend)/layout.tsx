@@ -2,7 +2,6 @@ import React from 'react'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { Header } from '@/components/Header'
 import { BrandFooter as Footer } from '@/components/BrandFooter'
-import { CartDrawer } from '@/components/Cart/CartDrawer'
 import { LoadingScreen } from '@/components/LoadingScreen'
 import { ViewportHandler } from '@/components/ViewportHandler'
 import { OrganizationSchema } from '@/components/SEO/OrganizationSchema'
@@ -11,7 +10,12 @@ import config from '@payload-config'
 import { FreshnessHandler } from '@/components/FreshnessHandler'
 import { ScrollToTopFab } from '@/components/ScrollToTopFab'
 import Script from 'next/script'
+import dynamic from 'next/dynamic'
 import './styles.css'
+
+const CartDrawer = dynamic(() => import('@/components/Cart/CartDrawer').then(mod => mod.CartDrawer), {
+  ssr: false,
+})
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter', display: 'swap' })
 const playfair = Playfair_Display({
@@ -60,13 +64,41 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {/* Google Tag Manager */}
         <Script
           id="gtm-script"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-5BK9W2PZ');`,
+            __html: `
+              (function() {
+                var gtmLoaded = false;
+                function loadGTM() {
+                  if (gtmLoaded) return;
+                  gtmLoaded = true;
+                  // Remove listeners
+                  window.removeEventListener('scroll', loadGTM);
+                  window.removeEventListener('mousemove', loadGTM);
+                  window.removeEventListener('touchstart', loadGTM);
+                  
+                  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                  })(window,document,'script','dataLayer','GTM-5BK9W2PZ');
+                }
+                
+                // Load GTM on interaction
+                window.addEventListener('scroll', loadGTM, { passive: true });
+                window.addEventListener('mousemove', loadGTM, { passive: true });
+                window.addEventListener('touchstart', loadGTM, { passive: true });
+                
+                // Fallback to load GTM after 5 seconds of idle time if no interaction
+                if (window.requestIdleCallback) {
+                  requestIdleCallback(function() {
+                    setTimeout(loadGTM, 5000);
+                  });
+                } else {
+                  setTimeout(loadGTM, 5000);
+                }
+              })();
+            `,
           }}
         />
         <script

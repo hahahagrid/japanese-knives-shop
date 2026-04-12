@@ -29,12 +29,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { KnifeCard } from '@/components/KnifeCard'
 import { AnimatedSection } from '@/components/AnimatedSection'
-import { ReviewsMarquee } from '@/components/ReviewsMarquee'
 import { ArrowDown, Plane, ShieldCheck, Truck, MessageSquare } from 'lucide-react'
-import { ManufacturerCard } from '@/components/ManufacturerCard'
 import { ScrollToTop } from '@/components/ScrollToTop'
-import { ChevronUp } from 'lucide-react'
 import { PageVersion } from '@/components/PageVersion'
+import dynamic from 'next/dynamic'
+
+const ReviewsMarquee = dynamic(() => import('@/components/ReviewsMarquee').then(mod => mod.ReviewsMarquee), {
+  ssr: true,
+})
+
+const ManufacturerCard = dynamic(() => import('@/components/ManufacturerCard').then(mod => mod.ManufacturerCard), {
+  ssr: true,
+})
 
 const manufacturers = [
   { en: 'Yoshimi Kato', jp: '加藤 義実' },
