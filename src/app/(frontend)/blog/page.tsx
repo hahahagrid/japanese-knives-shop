@@ -39,26 +39,39 @@ export default async function BlogPage() {
   const extractExcerpt = (content: any): string => {
     if (!content?.root?.children) return ''
     
-    // Find the first paragraph node that has actual text
-    const firstParagraph = content.root.children.find((node: any) => 
-      node.type === 'paragraph' && 
-      node.children?.some((child: any) => child.text && child.text.trim().length > 0)
-    )
+    const limit = 240
+    let fullText = ''
 
-    if (firstParagraph) {
-      const text = firstParagraph.children
-        .map((child: any) => {
-          if (child.type === 'linebreak') return ' '
-          return child.text || ''
+    const getText = (nodes: any[]): string => {
+      return nodes
+        .map((node: any) => {
+          if (node.type === 'text') return node.text || ''
+          if (node.type === 'linebreak') return ' '
+          if (node.children) return getText(node.children)
+          return ''
         })
         .join('')
-        .replace(/\s+/g, ' ') // Collapse multiple spaces
-        .trim()
-      
-      return text.length > 220 ? text.substring(0, 217) + '...' : text
     }
 
-    return 'Мистецтво виготовлення, догляд за лезом та філософія японської майстерності. Дізнайтеся більше про світ професійних інструментів.'
+    for (const node of content.root.children) {
+      if (node.type === 'heading') continue
+
+      const nodeText = getText([node]).trim()
+      
+      if (nodeText) {
+        fullText += (fullText ? ' ' : '') + nodeText
+      }
+
+      if (fullText.length > limit) break
+    }
+
+    fullText = fullText.replace(/\s+/g, ' ').trim()
+    
+    if (!fullText) {
+      return 'Мистецтво виготовлення, догляд за лезом та філософія японської майстерності. Дізнайтеся більше про світ професійних інструментів.'
+    }
+
+    return fullText.length > limit ? fullText.substring(0, limit - 3) + '...' : fullText
   }
 
   return (
