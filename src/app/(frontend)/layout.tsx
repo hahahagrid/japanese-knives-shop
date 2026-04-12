@@ -13,9 +13,7 @@ import Script from 'next/script'
 import dynamic from 'next/dynamic'
 import './styles.css'
 
-const CartDrawer = dynamic(() => import('@/components/Cart/CartDrawer').then(mod => mod.CartDrawer), {
-  ssr: false,
-})
+const CartDrawer = dynamic(() => import('@/components/Cart/CartDrawer').then(mod => mod.CartDrawer))
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'], variable: '--font-inter', display: 'swap' })
 const playfair = Playfair_Display({
