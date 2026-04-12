@@ -36,6 +36,31 @@ export default async function BlogPage() {
     overrideAccess: false,
   })
 
+  const extractExcerpt = (content: any): string => {
+    if (!content?.root?.children) return ''
+    
+    // Find the first paragraph node that has actual text
+    const firstParagraph = content.root.children.find((node: any) => 
+      node.type === 'paragraph' && 
+      node.children?.some((child: any) => child.text && child.text.trim().length > 0)
+    )
+
+    if (firstParagraph) {
+      const text = firstParagraph.children
+        .map((child: any) => {
+          if (child.type === 'linebreak') return ' '
+          return child.text || ''
+        })
+        .join('')
+        .replace(/\s+/g, ' ') // Collapse multiple spaces
+        .trim()
+      
+      return text.length > 220 ? text.substring(0, 217) + '...' : text
+    }
+
+    return 'Мистецтво виготовлення, догляд за лезом та філософія японської майстерності. Дізнайтеся більше про світ професійних інструментів.'
+  }
+
   return (
     <div className="flex flex-col">
       <PageVersion />
@@ -117,8 +142,7 @@ export default async function BlogPage() {
                     </h2>
 
                     <div className="text-neutral-500 line-clamp-3 lg:line-clamp-4 leading-relaxed text-sm md:text-lg xl:text-xl italic font-serif">
-                      Мистецтво виготовлення, догляд за лезом та філософія японської майстерності. 
-                      Саме тут ми розкриваємо секрети ковалів та ділимося досвідом правильного обходження з преміальними інструментами...
+                      {extractExcerpt(post.content)}
                     </div>
                   </Link>
 
