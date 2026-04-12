@@ -45,8 +45,8 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
               } ${
                 canHover && hoverImageUrl ? 'md:group-hover:opacity-0' : 'opacity-100'
               }`}
-              sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
-              quality={55}
+              sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
+              quality={45}
             />
             {/* Only render hover image for desktop to save mobile bandwidth */}
             {canHover && hoverImageUrl && (
@@ -55,8 +55,8 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
                 alt={`${title} - view 2`}
                 fill
                 className="hidden md:block object-cover transition-all duration-1000 ease-out-expo opacity-0 group-hover:opacity-100 group-hover:scale-[1.05] will-change-transform"
-                sizes="(max-width: 640px) 40vw, (max-width: 1024px) 33vw, 25vw"
-                quality={55}
+                sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
+                quality={45}
               />
             )}
           </>
