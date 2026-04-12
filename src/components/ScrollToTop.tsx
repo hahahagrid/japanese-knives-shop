@@ -10,7 +10,7 @@ export const ScrollToTop: React.FC<{ children: React.ReactNode }> = ({ children 
   return (
     <button
       onClick={handleClick}
-      className="flex items-center gap-3 bg-[#0A0A09] px-6 transition-all duration-300 hover:text-[var(--gold)] group"
+      className="flex items-center gap-3 bg-[#0A0A09] px-6 transition-all duration-300 hover:text-[var(--accent)] group"
       aria-label="Back to top"
     >
       {children}

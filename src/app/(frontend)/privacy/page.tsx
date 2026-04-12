@@ -41,7 +41,7 @@ export default function PrivacyPage() {
         <section className="space-y-4">
           <h2 className="text-xl font-serif font-bold text-black border-b border-black/10 pb-4">2. Які дані ми збираємо</h2>
           <p>При оформленні замовлення або заповненні контактної форми ми можемо збирати наступну інформацію:</p>
-          <ul className="list-disc pl-5 space-y-2 marker:text-[var(--gold)]">
+          <ul className="list-disc pl-5 space-y-2 marker:text-[var(--accent)]">
             <li><strong>Персональні дані:</strong> прізвище, ім&apos;я, номер телефону, email.</li>
             <li><strong>Дані доставки:</strong> адреса або номер відділення поштової служби.</li>
             <li><strong>Технічні дані (автоматично):</strong> IP-адреса, приблизне місцезнаходження (місто, країна), тип пристрою та версія браузера.</li>
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
         <section className="space-y-4">
           <h2 className="text-xl font-serif font-bold text-black border-b border-black/10 pb-4">3. Чому ми це робимо (Мета обробки)</h2>
           <p>Ми використовуємо ваші дані виключно для:</p>
-          <ul className="list-disc pl-5 space-y-2 marker:text-[var(--gold)]">
+          <ul className="list-disc pl-5 space-y-2 marker:text-[var(--accent)]">
             <li>Якісного опрацювання ваших замовлень та зв&apos;язку з вами;</li>
             <li><strong>Запобігання шахрайству та бот-атакам:</strong> збір IP та технічних даних допомагає нам блокувати автоматичні спам-замовлення;</li>
             <li>Покращення нашого сервісу на основі аналізу відвідуваності.</li>

@@ -33,7 +33,7 @@ export function ManufacturerCard({ en, jp, delay = 0 }: ManufacturerCardProps) {
         >
           {/* Front Side */}
           <div className="absolute inset-0 backface-hidden border border-black/6 bg-[#FAFAF9] px-4 py-4 flex items-center gap-3 hover:border-black/15 transition-colors duration-300">
-            <span className="mt-[2px] w-1.5 h-1.5 bg-black/10 group-hover:bg-[var(--gold)] transition-colors duration-300 shrink-0"></span>
+            <span className="mt-[2px] w-1.5 h-1.5 bg-black/10 group-hover:bg-[var(--accent)] transition-colors duration-300 shrink-0"></span>
             <div className="font-sans text-[12px] tracking-[0.12em] uppercase text-black/70 group-hover:text-black transition-colors duration-300 leading-tight">
               {en}
             </div>

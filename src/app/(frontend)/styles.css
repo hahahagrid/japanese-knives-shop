@@ -8,7 +8,7 @@
     --foreground: #0A0A09;
     --muted: #737370;
     --border: #E5E4E0;
-    --gold: #C9A84C;
+    --accent: #BC002D;
     --stone-50: #F8F7F4;
     --stone-100: #F0EFEB;
   }
@@ -115,7 +115,8 @@ body {
   .text-price {
     font-family: var(--font-playfair), serif;
     font-style: italic;
-    color: var(--gold);
+    color: var(--foreground);
+    opacity: 0.9;
   }
 
   /* Secondary metadata (Card prices, specs labels) */
@@ -200,8 +201,8 @@ body {
 .stagger-children > *:nth-child(8) { animation-delay: 560ms; }
 
 /* ── Gold accent ─────────────────────────────── */
-.text-gold { color: var(--gold); }
-.border-gold { border-color: var(--gold); }
+.text-accent { color: var(--accent); }
+.border-accent { border-color: var(--accent); }
 .bg-stone { background-color: var(--stone-50); }
 
 /* ── Rich Text Content ──────────────────────── */

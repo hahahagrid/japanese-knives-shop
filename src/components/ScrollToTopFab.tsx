@@ -43,15 +43,15 @@ export function ScrollToTopFab() {
           {/* Vertical Knife Handle/Blade Visual */}
           <div className="relative flex flex-col items-center">
             {/* The "Blade" Tip (Icon) */}
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-[#0A0A09] border border-white/10 rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[var(--gold)] transition-colors duration-500 backdrop-blur-md">
-              <ChevronUp className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-[var(--gold)] transition-all duration-500" />
+            <div className="w-12 h-12 md:w-16 md:h-16 bg-[#0A0A09] border border-white/10 rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[var(--accent)] transition-colors duration-500 backdrop-blur-md">
+              <ChevronUp className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-[var(--accent)] transition-all duration-500" />
               
               {/* Shine streak animation on hover */}
               <div className="absolute inset-x-0 h-full w-2 bg-white/10 -skew-x-[25deg] -translate-x-12 group-hover:translate-x-24 transition-transform duration-1000 ease-in-out"></div>
             </div>
 
             {/* The "Blade" vertical line extension */}
-            <div className="w-[1px] h-0 group-hover:h-8 bg-gradient-to-b from-[var(--gold)] to-transparent transition-all duration-500 mt-2"></div>
+            <div className="w-[1px] h-0 group-hover:h-8 bg-gradient-to-b from-[var(--accent)] to-transparent transition-all duration-500 mt-2"></div>
             
             {/* The Kanji for "Up" (上) or "Blade" (刃) */}
             <span className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-serif opacity-0 group-hover:opacity-100 transition-opacity duration-700 mt-1 origin-top scale-75">

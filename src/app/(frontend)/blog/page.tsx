@@ -36,6 +36,31 @@ export default async function BlogPage() {
     overrideAccess: false,
   })
 
+  const extractExcerpt = (content: any): string => {
+    if (!content?.root?.children) return ''
+    
+    // Find the first paragraph node that has actual text
+    const firstParagraph = content.root.children.find((node: any) => 
+      node.type === 'paragraph' && 
+      node.children?.some((child: any) => child.text && child.text.trim().length > 0)
+    )
+
+    if (firstParagraph) {
+      const text = firstParagraph.children
+        .map((child: any) => {
+          if (child.type === 'linebreak') return ' '
+          return child.text || ''
+        })
+        .join('')
+        .replace(/\s+/g, ' ') // Collapse multiple spaces
+        .trim()
+      
+      return text.length > 220 ? text.substring(0, 217) + '...' : text
+    }
+
+    return 'Мистецтво виготовлення, догляд за лезом та філософія японської майстерності. Дізнайтеся більше про світ професійних інструментів.'
+  }
+
   return (
     <div className="flex flex-col">
       <PageVersion />
@@ -103,7 +128,7 @@ export default async function BlogPage() {
                 <div className="flex-1 flex flex-col justify-between py-1 md:py-2">
                   <Link href={`/blog/${post.slug}`} className="group flex flex-col">
                     {post.publishedDate && (
-                      <time className="heading-display text-lg md:text-xl xl:text-2xl mb-2 md:mb-4 block text-[var(--gold)]">
+                      <time className="heading-display text-lg md:text-xl xl:text-2xl mb-2 md:mb-4 block text-[var(--accent)]">
                         {new Date(post.publishedDate).toLocaleDateString('uk-UA', {
                           day: 'numeric',
                           month: 'long',
@@ -117,8 +142,7 @@ export default async function BlogPage() {
                     </h2>
 
                     <div className="text-neutral-500 line-clamp-3 lg:line-clamp-4 leading-relaxed text-sm md:text-lg xl:text-xl italic font-serif">
-                      Мистецтво виготовлення, догляд за лезом та філософія японської майстерності. 
-                      Саме тут ми розкриваємо секрети ковалів та ділимося досвідом правильного обходження з преміальними інструментами...
+                      {extractExcerpt(post.content)}
                     </div>
                   </Link>
 

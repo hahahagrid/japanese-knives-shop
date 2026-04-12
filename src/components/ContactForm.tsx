@@ -71,7 +71,7 @@ export function ContactForm() {
         <div className="relative group">
           <label
             htmlFor="name"
-            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]"
+            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]"
           >
             Ваше ім&apos;я
           </label>
@@ -92,7 +92,7 @@ export function ContactForm() {
         <div className="relative group">
           <label
             htmlFor="phone"
-            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]"
+            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]"
           >
             Телефон *
           </label>
@@ -113,7 +113,7 @@ export function ContactForm() {
         <div className="relative group">
           <label
             htmlFor="email"
-            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]"
+            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]"
           >
             Email (необов'язково)
           </label>
@@ -132,7 +132,7 @@ export function ContactForm() {
         <div className="relative group">
           <label
             htmlFor="message"
-            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]"
+            className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]"
           >
             Ваше запитання
           </label>

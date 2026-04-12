@@ -67,7 +67,7 @@ export default async function CustomOrderPage() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24">
         <AnimatedSection className="mb-16 border-b border-[var(--border)] pb-10 flex items-end justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-[1px] bg-[var(--gold)]" />
+            <div className="w-8 h-[1px] bg-[var(--accent)]" />
             <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">
               Весь каталог ({knives.length})
             </h2>

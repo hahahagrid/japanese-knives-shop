@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="min-h-[80vh] flex items-center justify-center container mx-auto px-4 pt-32 pb-32">
       <AnimatedSection className="text-center max-w-xl">
-        <span className="text-[10px] tracking-[0.5em] uppercase text-[var(--gold)] mb-6 block font-bold">
+        <span className="text-[10px] tracking-[0.5em] uppercase text-[var(--accent)] mb-6 block font-bold">
           Помилка 404
         </span>
         <h1 className="heading-display text-5xl md:text-7xl mb-8 leading-tight">

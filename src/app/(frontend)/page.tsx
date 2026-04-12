@@ -364,7 +364,7 @@ export default async function HomePage() {
             <div className="lg:col-span-5 flex flex-col pt-4 md:pt-8">
               <AnimatedSection variant="fade-in">
                 <div className="flex items-center gap-4 mb-10 overflow-hidden">
-                  <div className="w-12 h-[1px] bg-[var(--gold)] origin-left animate-width-reveal"></div>
+                  <div className="w-12 h-[1px] bg-[var(--accent)] origin-left animate-width-reveal"></div>
                   <p className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-mono">
                     章 01 / Витоки
                   </p>
@@ -455,7 +455,7 @@ export default async function HomePage() {
             <div className="lg:col-span-4 lg:col-start-9 order-1 lg:order-2 flex flex-col justify-center">
               <AnimatedSection delay={0.2}>
                 <div className="flex items-center gap-4 mb-10 overflow-hidden">
-                  <div className="w-12 h-[1px] bg-[var(--gold)] origin-left animate-width-reveal"></div>
+                  <div className="w-12 h-[1px] bg-[var(--accent)] origin-left animate-width-reveal"></div>
                   <p className="text-[10px] tracking-[0.5em] uppercase text-black/40 font-mono">
                     章 02 / Якість
                   </p>
@@ -517,7 +517,7 @@ export default async function HomePage() {
 
             <div className="flex items-center justify-center gap-6 mb-20">
               <div className="w-16 h-[1px] bg-black/10 origin-right transition-transform hover:scale-x-150 duration-700"></div>
-              <div className="w-2 h-2 border border-[var(--gold)] rotate-45 group-hover:bg-[var(--gold)] transition-colors duration-700"></div>
+              <div className="w-2 h-2 border border-[var(--accent)] rotate-45 group-hover:bg-[var(--accent)] transition-colors duration-700"></div>
               <div className="w-16 h-[1px] bg-black/10 origin-left transition-transform hover:scale-x-150 duration-700"></div>
             </div>
           </AnimatedSection>

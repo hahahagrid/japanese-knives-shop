@@ -126,7 +126,7 @@ export default function CheckoutPage() {
               <h2 className="text-xl font-serif font-bold border-b border-black/10 pb-4">Контактні дані</h2>
               
               <div className="relative group">
-                <label htmlFor="name" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+                <label htmlFor="name" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]">
                   Прізвище та Ім&apos;я *
                 </label>
                 <input
@@ -149,7 +149,7 @@ export default function CheckoutPage() {
               </div>
 
               <div className="relative group">
-                <label htmlFor="phone" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+                <label htmlFor="phone" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]">
                   Телефон *
                 </label>
                 <input
@@ -167,7 +167,7 @@ export default function CheckoutPage() {
               </div>
 
               <div className="relative group">
-                <label htmlFor="email" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+                <label htmlFor="email" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]">
                   Email (необов&apos;язково)
                 </label>
                 <input
@@ -187,7 +187,7 @@ export default function CheckoutPage() {
               <h2 className="text-xl font-serif font-bold border-b border-black/10 pb-4">Доставка</h2>
               
               <div className="relative group">
-                <label htmlFor="deliveryInfo" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+                <label htmlFor="deliveryInfo" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]">
                   Місто та відділення (Нова Пошта) *
                 </label>
                 <textarea
@@ -206,7 +206,7 @@ export default function CheckoutPage() {
               </div>
 
               <div className="relative group">
-                <label htmlFor="message" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--gold)]">
+                <label htmlFor="message" className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]">
                   Коментар до замовлення (необов&apos;язково)
                 </label>
                 <textarea
@@ -310,7 +310,7 @@ export default function CheckoutPage() {
                             ? `/accessories/${item.slug}` 
                             : `/knives/${item.status === 'in_stock' ? 'in-stock' : 'custom-order'}/${item.slug}`
                           }
-                          className="font-serif font-bold text-base leading-snug hover:text-[var(--gold)] transition-colors line-clamp-2 pr-4"
+                          className="font-serif font-bold text-base leading-snug hover:text-[var(--accent)] transition-colors line-clamp-2 pr-4"
                         >
                           {item.title}
                         </Link>

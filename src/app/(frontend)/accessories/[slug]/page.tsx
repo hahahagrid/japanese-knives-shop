@@ -93,6 +93,14 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
     id: typeof img === 'object' && img !== null ? img.id : undefined,
   }))
 
+  const specsList = [
+    { label: 'Виробник', value: product.specs?.manufacturer },
+    { label: 'Країна', value: product.specs?.country },
+    { label: 'Матеріал', value: product.specs?.steel },
+    { label: 'Довжина', value: product.specs?.totalLength, unit: 'мм' },
+    { label: 'Вага', value: product.specs?.weight, unit: 'г' },
+  ].filter((item) => item.value)
+
   const finalDescription = generateProductDescription(product as any, 'accessory')
 
   return (
@@ -141,7 +149,7 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
               <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-10 leading-tight">
                 {product.title}
               </h1>
-              <p className="text-4xl font-serif italic text-[var(--gold)]">
+              <p className="text-4xl font-serif italic text-[var(--accent)]">
                 {product.price
                   ? `${product.price.toLocaleString('uk-UA')} грн`
                   : 'Ціна за запитом'}
@@ -172,12 +180,40 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
             {/* Description */}
             {hasDescription && (
               <div className="mb-14">
-                <h3 className="text-[11px] uppercase tracking-widest font-bold text-neutral-400 mb-6 italic border-l-2 border-[var(--gold)] pl-4">
+                <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-400 mb-6 italic border-l-2 border-[var(--accent)] pl-4">
                   Про виріб
-                </h3>
+                </h2>
                 <div className="prose prose-neutral prose-md max-w-none leading-relaxed text-neutral-700 font-light">
                   <RichText content={product.description} className="text-lg" />
                 </div>
+              </div>
+            )}
+
+            {/* Specs Grid */}
+            {specsList.length > 0 && (
+              <div className="mb-16 border-t border-[var(--border)] pt-12">
+                <div className="flex items-center gap-3 mb-10">
+                  <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-400 italic">
+                    Технічні характеристики
+                  </h2>
+                </div>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+                  {specsList.map((spec, index) => (
+                    <div key={index} className="group border-b border-black/5 pb-2">
+                      <dt className="text-[10px] uppercase tracking-widest text-[#B4B4B0] mb-2">
+                        {spec.label}
+                      </dt>
+                      <dd className="text-base font-medium tracking-tight text-neutral-800">
+                        {spec.value}
+                        {spec.unit && (
+                          <span className="text-[10px] ml-1 text-neutral-400 uppercase tracking-tighter">
+                            {spec.unit}
+                          </span>
+                        )}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             )}
           </AnimatedSection>
