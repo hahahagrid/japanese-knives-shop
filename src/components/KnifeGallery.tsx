@@ -117,10 +117,8 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                   className="object-cover transition-transform duration-1000 ease-out lg:hover:scale-105 will-change-transform"
                   priority={activeIndex === 0}
                   {...(activeIndex === 0 ? { fetchPriority: "high" } : {})}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 600px"
-                  quality={activeIndex === 0 
-                    ? (typeof window !== 'undefined' && window.innerWidth < 768 ? 55 : 65) 
-                    : (typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 65)}
+                  sizes="(max-width: 1023px) calc(100vw - 32px), 750px"
+                  quality={activeIndex === 0 ? 60 : 65}
                 />
               )}
           </motion.div>
@@ -166,7 +164,7 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                     alt={`${title} - Thumbnail ${i + 1}`}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 80px, 120px"
+                    sizes="120px"
                     quality={50}
                   />
                 )}
@@ -258,10 +256,10 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
               <Image
                 src={url}
                 alt="prefetch-urgent"
-                width={828}
-                height={1035}
+                width={750}
+                height={938}
                 priority={false}
-                quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 65}
+                quality={50}
               />
             )
           })()}
@@ -281,20 +279,20 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
                   <Image
                     src={url}
                     alt="prefetch"
-                    width={828}
-                    height={1035}
+                    width={750}
+                    height={938}
                     priority={false}
-                    quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 60 : 65}
+                    quality={50}
                   />
                 )}
                 {/* Prefetch for Zoom View (all images) */}
                 <Image
                   src={url}
                   alt="prefetch-zoom"
-                  width={1440}
-                  height={1800}
+                  width={1200}
+                  height={1500}
                   priority={false}
-                  quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 75 : 80}
+                  quality={70}
                 />
               </React.Fragment>
             )
