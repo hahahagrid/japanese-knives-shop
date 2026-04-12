@@ -149,7 +149,7 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
               <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-10 leading-tight">
                 {product.title}
               </h1>
-              <p className="text-4xl font-serif italic text-[var(--accent)]">
+              <p className="text-4xl text-price">
                 {product.price
                   ? `${product.price.toLocaleString('uk-UA')} грн`
                   : 'Ціна за запитом'}
