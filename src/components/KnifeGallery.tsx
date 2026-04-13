@@ -24,9 +24,10 @@ interface KnifeGalleryProps {
     id?: string
   }>
   title: string
+  isUnavailable?: boolean
 }
 
-export function KnifeGallery({ images, title }: KnifeGalleryProps) {
+export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
     const [canPrefetchUrgent, setCanPrefetchUrgent] = useState(false)
