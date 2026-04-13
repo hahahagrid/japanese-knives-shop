@@ -78,7 +78,7 @@ export default async function BlogPage() {
     <div className="flex flex-col">
       <PageVersion />
       {/* Hero Banner */}
-      <div className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-48 md:pb-32 relative overflow-hidden">
+      <div className="bg-[#0A0A09] text-white pt-24 pb-12 md:pt-32 md:pb-20 relative overflow-hidden">
         <div className="absolute right-[-5%] top-[50%] -translate-y-1/2 text-[20vw] font-serif opacity-[0.06] select-none pointer-events-none">
           読
         </div>
@@ -98,7 +98,7 @@ export default async function BlogPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 md:py-32">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-12 md:py-16">
 
       {posts.length === 0 ? (
         <div className="py-24 text-center text-[var(--muted)] border-t border-[var(--border)]">
@@ -112,7 +112,7 @@ export default async function BlogPage() {
             <AnimatedSection 
               delay={i * 0.1} 
               key={post.id} 
-              className={`border-t border-[var(--border)] pt-12 pb-12 md:pt-16 md:pb-16 ${
+              className={`border-t border-[var(--border)] pt-8 pb-8 md:pt-12 md:pb-12 ${
                 i === posts.length - 1 ? 'border-b' : ''
               }`}
             >

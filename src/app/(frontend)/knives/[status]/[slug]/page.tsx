@@ -8,10 +8,12 @@ import { AnimatedSection } from '@/components/AnimatedSection'
 import { KnifeGallery } from '@/components/KnifeGallery'
 import { RichText } from '@/components/RichText'
 import { AddToCartButton } from '@/components/Cart/AddToCartButton'
-import { Database } from 'lucide-react'
 import { ProductSchema } from '@/components/SEO/ProductSchema'
 import { PageVersion } from '@/components/PageVersion'
-import { ExpandableSection } from '@/components/ExpandableSection'
+import { StickyProductBar } from '@/components/StickyProductBar'
+import { ProductTabs } from '@/components/ProductTabs'
+import { RelatedProducts } from '@/components/RelatedProducts'
+import { LatestPosts } from '@/components/LatestPosts'
 
 import { generateProductDescription } from '@/utils/seo'
 
@@ -64,6 +66,7 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
       ],
       locale: 'uk_UA',
       type: 'website',
+      publishedTime: (knife as any).publishedAt ?? undefined,
     },
   }
 }
@@ -143,123 +146,136 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
   const unavailableBadge = isCustomOrder ? 'Тимчасово недоступно' : 'Продано'
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
-      <PageVersion />
-      <ProductSchema 
-        id={String(knife.id)}
-        name={knife.title}
-        description={finalDescription}
-        image={galleryImages[0]?.image?.url}
-        price={knife.price || 0}
-        url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}` : `./`}
-        availability={isUnavailable ? 'OutOfStock' : (knife.status === 'in_stock' ? 'InStock' : 'PreOrder')}
+    <div className="relative">
+      <StickyProductBar 
+        knife={{
+          id: String(knife.id),
+          slug: knife.slug as string,
+          title: knife.title as string,
+          price: knife.price as number,
+          status: knife.status as string,
+          availability: (knife as any).availability as string,
+          type: 'knife',
+          imageUrl: galleryImages[0]?.image?.url as string | null,
+        }}
       />
-      {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-label mb-12">
-        <Link href="/" className="hover:text-black transition-colors">
-          Головна
-        </Link>
-        <span className="opacity-30">/</span>
-        <Link
-          href={knife.status === 'in_stock' ? '/knives/in-stock' : '/knives/custom-order'}
-          className="hover:text-black transition-colors"
-        >
-          {knife.status === 'in_stock' ? 'В наявності' : 'Під замовлення'}
-        </Link>
-        <span className="opacity-30">/</span>
-        <span className="text-black uppercase">{knife.title}</span>
-      </nav>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
+        <PageVersion />
+        <ProductSchema 
+          id={String(knife.id)}
+          name={knife.title}
+          description={finalDescription}
+          image={galleryImages[0]?.image?.url}
+          price={knife.price || 0}
+          url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}` : `./`}
+          availability={isUnavailable ? 'OutOfStock' : (knife.status === 'in_stock' ? 'InStock' : 'PreOrder')}
+        />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
-        {/* Left: Gallery */}
-        <div className="lg:col-span-7">
-          <AnimatedSection>
-            <KnifeGallery images={galleryImages} title={knife.title} />
-          </AnimatedSection>
-        </div>
+        {/* Breadcrumbs */}
+        <nav className="flex items-center gap-2 text-label mb-12">
+          <Link href="/" className="hover:text-black transition-colors uppercase">
+            Головна
+          </Link>
+          <span className="opacity-30">/</span>
+          <Link
+            href={knife.status === 'in_stock' ? '/knives/in-stock' : '/knives/custom-order'}
+            className="hover:text-black transition-colors"
+          >
+            {knife.status === 'in_stock' ? 'В наявності' : 'Під замовлення'}
+          </Link>
+          <span className="opacity-30">/</span>
+          <span className="text-black uppercase">{knife.title}</span>
+        </nav>
 
-        {/* Right: Info */}
-        <div className="lg:col-span-5">
-          <AnimatedSection delay={0.15} className="flex flex-col">
-            <div className="mb-8 lg:mb-12 border-b border-[var(--border)] pb-10">
-              <p className="text-label mb-4">
-                {isUnavailable ? unavailableLabel : (knife.status === 'in_stock' ? 'В наявності' : 'Доступний під замовлення')}
-              </p>
-              <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-10 leading-tight">
-                {knife.title}
-              </h1>
-              <p className="text-4xl text-price">
-                {isUnavailable 
-                  ? unavailableBadge 
-                  : (knife.price
-                      ? `${knife.price.toLocaleString('uk-UA')} грн`
-                      : knife.status === 'custom_order'
-                        ? 'Ціна за запитом'
-                        : 'Ціна уточнюється')}
-              </p>
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start pb-0">
+          {/* Left: Gallery */}
+          <div className="order-1 lg:order-1 lg:sticky lg:top-32">
+            <KnifeGallery images={galleryImages} title={knife.title} isUnavailable={isUnavailable} />
+          </div>
 
-            {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-10 md:mb-12">
-              <AddToCartButton 
-                knife={{
-                  id: String(knife.id),
-                  slug: knife.slug as string,
-                  title: knife.title as string,
-                  price: knife.price as number,
-                  status: knife.status as string,
-                  availability: (knife as any).availability as string,
-                  type: 'knife',
-                  imageUrl: galleryImages[0]?.image?.url as string | null,
-                }} 
-              />
-              {knife.price && (
+          {/* Right: Info & Primary Actions */}
+          <div className="order-2 lg:order-2">
+            <AnimatedSection delay={0.15} className="flex flex-col">
+              <div className="mb-8 lg:mb-12">
+                <p className="text-label mb-4 text-[#B4B4B0] uppercase tracking-[0.2em] font-bold">
+                  {isUnavailable ? unavailableLabel : (knife.status === 'in_stock' ? 'В наявності' : 'Доступний під замовлення')}
+                </p>
+                <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-8 leading-tight">
+                  {knife.title}
+                </h1>
+                <p className="text-2xl md:text-4xl font-bold uppercase tracking-[0.2em] text-[var(--accent)] mb-6 md:mb-12">
+                  {isUnavailable 
+                    ? unavailableBadge 
+                    : (knife.price
+                        ? `${knife.price.toLocaleString('uk-UA')} грн`
+                        : knife.status === 'custom_order'
+                          ? 'Ціна за запитом'
+                          : 'Ціна уточнюється')}
+                </p>
+              </div>
+
+              {/* Primary Actions */}
+              <div id="main-buy-area" className="flex flex-col sm:flex-row gap-4 mb-12">
+                <AddToCartButton 
+                  knife={{
+                    id: String(knife.id),
+                    slug: knife.slug as string,
+                    title: knife.title as string,
+                    price: knife.price as number,
+                    status: knife.status as string,
+                    availability: (knife as any).availability as string,
+                    type: 'knife',
+                    imageUrl: galleryImages[0]?.image?.url as string | null,
+                  }} 
+                />
                 <Link
                   href="/contacts"
                   className="w-full sm:flex-1 text-center bg-white border border-black/10 text-black py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] hover:bg-stone-50 transition-all active:scale-95"
                 >
                   Консультація
                 </Link>
-              )}
-            </div>
+              </div>
 
-            {/* Expandable Content Sections */}
-            <div className="mt-8">
-              {/* Description */}
-              {hasDescription && (
-                <ExpandableSection title="Про виріб" id="description" defaultOpen={true}>
-                  <div className="prose prose-neutral prose-lg max-w-none text-neutral-800">
-                    <RichText content={knife.description} />
-                  </div>
-                </ExpandableSection>
-              )}
 
-              {/* Specs Grid */}
-              {specsList.length > 0 && (
-                <ExpandableSection title="Технічні характеристики" id="specs">
-                  <div className="pt-4">
-                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
-                      {specsList.map((spec, index) => (
-                        <div key={index} className="group border-b border-black/5 pb-2">
-                          <dt className="text-[10px] uppercase tracking-widest mb-1 text-[#B4B4B0]">
-                            {spec.label}
-                          </dt>
-                          <dd className="text-sm font-medium tracking-tight text-neutral-800">
-                            {spec.value}
-                            {spec.unit && (
-                              <span className="text-[10px] ml-1 text-neutral-400 uppercase tracking-tighter">
-                                {spec.unit}
-                              </span>
-                            )}
-                          </dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
-                </ExpandableSection>
-              )}
+            </AnimatedSection>
+          </div>
+        </div>
+
+        {/* Detailed Info Tabs - Full Width */}
+        <ProductTabs 
+          description={hasDescription ? (
+            <div className="prose prose-neutral prose-lg max-w-none text-neutral-800">
+              <RichText content={knife.description} />
             </div>
-          </AnimatedSection>
+          ) : null}
+          specifications={specsList.length > 0 ? (
+            <div className="pt-4">
+              <dl className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 sm:gap-x-12">
+                {specsList.map((spec, index) => (
+                  <div key={index} className="group border-b border-black/5 pb-2">
+                    <dt className="text-[11px] uppercase tracking-widest mb-2 text-[#B4B4B0] font-bold">
+                      {spec.label}
+                    </dt>
+                    <dd className="text-base font-medium tracking-tight text-neutral-800">
+                      {spec.value}
+                      {spec.unit && (
+                        <span className="text-[10px] ml-1 text-neutral-400 uppercase tracking-tighter">
+                          {spec.unit}
+                        </span>
+                      )}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ) : null}
+        />
+
+        {/* Recommendations and Blog */}
+        <div className="mt-8 space-y-0">
+          <LatestPosts />
+          <RelatedProducts type="knife" />
         </div>
       </div>
     </div>

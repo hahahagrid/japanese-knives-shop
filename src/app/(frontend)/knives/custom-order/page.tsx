@@ -46,7 +46,7 @@ export default async function CustomOrderPage() {
     <div>
       <PageVersion />
       {/* Top CTA banner */}
-      <div className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
+      <div className="bg-[#0A0A09] text-white pt-24 pb-12 md:pt-32 md:pb-20 relative overflow-hidden">
         {/* Subtle Background Kanji Pattern */}
         <div className="absolute right-[-5%] top-[50%] -translate-y-1/2 text-[20vw] font-serif opacity-[0.06] select-none pointer-events-none">
           趣
@@ -70,8 +70,8 @@ export default async function CustomOrderPage() {
       </div>
 
       {/* Grid */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24">
-        <AnimatedSection className="mb-16 border-b border-[var(--border)] pb-10 flex items-end justify-between">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 md:py-12">
+        <AnimatedSection className="mb-10 border-b border-[var(--border)] pb-10 flex items-end justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-[1px] bg-[var(--accent)]" />
             <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">

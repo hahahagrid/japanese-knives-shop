@@ -34,7 +34,7 @@ export function KnifeCard({ slug, title, price, status, availability, imageUrl, 
   const badgeText = status === 'custom_order' ? 'Недоступно' : 'Продано'
   
   return (
-    <Link href={href} className={`group flex flex-col ${isUnavailable ? 'opacity-70' : ''}`}>
+    <Link href={href} className="group flex flex-col">
       {/* Image Container */}
       <div className={`aspect-[4/5] overflow-hidden relative mb-5 bg-neutral-100 ${isUnavailable ? 'grayscale' : ''}`}>
         {imageUrl ? (
@@ -49,7 +49,7 @@ export function KnifeCard({ slug, title, price, status, availability, imageUrl, 
                 canHover && !isUnavailable ? 'group-hover:scale-[1.05]' : ''
               } ${
                 canHover && hoverImageUrl && !isUnavailable ? 'md:group-hover:opacity-0' : 'opacity-100'
-              }`}
+              } ${isUnavailable ? 'opacity-70' : ''}`}
               sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
               quality={45}
             />
@@ -80,7 +80,7 @@ export function KnifeCard({ slug, title, price, status, availability, imageUrl, 
       </div>
 
       {/* Info Container */}
-      <div className="flex flex-col gap-2">
+      <div className={`flex flex-col gap-2 ${isUnavailable ? 'opacity-70' : ''}`}>
         <h3 className={`font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 ${!isUnavailable ? 'group-hover:opacity-60' : ''}`}>
           {title}
         </h3>

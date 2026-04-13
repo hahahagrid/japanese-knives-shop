@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react'
@@ -30,6 +31,11 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
   const [isZoomed, setIsZoomed] = useState(false)
     const [canPrefetchUrgent, setCanPrefetchUrgent] = useState(false)
     const [canPrefetchIdle, setCanPrefetchIdle] = useState(false)
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+      setMounted(true)
+    }, [])
 
     useEffect(() => {
       let idleHandle: number | undefined
@@ -174,77 +180,82 @@ export function KnifeGallery({ images, title }: KnifeGalleryProps) {
         </div>
       )}
 
-      {/* Full-screen Zoom Modal */}
-      <AnimatePresence>
-      {isZoomed && activeUrl && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-white/98 backdrop-blur-xl flex items-center justify-center cursor-zoom-out touch-pinch-zoom overscroll-none"
-            onClick={() => setIsZoomed(false)}
-          >
+      {/* Full-screen Zoom Modal - Portal to Body for top-level z-index */}
+      {mounted && createPortal(
+        <AnimatePresence>
+          {isZoomed && activeUrl && (
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="relative w-full h-full p-4 md:p-12 flex items-center justify-center pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[9999] bg-white/98 backdrop-blur-xl flex items-center justify-center cursor-zoom-out touch-pinch-zoom overscroll-none"
+              onClick={() => setIsZoomed(false)}
             >
-              <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeIndex}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative w-full h-full flex items-center justify-center p-4"
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                className="relative w-full h-full p-4 md:p-12 flex items-center justify-center pointer-events-none"
+              >
+                <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeIndex}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.3 }}
+                      className="relative w-full h-full flex items-center justify-center p-4"
+                    >
+                      <Image
+                        src={activeUrl as string}
+                        alt={activeAlt || title}
+                        fill
+                        loading="lazy"
+                        className="object-contain pointer-events-auto"
+                        sizes="100vw"
+                        quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 75 : 85}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+
+              {/* Modal Navigation Arrows */}
+              {images.length > 1 && (
+                <div className="absolute inset-x-3 sm:inset-x-6 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none z-[10000]">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                    className="p-3 bg-white/80 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto hover:bg-white transition-all shadow-md active:scale-95"
+                    aria-label="Previous image"
                   >
-                    <Image
-                      src={activeUrl as string}
-                      alt={activeAlt || title}
-                      fill
-                      loading="lazy"
-                      className="object-contain pointer-events-auto"
-                      sizes="100vw"
-                      quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 75 : 85}
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                    <ChevronLeft className="w-5 h-5 text-black" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                    className="p-3 bg-white/80 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto hover:bg-white transition-all shadow-md active:scale-95"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="w-5 h-5 text-black" />
+                  </button>
+                </div>
+              )}
+              
+              <div className="absolute top-4 right-4 md:top-8 md:right-8 z-[10000]">
+                <button
+                  onClick={() => setIsZoomed(false)}
+                  className="p-3 bg-white/80 backdrop-blur-md border border-[var(--border)] rounded-full hover:bg-white transition-all shadow-md active:scale-95"
+                  aria-label="Close zoom"
+                >
+                  <X className="w-5 h-5 text-black" />
+                </button>
               </div>
             </motion.div>
-
-            {/* Modal Navigation Arrows */}
-            {images.length > 1 && (
-              <div className="absolute inset-x-4 md:inset-x-10 top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none z-[110]">
-                <button
-                  onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                  className="p-4 md:p-5 bg-white/90 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto transition-all shadow-lg hover:bg-white active:scale-90"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="w-6 h-6 md:w-8 h-8 text-black" />
-                </button>
-                <button
-                  onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                  className="p-4 md:p-5 bg-white/90 backdrop-blur-md border border-[var(--border)] rounded-full pointer-events-auto transition-all shadow-lg hover:bg-white active:scale-90"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="w-6 h-6 md:w-8 h-8 text-black" />
-                </button>
-              </div>
-            ) /* Modal Navigation Arrows End */}
-            
-            <button
-              onClick={() => setIsZoomed(false)}
-              className="absolute top-6 right-6 md:top-10 md:right-10 p-4 bg-white/90 backdrop-blur-md border border-[var(--border)] rounded-full hover:bg-white transition-all shadow-lg z-[110] active:scale-90"
-              aria-label="Close zoom"
-            >
-              <X className="w-6 h-6 md:w-8 h-8 text-black" />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       {/* Background Prefetch Layer - URGEANT (Index 1) */}
       {canPrefetchUrgent && images[1] && (
