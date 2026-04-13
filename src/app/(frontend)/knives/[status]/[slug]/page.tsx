@@ -227,8 +227,8 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
             <div className="mt-8">
               {/* Description */}
               {hasDescription && (
-                <ExpandableSection title="Про виріб" id="description">
-                  <div className="prose prose-neutral prose-lg max-w-none text-neutral-800 font-serif leading-relaxed">
+                <ExpandableSection title="Про виріб" id="description" defaultOpen={true}>
+                  <div className="prose prose-neutral prose-lg max-w-none text-neutral-800">
                     <RichText content={knife.description} />
                   </div>
                 </ExpandableSection>

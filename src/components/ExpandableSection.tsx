@@ -23,9 +23,9 @@ export function ExpandableSection({
       <button
         id={id ? `btn-expand-${id}` : undefined}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-8 flex items-center justify-between text-left group/btn transition-colors hover:text-[var(--accent)]"
+        className="w-full py-8 flex items-center justify-between text-left group/btn transition-colors hover:text-black"
       >
-        <h2 className="text-label-caps text-[#B4B4B0] group-hover/btn:text-black transition-colors uppercase tracking-[0.2em] text-[11px] font-bold">
+        <h2 className={`text-label-caps group-hover/btn:text-black transition-colors uppercase tracking-[0.2em] text-[11px] font-bold ${isOpen ? 'text-black' : 'text-[#B4B4B0]'}`}>
           {title}
         </h2>
         
