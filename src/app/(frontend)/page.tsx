@@ -266,7 +266,7 @@ export default async function HomePage() {
                       title={knife.title}
                       price={knife.price}
                       status={knife.status ?? 'in_stock'}
-                      availability={knife.availability ?? 'available'}
+                      availability={(knife as any).availability ?? 'available'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
                     />
@@ -318,7 +318,7 @@ export default async function HomePage() {
                       title={knife.title}
                       price={knife.price}
                       status={knife.status ?? 'custom_order'}
-                      availability={knife.availability ?? 'available'}
+                      availability={(knife as any).availability ?? 'available'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
                     />

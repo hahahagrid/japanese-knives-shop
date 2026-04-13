@@ -41,7 +41,7 @@ export default async function InStockPage() {
   // Sort: available (0) first, then unavailable (1)
   const sortedKnives = [...knives].sort((a, b) => {
     const order: Record<string, number> = { 'available': 0, 'unavailable': 1 };
-    return (order[a.availability as string] ?? 0) - (order[b.availability as string] ?? 0);
+    return (order[(a as any).availability as string] ?? 0) - (order[(b as any).availability as string] ?? 0);
   })
 
   return (
@@ -109,7 +109,7 @@ export default async function InStockPage() {
                     title={knife.title}
                     price={knife.price}
                     status={knife.status ?? 'in_stock'}
-                    availability={knife.availability ?? 'available'}
+                    availability={(knife as any).availability ?? 'available'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
                     priority={index < 4}

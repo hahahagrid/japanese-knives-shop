@@ -135,7 +135,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
 
   const finalDescription = generateProductDescription(knife as any, 'knife')
   
-  const isUnavailable = knife.availability === 'unavailable'
+  const isUnavailable = (knife as any).availability === 'unavailable'
   const isCustomOrder = knife.status === 'custom_order'
   
   // Badge text: "Розпродано" for in-stock, "Недоступно" for custom_order
