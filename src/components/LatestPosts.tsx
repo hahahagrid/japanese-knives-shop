@@ -34,21 +34,21 @@ export async function LatestPosts() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
         {posts.map((post) => (
           <Link key={post.id} href={`/blog/${post.slug}`} className="group block">
-            <div className="aspect-[16/10] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 relative mb-6">
+            <div className="aspect-[16/10] overflow-hidden relative mb-3 bg-neutral-100">
               {post.coverImage && typeof post.coverImage === 'object' && (
                 <Image
-                  src={(post.coverImage as any).url}
+                  src={(post.coverImage as any).sizes?.thumbnail?.url || (post.coverImage as any).url}
                   alt={post.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-1000"
+                  className="object-cover lg:group-hover:scale-[1.05] transition-transform duration-1000 ease-out-expo"
+                  sizes="400px"
                 />
               )}
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
             </div>
-            <h3 className="font-serif italic text-xl mb-3 group-hover:text-[var(--accent)] transition-colors">
+            <h3 className="font-serif italic text-xl mb-3 lg:group-hover:text-[var(--accent)] transition-colors">
               {post.title}
             </h3>
-            <p className="text-[10px] tracking-widest uppercase text-neutral-400 font-bold group-hover:text-black transition-colors">
+            <p className="text-[10px] tracking-widest uppercase text-neutral-400 font-bold lg:group-hover:text-black transition-colors">
               Переглянути статтю
             </p>
           </Link>

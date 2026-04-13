@@ -46,9 +46,9 @@ export function KnifeCard({ slug, title, price, status, availability, imageUrl, 
               priority={priority}
               {...(priority ? { fetchPriority: "high" } : {})}
               className={`object-cover transition-all duration-1000 ease-out-expo will-change-transform ${
-                canHover && !isUnavailable ? 'group-hover:scale-[1.05]' : ''
+                canHover && !isUnavailable ? 'lg:group-hover:scale-[1.05]' : ''
               } ${
-                canHover && hoverImageUrl && !isUnavailable ? 'md:group-hover:opacity-0' : 'opacity-100'
+                canHover && hoverImageUrl && !isUnavailable ? 'lg:group-hover:opacity-0' : 'opacity-100'
               } ${isUnavailable ? 'opacity-70' : ''}`}
               sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
               quality={45}
@@ -59,7 +59,7 @@ export function KnifeCard({ slug, title, price, status, availability, imageUrl, 
                 src={hoverImageUrl}
                 alt={`${title} - view 2`}
                 fill
-                className="hidden md:block object-cover transition-all duration-1000 ease-out-expo opacity-0 group-hover:opacity-100 group-hover:scale-[1.05] will-change-transform"
+                className="hidden lg:block object-cover transition-all duration-1000 ease-out-expo opacity-0 lg:group-hover:opacity-100 lg:group-hover:scale-[1.05] will-change-transform"
                 sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
                 quality={45}
               />
@@ -81,7 +81,7 @@ export function KnifeCard({ slug, title, price, status, availability, imageUrl, 
 
       {/* Info Container */}
       <div className={`flex flex-col gap-2 ${isUnavailable ? 'opacity-70' : ''}`}>
-        <h3 className={`font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 ${!isUnavailable ? 'group-hover:opacity-60' : ''}`}>
+        <h3 className={`font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 ${!isUnavailable ? 'lg:group-hover:opacity-60' : ''}`}>
           {title}
         </h3>
         <p className={`text-metadata ${isUnavailable ? 'text-neutral-400' : ''}`}>
