@@ -25,10 +25,21 @@ export default async function AccessoriesPage() {
 
   const { docs: products } = await payload.find({
     collection: 'products',
-    where: { type: { equals: 'accessory' } },
+    where: { 
+      and: [
+        { type: { equals: 'accessory' } },
+        { status: { in: ['in_stock', 'sold'] } }
+      ]
+    },
     overrideAccess: false,
     depth: 1,
     limit: 100,
+    sort: 'status',
+  })
+
+  const sortedProducts = [...products].sort((a, b) => {
+    const order: Record<string, number> = { 'in_stock': 0, 'sold': 1 };
+    return (order[a.status as string] ?? 2) - (order[b.status as string] ?? 2);
   })
 
   return (
@@ -61,12 +72,12 @@ export default async function AccessoriesPage() {
           <div className="flex items-center gap-3">
             <div className="w-8 h-[1px] bg-[var(--accent)]" />
             <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">
-              Весь каталог ({products.length})
+              Весь каталог ({sortedProducts.length})
             </h2>
           </div>
         </AnimatedSection>
 
-        {products.length === 0 ? (
+        {sortedProducts.length === 0 ? (
           <div className="py-32 text-center">
             <p className="text-[var(--muted)]">
               Наразі аксесуарів немає в наявності. Слідкуйте за оновленнями.
@@ -74,7 +85,7 @@ export default async function AccessoriesPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-14 stagger-children">
-            {products.map((product, index) => {
+            {sortedProducts.map((product, index) => {
               const firstImage = product.images?.[0]
               const secondImage = product.images?.[1]
               const imgUrl =

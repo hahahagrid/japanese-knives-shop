@@ -78,6 +78,7 @@ export const Products: CollectionConfig = {
       options: [
         { label: 'В наявності', value: 'in_stock' },
         { label: 'Під замовлення', value: 'custom_order' },
+        { label: 'Продано', value: 'sold' },
       ],
       defaultValue: 'in_stock',
       required: true,

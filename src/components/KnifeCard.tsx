@@ -25,13 +25,14 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
     }
   }, [])
 
-  const statusPath = status === 'in_stock' ? 'in-stock' : 'custom-order'
+  const isSold = status === 'sold'
+  const statusPath = isSold ? 'in-stock' : (status === 'in_stock' ? 'in-stock' : 'custom-order')
   const href = pathPrefix ? `${pathPrefix}/${slug}` : `/knives/${statusPath}/${slug}`
   
   return (
-    <Link href={href} className="group flex flex-col">
+    <Link href={href} className={`group flex flex-col ${isSold ? 'opacity-70' : ''}`}>
       {/* Image Container */}
-      <div className="aspect-[4/5] overflow-hidden relative mb-5 bg-neutral-100">
+      <div className={`aspect-[4/5] overflow-hidden relative mb-5 bg-neutral-100 ${isSold ? 'grayscale' : ''}`}>
         {imageUrl ? (
           <>
             <Image
@@ -41,15 +42,15 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
               priority={priority}
               {...(priority ? { fetchPriority: "high" } : {})}
               className={`object-cover transition-all duration-1000 ease-out-expo will-change-transform ${
-                canHover ? 'group-hover:scale-[1.05]' : ''
+                canHover && !isSold ? 'group-hover:scale-[1.05]' : ''
               } ${
-                canHover && hoverImageUrl ? 'md:group-hover:opacity-0' : 'opacity-100'
+                canHover && hoverImageUrl && !isSold ? 'md:group-hover:opacity-0' : 'opacity-100'
               }`}
               sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
               quality={45}
             />
             {/* Only render hover image for desktop to save mobile bandwidth */}
-            {canHover && hoverImageUrl && (
+            {canHover && hoverImageUrl && !isSold && (
               <Image
                 src={hoverImageUrl}
                 alt={`${title} - view 2`}
@@ -59,6 +60,15 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
                 quality={45}
               />
             )}
+            
+            {/* Sold Badge */}
+            {isSold && (
+              <div className="absolute top-4 right-4 z-10">
+                <span className="bg-black/60 backdrop-blur-md text-white px-3 py-1.5 text-[9px] font-bold tracking-[0.2em] uppercase">
+                  Продано
+                </span>
+              </div>
+            )}
           </>
         ) : (
           <div className="absolute inset-0 bg-neutral-100" />
@@ -67,13 +77,15 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
 
       {/* Info Container */}
       <div className="flex flex-col gap-2">
-        <h3 className="font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 group-hover:opacity-60">
+        <h3 className={`font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 ${!isSold ? 'group-hover:opacity-60' : ''}`}>
           {title}
         </h3>
-        <p className="text-metadata">
-          {price 
-            ? `${price.toLocaleString('uk-UA')} грн`
-            : (status === 'custom_order' ? 'Ціна за запитом' : 'Ціна уточнюється')}
+        <p className={`text-metadata ${isSold ? 'text-neutral-400' : ''}`}>
+          {isSold 
+            ? 'Продано' 
+            : (price 
+                ? `${price.toLocaleString('uk-UA')} грн`
+                : (status === 'custom_order' ? 'Ціна за запитом' : 'Ціна уточнюється'))}
         </p>
       </div>
     </Link>

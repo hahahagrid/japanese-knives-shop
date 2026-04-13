@@ -17,7 +17,8 @@ import { generateProductDescription } from '@/utils/seo'
 // Map UI status to DB status
 const statusMap: Record<string, string> = {
   'in-stock': 'in_stock',
-  'custom-order': 'custom_order'
+  'custom-order': 'custom_order',
+  'sold': 'sold'
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ status: string, slug: string }> }) {
@@ -144,7 +145,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
         image={galleryImages[0]?.image?.url}
         price={knife.price || 0}
         url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}` : `./`}
-        availability={dbStatus === 'in_stock' ? 'InStock' : 'PreOrder'}
+        availability={dbStatus === 'sold' ? 'OutOfStock' : (dbStatus === 'in_stock' ? 'InStock' : 'PreOrder')}
       />
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 text-label mb-12">
@@ -153,10 +154,10 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
         </Link>
         <span className="opacity-30">/</span>
         <Link
-          href={dbStatus === 'in_stock' ? '/knives/in-stock' : '/knives/custom-order'}
+          href={dbStatus === 'sold' ? '/knives/in-stock' : (dbStatus === 'in_stock' ? '/knives/in-stock' : '/knives/custom-order')}
           className="hover:text-black transition-colors"
         >
-          {dbStatus === 'in_stock' ? 'В наявності' : 'Під замовлення'}
+          {dbStatus === 'sold' ? 'Розпродано' : (dbStatus === 'in_stock' ? 'В наявності' : 'Під замовлення')}
         </Link>
         <span className="opacity-30">/</span>
         <span className="text-black uppercase">{knife.title}</span>
@@ -175,17 +176,19 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
           <AnimatedSection delay={0.15} className="flex flex-col">
             <div className="mb-8 lg:mb-12 border-b border-[var(--border)] pb-10">
               <p className="text-label mb-4">
-                {dbStatus === 'in_stock' ? 'В наявності' : 'Доступний під замовлення'}
+                {dbStatus === 'sold' ? 'Розпродано' : (dbStatus === 'in_stock' ? 'В наявності' : 'Доступний під замовлення')}
               </p>
               <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-10 leading-tight">
                 {knife.title}
               </h1>
               <p className="text-4xl text-price">
-                {knife.price
-                  ? `${knife.price.toLocaleString('uk-UA')} грн`
-                  : dbStatus === 'custom_order'
-                    ? 'Ціна за запитом'
-                    : 'Ціна уточнюється'}
+                {dbStatus === 'sold' 
+                  ? 'Продано' 
+                  : (knife.price
+                      ? `${knife.price.toLocaleString('uk-UA')} грн`
+                      : dbStatus === 'custom_order'
+                        ? 'Ціна за запитом'
+                        : 'Ціна уточнюється')}
               </p>
             </div>
 

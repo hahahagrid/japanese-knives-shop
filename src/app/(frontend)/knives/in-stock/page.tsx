@@ -28,11 +28,21 @@ export default async function InStockPage() {
   const { docs: knives } = await payload.find({
     collection: 'products',
     where: {
-      and: [{ status: { equals: 'in_stock' } }, { type: { equals: 'knife' } }],
+      and: [
+        { status: { in: ['in_stock', 'sold'] } }, 
+        { type: { equals: 'knife' } }
+      ],
     },
     overrideAccess: false,
     depth: 1,
     limit: 100,
+    sort: 'status', // entries are 'in_stock', then 'sold' (alphabetical: in_stock < sold)
+  })
+
+  // Ensure in_stock comes first, then sold (just in case sort: status isn't clear enough or we have custom_order in theory)
+  const sortedKnives = [...knives].sort((a, b) => {
+    const order: Record<string, number> = { 'in_stock': 0, 'sold': 1 };
+    return order[a.status as string] - order[b.status as string];
   })
 
   return (
@@ -65,12 +75,12 @@ export default async function InStockPage() {
           <div className="flex items-center gap-3">
             <div className="w-8 h-[1px] bg-[var(--accent)]" />
             <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">
-              Весь каталог ({knives.length})
+              Весь каталог ({sortedKnives.length})
             </h2>
           </div>
         </AnimatedSection>
 
-        {knives.length === 0 ? (
+        {sortedKnives.length === 0 ? (
           <div className="py-32 text-center">
             <p className="text-[var(--muted)]">
               Наразі всі ножі розпродані. Слідкуйте за оновленнями.
@@ -78,7 +88,7 @@ export default async function InStockPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-14 stagger-children">
-            {knives.map((knife, index) => {
+            {sortedKnives.map((knife, index) => {
               const firstImage = knife.images?.[0]
               const secondImage = knife.images?.[1]
               const imgUrl =

@@ -32,6 +32,17 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
     )
   }
 
+  if (knife.status === 'sold') {
+    return (
+      <button
+        disabled
+        className="w-full sm:flex-1 bg-neutral-200 text-neutral-500 py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] cursor-not-allowed flex items-center justify-center gap-3"
+      >
+        <span>Розпродано</span>
+      </button>
+    )
+  }
+
   return (
     <button
       id="btn-add-to-cart"
