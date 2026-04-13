@@ -208,7 +208,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
                   title: knife.title as string,
                   price: knife.price as number,
                   status: knife.status as string,
-                  availability: knife.availability as string,
+                  availability: (knife as any).availability as string,
                   type: 'knife',
                   imageUrl: galleryImages[0]?.image?.url as string | null,
                 }} 
