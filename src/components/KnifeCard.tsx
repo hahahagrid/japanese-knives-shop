@@ -9,13 +9,14 @@ interface KnifeCardProps {
   title: string
   price?: number | null
   status?: string
+  availability?: string
   imageUrl?: string | null
   hoverImageUrl?: string | null
   pathPrefix?: string
   priority?: boolean
 }
 
-export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl, pathPrefix, priority }: KnifeCardProps) {
+export function KnifeCard({ slug, title, price, status, availability, imageUrl, hoverImageUrl, pathPrefix, priority }: KnifeCardProps) {
   const [canHover, setCanHover] = useState(false)
   
   useEffect(() => {
@@ -25,13 +26,17 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
     }
   }, [])
 
+  const isUnavailable = availability === 'unavailable'
   const statusPath = status === 'in_stock' ? 'in-stock' : 'custom-order'
   const href = pathPrefix ? `${pathPrefix}/${slug}` : `/knives/${statusPath}/${slug}`
+  
+  // Badge text logic: "Продано" for in-stock/accessories, "Недоступно" for custom order
+  const badgeText = status === 'custom_order' ? 'Недоступно' : 'Продано'
   
   return (
     <Link href={href} className="group flex flex-col">
       {/* Image Container */}
-      <div className="aspect-[4/5] overflow-hidden relative mb-5 bg-neutral-100">
+      <div className={`aspect-[4/5] overflow-hidden relative mb-5 bg-neutral-100 ${isUnavailable ? 'grayscale' : ''}`}>
         {imageUrl ? (
           <>
             <Image
@@ -41,15 +46,15 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
               priority={priority}
               {...(priority ? { fetchPriority: "high" } : {})}
               className={`object-cover transition-all duration-1000 ease-out-expo will-change-transform ${
-                canHover ? 'group-hover:scale-[1.05]' : ''
+                canHover && !isUnavailable ? 'group-hover:scale-[1.05]' : ''
               } ${
-                canHover && hoverImageUrl ? 'md:group-hover:opacity-0' : 'opacity-100'
-              }`}
+                canHover && hoverImageUrl && !isUnavailable ? 'md:group-hover:opacity-0' : 'opacity-100'
+              } ${isUnavailable ? 'opacity-70' : ''}`}
               sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
               quality={45}
             />
             {/* Only render hover image for desktop to save mobile bandwidth */}
-            {canHover && hoverImageUrl && (
+            {canHover && hoverImageUrl && !isUnavailable && (
               <Image
                 src={hoverImageUrl}
                 alt={`${title} - view 2`}
@@ -59,6 +64,15 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
                 quality={45}
               />
             )}
+            
+            {/* Availability Badge */}
+            {isUnavailable && (
+              <div className="absolute top-4 right-4 z-10">
+                <span className="bg-black text-white px-3 py-1.5 text-[9px] font-bold tracking-[0.2em] uppercase">
+                  {badgeText}
+                </span>
+              </div>
+            )}
           </>
         ) : (
           <div className="absolute inset-0 bg-neutral-100" />
@@ -66,14 +80,16 @@ export function KnifeCard({ slug, title, price, status, imageUrl, hoverImageUrl,
       </div>
 
       {/* Info Container */}
-      <div className="flex flex-col gap-2">
-        <h3 className="font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 group-hover:opacity-60">
+      <div className={`flex flex-col gap-2 ${isUnavailable ? 'opacity-70' : ''}`}>
+        <h3 className={`font-serif font-bold text-[1.1rem] leading-snug transition-opacity duration-300 ${!isUnavailable ? 'group-hover:opacity-60' : ''}`}>
           {title}
         </h3>
-        <p className="text-metadata">
-          {price 
-            ? `${price.toLocaleString('uk-UA')} грн`
-            : (status === 'custom_order' ? 'Ціна за запитом' : 'Ціна уточнюється')}
+        <p className={`text-metadata ${isUnavailable ? 'text-neutral-400' : ''}`}>
+          {isUnavailable 
+            ? badgeText 
+            : (price 
+                ? `${price.toLocaleString('uk-UA')} грн`
+                : (status === 'custom_order' ? 'Ціна за запитом' : 'Ціна уточнюється'))}
         </p>
       </div>
     </Link>

@@ -36,11 +36,17 @@ export default async function CustomOrderPage() {
     limit: 100,
   })
 
+  // Sort: available (0) first, then unavailable (1)
+  const sortedKnives = [...knives].sort((a, b) => {
+    const order: Record<string, number> = { 'available': 0, 'unavailable': 1 };
+    return (order[(a as any).availability as string] ?? 0) - (order[(b as any).availability as string] ?? 0);
+  })
+
   return (
     <div>
       <PageVersion />
       {/* Top CTA banner */}
-      <div className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
+      <div className="bg-[#0A0A09] text-white pt-24 pb-12 md:pt-32 md:pb-20 relative overflow-hidden">
         {/* Subtle Background Kanji Pattern */}
         <div className="absolute right-[-5%] top-[50%] -translate-y-1/2 text-[20vw] font-serif opacity-[0.06] select-none pointer-events-none">
           趣
@@ -64,17 +70,17 @@ export default async function CustomOrderPage() {
       </div>
 
       {/* Grid */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24">
-        <AnimatedSection className="mb-16 border-b border-[var(--border)] pb-10 flex items-end justify-between">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 md:py-12">
+        <AnimatedSection className="mb-10 border-b border-[var(--border)] pb-10 flex items-end justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-[1px] bg-[var(--accent)]" />
             <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">
-              Весь каталог ({knives.length})
+              Весь каталог ({sortedKnives.length})
             </h2>
           </div>
         </AnimatedSection>
 
-        {knives.length === 0 ? (
+        {sortedKnives.length === 0 ? (
           <div className="py-32 text-center">
             <p className="text-[var(--muted)] mb-6">Каталог оновлюється.</p>
             <Link
@@ -86,7 +92,7 @@ export default async function CustomOrderPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-14 stagger-children">
-            {knives.map((knife, index) => {
+            {sortedKnives.map((knife, index) => {
               const firstImage = knife.images?.[0]
               const secondImage = knife.images?.[1]
               const imgUrl =
@@ -108,6 +114,7 @@ export default async function CustomOrderPage() {
                     title={knife.title}
                     price={knife.price}
                     status={knife.status ?? 'custom_order'}
+                    availability={(knife as any).availability ?? 'available'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
                     priority={index < 4}

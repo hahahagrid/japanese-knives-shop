@@ -89,7 +89,11 @@ export default async function HomePage() {
   const { docs: inStockKnives } = await payload.find({
     collection: 'products',
     where: {
-      and: [{ status: { equals: 'in_stock' } }, { type: { equals: 'knife' } }],
+      and: [
+        { status: { equals: 'in_stock' } }, 
+        { type: { equals: 'knife' } },
+        { availability: { equals: 'available' } }
+      ],
     },
     limit: 4,
     overrideAccess: false,
@@ -99,7 +103,11 @@ export default async function HomePage() {
   const { docs: customKnives } = await payload.find({
     collection: 'products',
     where: {
-      and: [{ status: { equals: 'custom_order' } }, { type: { equals: 'knife' } }],
+      and: [
+        { status: { equals: 'custom_order' } }, 
+        { type: { equals: 'knife' } },
+        { availability: { equals: 'available' } }
+      ],
     },
     limit: 4,
     overrideAccess: false,
@@ -220,7 +228,7 @@ export default async function HomePage() {
 
       {/* ── 2. In Stock Section ────────────────────────── */}
       {inStockKnives.length > 0 && (
-        <section className="bg-[#FAFAF9] py-20 md:py-32 border-b border-black/[0.03]">
+        <section className="bg-[#FAFAF9] py-12 md:py-16 border-b border-black/[0.03]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <AnimatedSection className="flex justify-between items-end mb-10">
               <div>
@@ -258,6 +266,7 @@ export default async function HomePage() {
                       title={knife.title}
                       price={knife.price}
                       status={knife.status ?? 'in_stock'}
+                      availability={(knife as any).availability ?? 'available'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
                     />
@@ -271,7 +280,7 @@ export default async function HomePage() {
 
       {/* ── 3. Custom Order Section ────────────────────── */}
       {customKnives.length > 0 && (
-        <section className="bg-[#FAFAF9] py-20 md:py-32 border-b border-black/[0.03]">
+        <section className="bg-[#FAFAF9] py-12 md:py-16 border-b border-black/[0.03]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <AnimatedSection className="flex justify-between items-end mb-10">
               <div>
@@ -308,7 +317,8 @@ export default async function HomePage() {
                       slug={knife.slug ?? ''}
                       title={knife.title}
                       price={knife.price}
-                      status={knife.status ?? 'custom'}
+                      status={knife.status ?? 'custom_order'}
+                      availability={(knife as any).availability ?? 'available'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
                     />
@@ -321,7 +331,7 @@ export default async function HomePage() {
       )}
 
       {/* ── 4. Featured Manufacturers ──────────────────────── */}
-      <section className="bg-white py-20 md:py-32 border-b border-black/[0.03]">
+      <section className="bg-white py-12 md:py-16 border-b border-black/[0.03]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <AnimatedSection className="mb-10">
             <p className="text-label mb-3">Клинки цих та інших майстрів доступні для замовлення</p>
@@ -342,7 +352,7 @@ export default async function HomePage() {
       <ReviewsMarquee reviews={reviewUrls} />
 
       {/* ── 6. Philosophy & Heritage (Immersive Editorial) ─────────── */}
-      <section className="bg-white pt-32 md:pt-40 pb-0 flex flex-col gap-10 border-t border-[var(--border)] overflow-hidden relative">
+      <section className="bg-white pt-20 md:pt-24 pb-0 flex flex-col gap-10 border-t border-[var(--border)] overflow-hidden relative">
         {/* Heritage Watermark 01: 锻 (Forging) */}
         <div className="absolute left-[-5%] top-[10%] text-[40vw] font-serif opacity-[0.03] select-none pointer-events-none text-black leading-none">
           锻

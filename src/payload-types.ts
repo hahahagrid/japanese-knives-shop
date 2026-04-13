@@ -214,7 +214,14 @@ export interface Product {
    */
   slug: string;
   type: 'knife' | 'accessory';
+  /**
+   * Визначає, в якому розділі сайту буде товар та його URL.
+   */
   status: 'in_stock' | 'custom_order';
+  /**
+   * Чи можна зараз купити/замовити цей товар.
+   */
+  availability: 'available' | 'unavailable';
   /**
    * Ціна в гривнях (залиште порожнім, якщо ціна за запитом)
    */
@@ -521,6 +528,7 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   type?: T;
   status?: T;
+  availability?: T;
   price?: T;
   category?: T;
   images?: T;

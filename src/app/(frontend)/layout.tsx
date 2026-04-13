@@ -57,7 +57,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const settings = await payload.findGlobal({ slug: 'site-settings', overrideAccess: false })
 
   return (
-    <html lang="uk" className={`${inter.variable} ${playfair.variable} light`}>
+    <html lang="uk" className={`${inter.variable} ${playfair.variable} light`} suppressHydrationWarning>
       <head>
         {/* Google Tag Manager */}
         <Script

@@ -10,13 +10,17 @@ interface AddToCartButtonProps {
     title: string
     price: number
     status: string
+    availability?: string
     imageUrl: string | null
     type?: 'knife' | 'accessory'
   }
+  className?: string
 }
 
-export function AddToCartButton({ knife }: AddToCartButtonProps) {
+export function AddToCartButton({ knife, className }: AddToCartButtonProps) {
   const { addItem } = useCartStore()
+
+  const defaultBtnClass = "w-full sm:flex-1 bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 flex items-center justify-center gap-3 group/btn overflow-hidden relative"
 
   if (!knife.price) {
     return (
@@ -24,11 +28,22 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
         href="/contacts"
         id="btn-learn-price"
         data-product-name={knife.title}
-        className="w-full sm:flex-1 text-center bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 group/btn overflow-hidden relative"
+        className={className || defaultBtnClass}
       >
         <span className="relative z-10">Дізнатись ціну</span>
         <div className="absolute inset-0 bg-[#BC002D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
       </a>
+    )
+  }
+
+  if (knife.availability === 'unavailable') {
+    return (
+      <button
+        disabled
+        className={className || "w-full sm:flex-1 bg-neutral-200 text-neutral-500 py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] cursor-not-allowed flex items-center justify-center gap-3"}
+      >
+        <span>Розпродано</span>
+      </button>
     )
   }
 
@@ -47,7 +62,7 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
           type: knife.type || 'knife',
         })
       }
-      className="w-full sm:flex-1 bg-black text-white py-6 px-10 font-bold uppercase tracking-[0.2em] text-[11px] transition-all shadow-xl shadow-black/10 active:scale-95 flex items-center justify-center gap-3 group/btn overflow-hidden relative"
+      className={className || defaultBtnClass}
     >
       <span className="relative z-10">{knife.status === 'in_stock' ? 'У кошик' : 'Передзамовити'}</span>
       <ShoppingBag className="w-4 h-4 relative z-10 opacity-70 group-hover/btn:opacity-100 transition-opacity" />

@@ -29,13 +29,21 @@ export default async function AccessoriesPage() {
     overrideAccess: false,
     depth: 1,
     limit: 100,
+    sort: 'status',
+  })
+
+  const sortedProducts = [...products].sort((a, b) => {
+    const order: Record<string, number> = { 'available': 0, 'unavailable': 1 };
+    const aOrder = order[(a as any).availability as string] ?? 0;
+    const bOrder = order[(b as any).availability as string] ?? 0;
+    return aOrder - bOrder;
   })
 
   return (
     <div className="flex flex-col">
       <PageVersion />
       {/* Hero Banner */}
-      <div className="bg-[#0A0A09] text-white pt-32 pb-20 md:pt-40 md:pb-32 relative overflow-hidden">
+      <div className="bg-[#0A0A09] text-white pt-24 pb-12 md:pt-32 md:pb-20 relative overflow-hidden">
         {/* Subtle Background Pattern */}
         <div className="absolute right-[-5%] top-[50%] -translate-y-1/2 text-[20vw] font-serif opacity-[0.06] select-none pointer-events-none">
           具
@@ -55,18 +63,18 @@ export default async function AccessoriesPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-16 md:py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-8 md:py-12">
         {/* Filter/Count Bar */}
-        <AnimatedSection className="mb-16 border-b border-[var(--border)] pb-10 flex items-end justify-between">
+        <AnimatedSection className="mb-10 border-b border-[var(--border)] pb-10 flex items-end justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-[1px] bg-[var(--accent)]" />
             <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">
-              Весь каталог ({products.length})
+              Весь каталог ({sortedProducts.length})
             </h2>
           </div>
         </AnimatedSection>
 
-        {products.length === 0 ? (
+        {sortedProducts.length === 0 ? (
           <div className="py-32 text-center">
             <p className="text-[var(--muted)]">
               Наразі аксесуарів немає в наявності. Слідкуйте за оновленнями.
@@ -74,7 +82,7 @@ export default async function AccessoriesPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-14 stagger-children">
-            {products.map((product, index) => {
+            {sortedProducts.map((product, index) => {
               const firstImage = product.images?.[0]
               const secondImage = product.images?.[1]
               const imgUrl =
@@ -94,6 +102,7 @@ export default async function AccessoriesPage() {
                     title={product.title}
                     price={product.price}
                     status={product.status ?? 'in_stock'}
+                    availability={(product as any).availability ?? 'available'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
                     pathPrefix="/accessories"
