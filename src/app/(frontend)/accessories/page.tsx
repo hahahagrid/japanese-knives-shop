@@ -33,9 +33,9 @@ export default async function AccessoriesPage() {
   })
 
   const sortedProducts = [...products].sort((a, b) => {
-    const order: Record<string, number> = { 'in_stock': 0, 'custom_order': 1, 'sold': 2 };
-    const aOrder = order[a.status as string] ?? 1;
-    const bOrder = order[b.status as string] ?? 1;
+    const order: Record<string, number> = { 'available': 0, 'unavailable': 1 };
+    const aOrder = order[a.availability as string] ?? 0;
+    const bOrder = order[b.availability as string] ?? 0;
     return aOrder - bOrder;
   })
 
@@ -102,6 +102,7 @@ export default async function AccessoriesPage() {
                     title={product.title}
                     price={product.price}
                     status={product.status ?? 'in_stock'}
+                    availability={product.availability ?? 'available'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
                     pathPrefix="/accessories"

@@ -89,7 +89,11 @@ export default async function HomePage() {
   const { docs: inStockKnives } = await payload.find({
     collection: 'products',
     where: {
-      and: [{ status: { equals: 'in_stock' } }, { type: { equals: 'knife' } }],
+      and: [
+        { status: { equals: 'in_stock' } }, 
+        { type: { equals: 'knife' } },
+        { availability: { equals: 'available' } }
+      ],
     },
     limit: 4,
     overrideAccess: false,
@@ -99,7 +103,11 @@ export default async function HomePage() {
   const { docs: customKnives } = await payload.find({
     collection: 'products',
     where: {
-      and: [{ status: { equals: 'custom_order' } }, { type: { equals: 'knife' } }],
+      and: [
+        { status: { equals: 'custom_order' } }, 
+        { type: { equals: 'knife' } },
+        { availability: { equals: 'available' } }
+      ],
     },
     limit: 4,
     overrideAccess: false,
@@ -258,6 +266,7 @@ export default async function HomePage() {
                       title={knife.title}
                       price={knife.price}
                       status={knife.status ?? 'in_stock'}
+                      availability={knife.availability ?? 'available'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
                     />
@@ -308,7 +317,8 @@ export default async function HomePage() {
                       slug={knife.slug ?? ''}
                       title={knife.title}
                       price={knife.price}
-                      status={knife.status ?? 'custom'}
+                      status={knife.status ?? 'custom_order'}
+                      availability={knife.availability ?? 'available'}
                       imageUrl={imgUrl}
                       hoverImageUrl={hoverImgUrl}
                     />

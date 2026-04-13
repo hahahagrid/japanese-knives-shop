@@ -29,20 +29,19 @@ export default async function InStockPage() {
     collection: 'products',
     where: {
       and: [
-        { status: { in: ['in_stock', 'sold'] } }, 
+        { status: { equals: 'in_stock' } }, 
         { type: { equals: 'knife' } }
       ],
     },
     overrideAccess: false,
     depth: 1,
     limit: 100,
-    sort: 'status', // entries are 'in_stock', then 'sold' (alphabetical: in_stock < sold)
   })
 
-  // Ensure in_stock comes first, then sold (just in case sort: status isn't clear enough or we have custom_order in theory)
+  // Sort: available (0) first, then unavailable (1)
   const sortedKnives = [...knives].sort((a, b) => {
-    const order: Record<string, number> = { 'in_stock': 0, 'sold': 1 };
-    return order[a.status as string] - order[b.status as string];
+    const order: Record<string, number> = { 'available': 0, 'unavailable': 1 };
+    return (order[a.availability as string] ?? 0) - (order[b.availability as string] ?? 0);
   })
 
   return (
@@ -110,6 +109,7 @@ export default async function InStockPage() {
                     title={knife.title}
                     price={knife.price}
                     status={knife.status ?? 'in_stock'}
+                    availability={knife.availability ?? 'available'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
                     priority={index < 4}

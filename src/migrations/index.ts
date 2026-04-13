@@ -8,7 +8,7 @@ import * as migration_20260403_190558_add_seo_fields from './20260403_190558_add
 import * as migration_20260403_221734_add_seo_image from './20260403_221734_add_seo_image';
 import * as migration_20260404_143507_add_orders_metadata_and_honeypot from './20260404_143507_add_orders_metadata_and_honeypot';
 import * as migration_20260408_081612_drop_excerpt_from_posts from './20260408_081612_drop_excerpt_from_posts';
-import * as migration_20260413_143500_add_sold_status from './20260413_143500_add_sold_status';
+import * as migration_20260413_153000_add_availability_field from './20260413_153000_add_availability_field';
 
 export const migrations = [
   {
@@ -62,8 +62,8 @@ export const migrations = [
     name: '20260408_081612_drop_excerpt_from_posts'
   },
   {
-    up: migration_20260413_143500_add_sold_status.up,
-    down: migration_20260413_143500_add_sold_status.down,
-    name: '20260413_143500_add_sold_status'
+    up: migration_20260413_153000_add_availability_field.up,
+    down: migration_20260413_153000_add_availability_field.down,
+    name: '20260413_153000_add_availability_field'
   },
 ];

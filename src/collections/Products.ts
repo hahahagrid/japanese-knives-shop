@@ -72,18 +72,34 @@ export const Products: CollectionConfig = {
     },
     {
       name: 'status',
-      label: 'Статус',
+      label: 'Статус (Розділ на сайті)',
       type: 'select',
       index: true,
       options: [
         { label: 'В наявності', value: 'in_stock' },
         { label: 'Під замовлення', value: 'custom_order' },
-        { label: 'Продано', value: 'sold' },
       ],
       defaultValue: 'in_stock',
       required: true,
       admin: {
         position: 'sidebar',
+        description: 'Визначає, в якому розділі сайту буде товар та його URL.',
+      },
+    },
+    {
+      name: 'availability',
+      label: 'Доступність',
+      type: 'select',
+      index: true,
+      options: [
+        { label: 'Можна замовити', value: 'available' },
+        { label: 'Немає в доступності', value: 'unavailable' },
+      ],
+      defaultValue: 'available',
+      required: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Чи можна зараз купити/замовити цей товар.',
       },
     },
     {

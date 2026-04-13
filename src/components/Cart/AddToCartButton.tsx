@@ -10,6 +10,7 @@ interface AddToCartButtonProps {
     title: string
     price: number
     status: string
+    availability?: string
     imageUrl: string | null
     type?: 'knife' | 'accessory'
   }
@@ -32,7 +33,7 @@ export function AddToCartButton({ knife }: AddToCartButtonProps) {
     )
   }
 
-  if (knife.status === 'sold') {
+  if (knife.availability === 'unavailable') {
     return (
       <button
         disabled

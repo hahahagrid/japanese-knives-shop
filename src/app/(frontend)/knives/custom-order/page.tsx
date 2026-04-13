@@ -36,6 +36,12 @@ export default async function CustomOrderPage() {
     limit: 100,
   })
 
+  // Sort: available (0) first, then unavailable (1)
+  const sortedKnives = [...knives].sort((a, b) => {
+    const order: Record<string, number> = { 'available': 0, 'unavailable': 1 };
+    return (order[a.availability as string] ?? 0) - (order[b.availability as string] ?? 0);
+  })
+
   return (
     <div>
       <PageVersion />
@@ -69,12 +75,12 @@ export default async function CustomOrderPage() {
           <div className="flex items-center gap-3">
             <div className="w-8 h-[1px] bg-[var(--accent)]" />
             <h2 className="text-[11px] uppercase tracking-widest font-bold text-neutral-500 italic">
-              Весь каталог ({knives.length})
+              Весь каталог ({sortedKnives.length})
             </h2>
           </div>
         </AnimatedSection>
 
-        {knives.length === 0 ? (
+        {sortedKnives.length === 0 ? (
           <div className="py-32 text-center">
             <p className="text-[var(--muted)] mb-6">Каталог оновлюється.</p>
             <Link
@@ -86,7 +92,7 @@ export default async function CustomOrderPage() {
           </div>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-8 gap-y-8 sm:gap-y-14 stagger-children">
-            {knives.map((knife, index) => {
+            {sortedKnives.map((knife, index) => {
               const firstImage = knife.images?.[0]
               const secondImage = knife.images?.[1]
               const imgUrl =
@@ -108,6 +114,7 @@ export default async function CustomOrderPage() {
                     title={knife.title}
                     price={knife.price}
                     status={knife.status ?? 'custom_order'}
+                    availability={knife.availability ?? 'available'}
                     imageUrl={imgUrl}
                     hoverImageUrl={hoverImgUrl}
                     priority={index < 4}

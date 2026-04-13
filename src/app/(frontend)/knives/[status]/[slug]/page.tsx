@@ -11,14 +11,14 @@ import { AddToCartButton } from '@/components/Cart/AddToCartButton'
 import { Database } from 'lucide-react'
 import { ProductSchema } from '@/components/SEO/ProductSchema'
 import { PageVersion } from '@/components/PageVersion'
+import { ExpandableSection } from '@/components/ExpandableSection'
 
 import { generateProductDescription } from '@/utils/seo'
 
 // Map UI status to DB status
 const statusMap: Record<string, string> = {
   'in-stock': 'in_stock',
-  'custom-order': 'custom_order',
-  'sold': 'sold'
+  'custom-order': 'custom_order'
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ status: string, slug: string }> }) {
@@ -134,6 +134,13 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
   ].filter((item) => item.value)
 
   const finalDescription = generateProductDescription(knife as any, 'knife')
+  
+  const isUnavailable = knife.availability === 'unavailable'
+  const isCustomOrder = knife.status === 'custom_order'
+  
+  // Badge text: "Розпродано" for in-stock, "Недоступно" for custom_order
+  const unavailableLabel = isCustomOrder ? 'Недоступно' : 'Розпродано'
+  const unavailableBadge = isCustomOrder ? 'Тимчасово недоступно' : 'Продано'
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
@@ -145,7 +152,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
         image={galleryImages[0]?.image?.url}
         price={knife.price || 0}
         url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}` : `./`}
-        availability={dbStatus === 'sold' ? 'OutOfStock' : (dbStatus === 'in_stock' ? 'InStock' : 'PreOrder')}
+        availability={isUnavailable ? 'OutOfStock' : (knife.status === 'in_stock' ? 'InStock' : 'PreOrder')}
       />
       {/* Breadcrumbs */}
       <nav className="flex items-center gap-2 text-label mb-12">
@@ -154,10 +161,10 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
         </Link>
         <span className="opacity-30">/</span>
         <Link
-          href={dbStatus === 'sold' ? '/knives/in-stock' : (dbStatus === 'in_stock' ? '/knives/in-stock' : '/knives/custom-order')}
+          href={knife.status === 'in_stock' ? '/knives/in-stock' : '/knives/custom-order'}
           className="hover:text-black transition-colors"
         >
-          {dbStatus === 'sold' ? 'Розпродано' : (dbStatus === 'in_stock' ? 'В наявності' : 'Під замовлення')}
+          {knife.status === 'in_stock' ? 'В наявності' : 'Під замовлення'}
         </Link>
         <span className="opacity-30">/</span>
         <span className="text-black uppercase">{knife.title}</span>
@@ -176,17 +183,17 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
           <AnimatedSection delay={0.15} className="flex flex-col">
             <div className="mb-8 lg:mb-12 border-b border-[var(--border)] pb-10">
               <p className="text-label mb-4">
-                {dbStatus === 'sold' ? 'Розпродано' : (dbStatus === 'in_stock' ? 'В наявності' : 'Доступний під замовлення')}
+                {isUnavailable ? unavailableLabel : (knife.status === 'in_stock' ? 'В наявності' : 'Доступний під замовлення')}
               </p>
               <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-10 leading-tight">
                 {knife.title}
               </h1>
               <p className="text-4xl text-price">
-                {dbStatus === 'sold' 
-                  ? 'Продано' 
+                {isUnavailable 
+                  ? unavailableBadge 
                   : (knife.price
                       ? `${knife.price.toLocaleString('uk-UA')} грн`
-                      : dbStatus === 'custom_order'
+                      : knife.status === 'custom_order'
                         ? 'Ціна за запитом'
                         : 'Ціна уточнюється')}
               </p>
@@ -201,6 +208,7 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
                   title: knife.title as string,
                   price: knife.price as number,
                   status: knife.status as string,
+                  availability: knife.availability as string,
                   type: 'knife',
                   imageUrl: galleryImages[0]?.image?.url as string | null,
                 }} 
@@ -215,46 +223,42 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
               )}
             </div>
 
-            {/* Description */}
-            {hasDescription && (
-              <div className="mb-4 lg:mb-8">
-                <h2 className="text-label mb-6 border-l-2 border-[var(--accent)] pl-4">
-                  Про виріб
-                </h2>
-                <div className="prose prose-neutral prose-lg max-w-none text-neutral-800">
-                  <RichText content={knife.description} />
-                </div>
-              </div>
-            )}
+            {/* Expandable Content Sections */}
+            <div className="mt-8">
+              {/* Description */}
+              {hasDescription && (
+                <ExpandableSection title="Про виріб" id="description">
+                  <div className="prose prose-neutral prose-lg max-w-none text-neutral-800 font-serif leading-relaxed">
+                    <RichText content={knife.description} />
+                  </div>
+                </ExpandableSection>
+              )}
 
-            {/* Specs Grid */}
-            {specsList.length > 0 && (
-              <div className="mb-16 border-t border-[var(--border)] pt-12">
-                <div className="flex items-center gap-3 mb-10">
-                  <Database className="w-4 h-4 text-[var(--accent)]" />
-                  <h2 className="text-label">
-                    Технічні характеристики
-                  </h2>
-                </div>
-                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
-                  {specsList.map((spec, index) => (
-                    <div key={index} className="group border-b border-black/5 pb-2">
-                      <dt className="text-label mb-2 text-[#B4B4B0]">
-                        {spec.label}
-                      </dt>
-                      <dd className="text-base font-medium tracking-tight text-neutral-800">
-                        {spec.value}
-                        {spec.unit && (
-                          <span className="text-[10px] ml-1 text-neutral-400 uppercase tracking-tighter">
-                            {spec.unit}
-                          </span>
-                        )}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            )}
+              {/* Specs Grid */}
+              {specsList.length > 0 && (
+                <ExpandableSection title="Технічні характеристики" id="specs">
+                  <div className="pt-4">
+                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-8">
+                      {specsList.map((spec, index) => (
+                        <div key={index} className="group border-b border-black/5 pb-2">
+                          <dt className="text-[10px] uppercase tracking-widest mb-1 text-[#B4B4B0]">
+                            {spec.label}
+                          </dt>
+                          <dd className="text-sm font-medium tracking-tight text-neutral-800">
+                            {spec.value}
+                            {spec.unit && (
+                              <span className="text-[10px] ml-1 text-neutral-400 uppercase tracking-tighter">
+                                {spec.unit}
+                              </span>
+                            )}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                </ExpandableSection>
+              )}
+            </div>
           </AnimatedSection>
         </div>
       </div>
