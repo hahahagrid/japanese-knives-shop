@@ -2,6 +2,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { KnifeCard } from './KnifeCard'
 import { AnimatedSection } from './AnimatedSection'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 interface RelatedProductsProps {
   type: 'knife' | 'accessory'
@@ -34,9 +36,17 @@ export async function RelatedProducts({ type }: RelatedProductsProps) {
 
   return (
     <section className="py-12 border-t border-[var(--border)]">
-      <AnimatedSection className="mb-8">
-        <p className="text-label mb-2">Доповніть свій комплект</p>
-        <h2 className="heading-display text-3xl md:text-4xl">{title}</h2>
+      <AnimatedSection className="flex justify-between items-end mb-8">
+        <div>
+          <p className="text-label mb-2">Доповніть свій комплект</p>
+          <h2 className="heading-display text-3xl md:text-4xl">{title}</h2>
+        </div>
+        <Link 
+          href={targetType === 'accessory' ? '/accessories' : '/knives/in-stock'} 
+          className="inline-flex items-center gap-2 text-[10px] md:text-xs tracking-widest uppercase border-b border-foreground pb-0.5 hover:opacity-50 transition-opacity"
+        >
+          {targetType === 'accessory' ? 'Всі аксесуари' : 'Всі ножі'} <ArrowRight className="w-3 h-3" />
+        </Link>
       </AnimatedSection>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8">
