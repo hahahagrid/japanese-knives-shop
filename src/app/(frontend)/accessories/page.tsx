@@ -25,12 +25,7 @@ export default async function AccessoriesPage() {
 
   const { docs: products } = await payload.find({
     collection: 'products',
-    where: { 
-      and: [
-        { type: { equals: 'accessory' } },
-        { status: { in: ['in_stock', 'sold'] } }
-      ]
-    },
+    where: { type: { equals: 'accessory' } },
     overrideAccess: false,
     depth: 1,
     limit: 100,
@@ -38,8 +33,10 @@ export default async function AccessoriesPage() {
   })
 
   const sortedProducts = [...products].sort((a, b) => {
-    const order: Record<string, number> = { 'in_stock': 0, 'sold': 1 };
-    return (order[a.status as string] ?? 2) - (order[b.status as string] ?? 2);
+    const order: Record<string, number> = { 'in_stock': 0, 'custom_order': 1, 'sold': 2 };
+    const aOrder = order[a.status as string] ?? 1;
+    const bOrder = order[b.status as string] ?? 1;
+    return aOrder - bOrder;
   })
 
   return (
