@@ -37,11 +37,11 @@ export async function LatestPosts() {
             <div className="aspect-[16/10] overflow-hidden relative mb-3 bg-neutral-100">
               {post.coverImage && typeof post.coverImage === 'object' && (
                 <Image
-                  src={(post.coverImage as any).sizes?.thumbnail?.url || (post.coverImage as any).url}
+                  src={(post.coverImage as any).url}
                   alt={post.title}
                   fill
                   className="object-cover lg:group-hover:scale-[1.05] transition-transform duration-1000 ease-out-expo"
-                  sizes="400px"
+                  sizes="500px"
                 />
               )}
             </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { AddToCartButton } from '@/components/Cart/AddToCartButton'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface StickyProductBarProps {
   knife: {
@@ -60,9 +61,11 @@ export function StickyProductBar({ knife }: StickyProductBarProps) {
         <div className="flex items-center gap-4 overflow-hidden">
           <div className="hidden sm:block h-12 w-12 relative flex-shrink-0 bg-stone-100 p-1">
              {knife.imageUrl && (
-               <img 
+               <Image 
                  src={knife.imageUrl} 
                  alt={knife.title} 
+                 width={48}
+                 height={48}
                  className="w-full h-full object-cover"
                />
              )}
