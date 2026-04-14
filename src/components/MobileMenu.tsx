@@ -86,7 +86,9 @@ export function MobileMenu() {
                       href={link.href}
                       onClick={() => setOpen(false)}
                       className={`block py-4 text-3xl font-serif font-bold border-b border-[var(--border)] hover:opacity-50 transition-opacity ${
-                        pathname === link.href ? 'text-[#BC002D]' : 'text-foreground'
+                        (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)) 
+                          ? 'text-[#BC002D]' 
+                          : 'text-foreground'
                       }`}
                     >
                       {link.label}
