@@ -2,10 +2,10 @@ export const revalidate = 86400
 
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { ContactForm } from '@/components/ContactForm'
-import { AnimatedSection } from '@/components/AnimatedSection'
+import { ContactForm } from '@/components/common/ContactForm'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { Phone, Mail, Clock, MapPin } from 'lucide-react'
-import { PageVersion } from '@/components/PageVersion'
+import { PageVersion } from '@/components/ui/PageVersion'
 
 export const metadata = {
   title: 'Контакти | Japanese Kitchen Knives',

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCartStore } from '@/store/cartStore'
-import { AnimatedSection } from '@/components/AnimatedSection'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'

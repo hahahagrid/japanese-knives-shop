@@ -1,14 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
-
+import { slugify } from '../utils/slug'
 import { revalidateProduct, revalidateDelete } from '../hooks/revalidate'
 import { syncMediaAlt } from '../hooks/syncMediaAlt'
 

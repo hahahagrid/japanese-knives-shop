@@ -2,9 +2,9 @@ export const revalidate = 3600 // 1 hour cache fallback
 
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { KnifeCard } from '@/components/KnifeCard'
-import { AnimatedSection } from '@/components/AnimatedSection'
-import { PageVersion } from '@/components/PageVersion'
+import { KnifeCard } from '@/components/product/KnifeCard'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { PageVersion } from '@/components/ui/PageVersion'
 
 export const metadata = {
   title: 'Купити японські ножі в наявності | Преміум клинки в Україні',

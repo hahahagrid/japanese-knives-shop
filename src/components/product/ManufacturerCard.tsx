@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { AnimatedSection } from './AnimatedSection'
+import { AnimatedSection } from '../ui/AnimatedSection'
 import './ManufacturerCard.css'
 
 interface ManufacturerCardProps {

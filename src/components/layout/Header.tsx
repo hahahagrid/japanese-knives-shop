@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Logo } from './Logo'
+import { Logo } from '../ui/Logo'
 import { MobileMenu } from './MobileMenu'
-import { CartIcon } from './Cart/CartIcon'
+import { CartIcon } from '../Cart/CartIcon'
 import { ChevronDown } from 'lucide-react'
 
 const navLinks = [

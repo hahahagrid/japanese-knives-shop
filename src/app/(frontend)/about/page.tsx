@@ -1,11 +1,11 @@
 export const revalidate = 86400
 
 import React from 'react'
-import { AnimatedSection } from '@/components/AnimatedSection'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import Image from 'next/image'
 import { Sword, Gem, ShieldCheck, Zap, Mail, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
-import { PageVersion } from '@/components/PageVersion'
+import { PageVersion } from '@/components/ui/PageVersion'
 
 export const metadata = {
   title: 'Про нас | Japanese Kitchen Knives',

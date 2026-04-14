@@ -3,9 +3,9 @@ export const revalidate = 86400
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
-import { KnifeCard } from '@/components/KnifeCard'
-import { AnimatedSection } from '@/components/AnimatedSection'
-import { PageVersion } from '@/components/PageVersion'
+import { KnifeCard } from '@/components/product/KnifeCard'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { PageVersion } from '@/components/ui/PageVersion'
 
 export const metadata = {
   title: 'Японські ножі під замовлення | Есклюзивні клинки з Японії',
