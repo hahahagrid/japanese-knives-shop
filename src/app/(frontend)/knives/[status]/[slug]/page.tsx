@@ -20,35 +20,39 @@ import { generateProductDescription } from '@/utils/seo'
 // Map UI status to DB status
 const statusMap: Record<string, string> = {
   'in-stock': 'in_stock',
-  'custom-order': 'custom_order'
+  'custom-order': 'custom_order',
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ status: string, slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ status: string; slug: string }>
+}) {
   const { status, slug } = await params
   const decodedSlug = decodeURIComponent(slug)
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'products',
-    where: { 
-      and: [
-        { slug: { equals: decodedSlug } },
-        { type: { equals: 'knife' } }
-      ]
+    where: {
+      and: [{ slug: { equals: decodedSlug } }, { type: { equals: 'knife' } }],
     },
     depth: 1,
   })
 
   if (!docs.length) return { title: 'Not Found' }
   const knife = docs[0]
-  
+
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
   const pageUrl = `${siteUrl}/knives/${status}/${slug}`
   const firstImage = (knife.images as any[])?.[0]
-  const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
-  
+  const ogImageUrl =
+    typeof firstImage === 'object' && firstImage?.url
+      ? firstImage.url
+      : `${siteUrl}/images/hero_knife-1920.webp`
+
   const finalDescription = generateProductDescription(knife as any, 'knife')
 
-  return { 
+  return {
     title: `${knife.title} | Japanese Kitchen Knives`,
     description: finalDescription,
     openGraph: {
@@ -71,20 +75,20 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
   }
 }
 
-export default async function KnifePage({ 
-  params, 
-  searchParams 
-}: { 
-  params: Promise<{ status: string, slug: string }>,
+export default async function KnifePage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ status: string; slug: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const { status, slug } = await params
   const { moved } = await searchParams
   const decodedSlug = decodeURIComponent(slug)
   const payload = await getPayload({ config })
-  
+
   const dbStatus = statusMap[status]
-  
+
   if (!dbStatus) {
     notFound()
   }
@@ -92,12 +96,12 @@ export default async function KnifePage({
   // 1. Try to find the knife with the requested status
   let { docs } = await payload.find({
     collection: 'products',
-    where: { 
+    where: {
       and: [
         { slug: { equals: decodedSlug } },
         { status: { equals: dbStatus } },
-        { type: { equals: 'knife' } }
-      ]
+        { type: { equals: 'knife' } },
+      ],
     },
     overrideAccess: false,
     depth: 1,
@@ -107,11 +111,8 @@ export default async function KnifePage({
   if (docs.length === 0) {
     const { docs: foundElsewhere } = await payload.find({
       collection: 'products',
-      where: { 
-        and: [
-          { slug: { equals: decodedSlug } },
-          { type: { equals: 'knife' } }
-        ]
+      where: {
+        and: [{ slug: { equals: decodedSlug } }, { type: { equals: 'knife' } }],
       },
       overrideAccess: false,
       depth: 0,
@@ -119,13 +120,15 @@ export default async function KnifePage({
 
     if (foundElsewhere.length > 0) {
       const correctKnife = foundElsewhere[0]
-      const correctStatus = Object.entries(statusMap).find(([_, v]) => v === correctKnife.status)?.[0]
-      
+      const correctStatus = Object.entries(statusMap).find(
+        ([_, v]) => v === correctKnife.status,
+      )?.[0]
+
       if (correctStatus) {
         redirect(`/knives/${correctStatus}/${slug}?moved=1`)
       }
     }
-    
+
     notFound()
   }
 
@@ -167,17 +170,17 @@ export default async function KnifePage({
   ].filter((item) => item.value)
 
   const finalDescription = generateProductDescription(knife as any, 'knife')
-  
+
   const isUnavailable = (knife as any).availability === 'unavailable'
   const isCustomOrder = knife.status === 'custom_order'
-  
+
   // Badge text: "Розпродано" for in-stock, "Недоступно" for custom_order
   const unavailableLabel = isCustomOrder ? 'Недоступно' : 'Розпродано'
   const unavailableBadge = isCustomOrder ? 'Тимчасово недоступно' : 'Продано'
 
   return (
     <div className="relative">
-      <StickyProductBar 
+      <StickyProductBar
         knife={{
           id: String(knife.id),
           slug: knife.slug as string,
@@ -189,26 +192,32 @@ export default async function KnifePage({
           imageUrl: galleryImages[0]?.image?.url as string | null,
         }}
       />
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
         {moved === '1' && (
           <div className="mb-8 p-6 bg-stone-50 border border-black/5 text-center">
             <p className="text-xs md:text-sm uppercase tracking-widest text-black/60 font-serif italic">
-              {knife.status === 'in_stock' 
-                ? 'Цей товар знову з&apos;явився в наявності' 
-                : 'Цей товар було продано, але ми можемо виготовити його під замовлення'}
+              {knife.status === 'in_stock'
+                ? 'Цей товар тепер є в наявності, у нас на складі'
+                : 'Цей товар було продано, але ми можемо доставити його вам під замовлення'}
             </p>
           </div>
         )}
         <PageVersion />
-        <ProductSchema 
+        <ProductSchema
           id={String(knife.id)}
           name={knife.title}
           description={finalDescription}
           image={galleryImages[0]?.image?.url}
           price={knife.price || 0}
-          url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}` : `./`}
-          availability={isUnavailable ? 'OutOfStock' : (knife.status === 'in_stock' ? 'InStock' : 'PreOrder')}
+          url={
+            process.env.NEXT_PUBLIC_SITE_URL
+              ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}`
+              : `./`
+          }
+          availability={
+            isUnavailable ? 'OutOfStock' : knife.status === 'in_stock' ? 'InStock' : 'PreOrder'
+          }
         />
 
         {/* Breadcrumbs */}
@@ -230,7 +239,11 @@ export default async function KnifePage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start pb-0">
           {/* Left: Gallery */}
           <div className="order-1 lg:order-1 lg:sticky lg:top-32">
-            <KnifeGallery images={galleryImages} title={knife.title} isUnavailable={isUnavailable} />
+            <KnifeGallery
+              images={galleryImages}
+              title={knife.title}
+              isUnavailable={isUnavailable}
+            />
           </div>
 
           {/* Right: Info & Primary Actions */}
@@ -238,25 +251,29 @@ export default async function KnifePage({
             <AnimatedSection delay={0.15} className="flex flex-col">
               <div className="mb-8 lg:mb-12">
                 <p className="text-label mb-4 text-[#B4B4B0] uppercase tracking-[0.2em] font-bold">
-                  {isUnavailable ? unavailableLabel : (knife.status === 'in_stock' ? 'В наявності' : 'Доступний під замовлення')}
+                  {isUnavailable
+                    ? unavailableLabel
+                    : knife.status === 'in_stock'
+                      ? 'В наявності'
+                      : 'Доступний під замовлення'}
                 </p>
                 <h1 className="heading-display text-4xl md:text-5xl lg:text-7xl mb-8 leading-tight">
                   {knife.title}
                 </h1>
                 <p className="text-2xl md:text-4xl font-bold uppercase tracking-[0.2em] text-[var(--accent)] mb-6 md:mb-12">
-                  {isUnavailable 
-                    ? unavailableBadge 
-                    : (knife.price
-                        ? `${knife.price.toLocaleString('uk-UA')} грн`
-                        : knife.status === 'custom_order'
-                          ? 'Ціна за запитом'
-                          : 'Ціна уточнюється')}
+                  {isUnavailable
+                    ? unavailableBadge
+                    : knife.price
+                      ? `${knife.price.toLocaleString('uk-UA')} грн`
+                      : knife.status === 'custom_order'
+                        ? 'Ціна за запитом'
+                        : 'Ціна уточнюється'}
                 </p>
               </div>
 
               {/* Primary Actions */}
               <div id="main-buy-area" className="flex flex-col sm:flex-row gap-4 mb-12">
-                <AddToCartButton 
+                <AddToCartButton
                   knife={{
                     id: String(knife.id),
                     slug: knife.slug as string,
@@ -266,7 +283,7 @@ export default async function KnifePage({
                     availability: (knife as any).availability as string,
                     type: 'knife',
                     imageUrl: galleryImages[0]?.image?.url as string | null,
-                  }} 
+                  }}
                 />
                 <Link
                   href="/contacts"
@@ -275,40 +292,42 @@ export default async function KnifePage({
                   Консультація
                 </Link>
               </div>
-
-
             </AnimatedSection>
           </div>
         </div>
 
         {/* Detailed Info Tabs - Full Width */}
-        <ProductTabs 
-          description={hasDescription ? (
-            <div className="prose prose-neutral prose-lg max-w-none text-neutral-800">
-              <RichText content={knife.description} />
-            </div>
-          ) : null}
-          specifications={specsList.length > 0 ? (
-            <div className="pt-4">
-              <dl className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 sm:gap-x-12">
-                {specsList.map((spec, index) => (
-                  <div key={index} className="group border-b border-black/5 pb-2">
-                    <dt className="text-[11px] uppercase tracking-widest mb-2 text-[#B4B4B0] font-bold">
-                      {spec.label}
-                    </dt>
-                    <dd className="text-base font-medium tracking-tight text-neutral-800">
-                      {spec.value}
-                      {spec.unit && (
-                        <span className="text-[10px] ml-1 text-neutral-400 uppercase tracking-tighter">
-                          {spec.unit}
-                        </span>
-                      )}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          ) : null}
+        <ProductTabs
+          description={
+            hasDescription ? (
+              <div className="prose prose-neutral prose-lg max-w-none text-neutral-800">
+                <RichText content={knife.description} />
+              </div>
+            ) : null
+          }
+          specifications={
+            specsList.length > 0 ? (
+              <div className="pt-4">
+                <dl className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 sm:gap-x-12">
+                  {specsList.map((spec, index) => (
+                    <div key={index} className="group border-b border-black/5 pb-2">
+                      <dt className="text-[11px] uppercase tracking-widest mb-2 text-[#B4B4B0] font-bold">
+                        {spec.label}
+                      </dt>
+                      <dd className="text-base font-medium tracking-tight text-neutral-800">
+                        {spec.value}
+                        {spec.unit && (
+                          <span className="text-[10px] ml-1 text-neutral-400 uppercase tracking-tighter">
+                            {spec.unit}
+                          </span>
+                        )}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ) : null
+          }
         />
 
         {/* Recommendations and Blog */}
