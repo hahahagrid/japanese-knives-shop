@@ -71,8 +71,15 @@ export async function generateMetadata({ params }: { params: Promise<{ status: s
   }
 }
 
-export default async function KnifePage({ params }: { params: Promise<{ status: string, slug: string }> }) {
+export default async function KnifePage({ 
+  params, 
+  searchParams 
+}: { 
+  params: Promise<{ status: string, slug: string }>,
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   const { status, slug } = await params
+  const { moved } = await searchParams
   const decodedSlug = decodeURIComponent(slug)
   const payload = await getPayload({ config })
   
@@ -82,7 +89,8 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
     notFound()
   }
 
-  const { docs } = await payload.find({
+  // 1. Try to find the knife with the requested status
+  let { docs } = await payload.find({
     collection: 'products',
     where: { 
       and: [
@@ -95,7 +103,30 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
     depth: 1,
   })
 
-  if (!docs.length) {
+  // 2. Smart Redirect Logic: If not found, look for it in ANY status
+  if (docs.length === 0) {
+    const { docs: foundElsewhere } = await payload.find({
+      collection: 'products',
+      where: { 
+        and: [
+          { slug: { equals: decodedSlug } },
+          { type: { equals: 'knife' } }
+        ]
+      },
+      overrideAccess: false,
+      depth: 0,
+    })
+
+    if (foundElsewhere.length > 0) {
+      const correctKnife = foundElsewhere[0]
+      const correctStatus = Object.entries(statusMap).find(([_, v]) => v === correctKnife.status)?.[0]
+      
+      if (correctStatus) {
+        const { redirect } = await import('next/navigation')
+        redirect(`/knives/${correctStatus}/${slug}?moved=1`)
+      }
+    }
+    
     notFound()
   }
 
@@ -147,6 +178,17 @@ export default async function KnifePage({ params }: { params: Promise<{ status: 
 
   return (
     <div className="relative">
+      {moved === '1' && (
+        <div className="bg-[#f2f2ee] border-b border-black/5 py-4 px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto max-w-7xl">
+            <p className="text-[11px] md:text-xs uppercase tracking-widest text-[#B4B4B0] font-bold text-center">
+              {knife.status === 'in_stock' 
+                ? 'Цей товар знову з&apos;явився в наявності' 
+                : 'Цей товар було продано, але ми можемо виготовити його під замовлення'}
+            </p>
+          </div>
+        </div>
+      )}
       <StickyProductBar 
         knife={{
           id: String(knife.id),
