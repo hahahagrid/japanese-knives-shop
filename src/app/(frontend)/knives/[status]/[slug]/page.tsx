@@ -198,7 +198,7 @@ export default async function KnifePage({
           <div className="mb-8 p-6 bg-stone-50 border border-black/5 text-center">
             <p className="text-xs md:text-sm uppercase tracking-widest text-black/60 font-serif italic">
               {knife.status === 'in_stock'
-                ? 'Цей товар тепер є в наявності, у нас на складі'
+                ? 'Цей товар знову є в наявності, у нас на складі'
                 : 'Цей товар було продано, але ми можемо доставити його вам під замовлення'}
             </p>
           </div>
