@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Logo } from './Logo'
 import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -20,6 +21,7 @@ const navLinks = [
 export function MobileMenu() {
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     setMounted(true)
@@ -54,14 +56,14 @@ export function MobileMenu() {
       {mounted && createPortal(
         <AnimatePresence>
           {open && (
-            <motion.div
-              key="mobile-overlay"
-              initial={{ y: '-100%' }}
-              animate={{ y: 0 }}
-              exit={{ y: '-100%' }}
-              transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-              className="fixed inset-0 z-[60] bg-background flex flex-col px-6 pt-6 pb-8 text-foreground"
-            >
+              <motion.div
+                key="mobile-overlay"
+                initial={{ y: '-100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '-100%' }}
+                transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                className="fixed inset-0 z-[200] bg-background flex flex-col px-6 pt-6 pb-8 text-foreground"
+              >
               <div className="flex items-center justify-between mb-12">
                 <Logo onClick={() => setOpen(false)} className="text-[18px]" />
                 <button
@@ -83,7 +85,11 @@ export function MobileMenu() {
                     <Link
                       href={link.href}
                       onClick={() => setOpen(false)}
-                      className="block py-4 text-3xl font-serif font-bold text-foreground border-b border-[var(--border)] hover:opacity-50 transition-opacity"
+                      className={`block py-4 text-3xl font-serif font-bold border-b border-[var(--border)] hover:opacity-50 transition-opacity ${
+                        (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)) 
+                          ? 'text-[#BC002D]' 
+                          : 'text-foreground'
+                      }`}
                     >
                       {link.label}
                     </Link>

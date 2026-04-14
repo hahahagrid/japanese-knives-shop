@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import './RichText.css'
 
 export const RichText: React.FC<{ content: any; className?: string }> = ({ content, className }) => {
@@ -61,17 +62,21 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
         return <blockquote key={index} className="border-l-4 border-accent pl-4">{children}</blockquote>
       case 'link':
         return <a key={index} href={node.fields?.url} target="_blank" rel="noopener noreferrer" className="text-accent underline">{children}</a>
-      case 'upload':
+      case 'upload': {
         const value = node.value
         if (node.relationTo === 'media' && value && typeof value === 'object') {
+          const imgUrl = value.sizes?.tablet?.url || value.sizes?.card?.url || value.url
           return (
-            <div key={index} className="mt-12 mb-4 md:mb-6">
-              <figure className="relative aspect-video overflow-hidden border border-[var(--border)] shadow-sm bg-stone-50">
-                <img
-                  src={value.url}
+            <div key={index} className="mt-8 mb-4 md:mt-12 md:mb-8">
+              <figure className="relative border border-[var(--border)] shadow-sm bg-stone-50 overflow-hidden">
+                <Image
+                  src={imgUrl}
                   alt={value.alt || 'Japanese Kitchen Knives Image'}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
+                  width={value.width || 1200}
+                  height={value.height || 800}
+                  className="w-full h-auto block"
+                  sizes="(max-width: 1024px) 100vw, 850px"
+                  quality={85}
                 />
                 {value.caption && (
                   <figcaption className="p-4 text-xs italic text-[var(--muted)] border-t border-[var(--border)]">
@@ -83,6 +88,7 @@ export const RichText: React.FC<{ content: any; className?: string }> = ({ conte
           )
         }
         return null
+      }
       default:
         return <React.Fragment key={index}>{children}</React.Fragment>
     }

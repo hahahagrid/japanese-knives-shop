@@ -105,7 +105,7 @@ export function ProductTabs({ description, specifications }: ProductTabsProps) {
         <div 
           ref={scrollContainerRef}
           onScroll={checkScroll}
-          className="flex-1 flex overflow-x-auto scrollbar-hide no-scrollbar scroll-smooth gap-4"
+          className="flex-1 flex overflow-x-auto scrollbar-hide no-scrollbar scroll-smooth gap-1"
           style={{ 
             msOverflowStyle: 'none', 
             scrollbarWidth: 'none',
@@ -116,7 +116,7 @@ export function ProductTabs({ description, specifications }: ProductTabsProps) {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-shrink-0 md:flex-1 whitespace-nowrap md:whitespace-normal px-6 md:px-4 py-7 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative overflow-hidden ${
+              className={`flex-shrink-0 md:flex-1 whitespace-nowrap md:whitespace-normal px-4 md:px-2 py-7 text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] transition-all relative overflow-hidden ${
                 activeTab === tab.id ? 'text-black' : 'text-[#B4B4B0] hover:text-black'
               }`}
             >
