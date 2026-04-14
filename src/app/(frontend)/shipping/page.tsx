@@ -1,9 +1,9 @@
 export const revalidate = 86400
 
 import React from 'react'
-import { AnimatedSection } from '@/components/AnimatedSection'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { CreditCard, Truck, ShieldCheck, Clock, Shield, RefreshCw } from 'lucide-react'
-import { PageVersion } from '@/components/PageVersion'
+import { PageVersion } from '@/components/ui/PageVersion'
 
 export const metadata = {
   title: 'Оплата та доставка | Japanese Kitchen Knives',

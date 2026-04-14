@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
-import { Logo } from './Logo'
+import { Logo } from '../ui/Logo'
 import { Send } from 'lucide-react'
 
 export const BrandFooter: React.FC = async () => {

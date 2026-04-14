@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react'
 import { motion, useAnimationFrame, useMotionValue, wrap } from 'framer-motion'
-import { AnimatedSection } from './AnimatedSection'
+import { AnimatedSection } from '../ui/AnimatedSection'
 import Image from 'next/image'
 import './ReviewsMarquee.css'
 

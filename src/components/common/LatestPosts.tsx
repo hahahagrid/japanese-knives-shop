@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
 import Image from 'next/image'
-import { AnimatedSection } from './AnimatedSection'
+import { AnimatedSection } from '../ui/AnimatedSection'
 import { ArrowRight } from 'lucide-react'
 
 export async function LatestPosts() {

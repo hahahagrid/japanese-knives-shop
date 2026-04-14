@@ -1,4 +1,4 @@
-import { AnimatedSection } from '@/components/AnimatedSection'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import Link from 'next/link'
 
 export const metadata = {

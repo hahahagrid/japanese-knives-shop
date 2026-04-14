@@ -3,12 +3,12 @@ export const revalidate = 86400
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
-import { AnimatedSection } from '@/components/AnimatedSection'
-import { RichText } from '@/components/RichText'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { RichText } from '@/components/ui/RichText'
 import Link from 'next/link'
 import NextImage from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { PageVersion } from '@/components/PageVersion'
+import { PageVersion } from '@/components/ui/PageVersion'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

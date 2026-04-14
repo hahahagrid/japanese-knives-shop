@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { KnifeCard } from './KnifeCard'
-import { AnimatedSection } from './AnimatedSection'
+import { AnimatedSection } from '../ui/AnimatedSection'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 

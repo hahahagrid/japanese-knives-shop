@@ -4,8 +4,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import Link from 'next/link'
 import NextImage from 'next/image'
-import { AnimatedSection } from '@/components/AnimatedSection'
-import { PageVersion } from '@/components/PageVersion'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { PageVersion } from '@/components/ui/PageVersion'
 
 export const metadata = {
   title: 'Блог | Japanese Kitchen Knives',

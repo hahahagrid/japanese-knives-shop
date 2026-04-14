@@ -27,18 +27,18 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import Image from 'next/image'
 import Link from 'next/link'
-import { KnifeCard } from '@/components/KnifeCard'
-import { AnimatedSection } from '@/components/AnimatedSection'
+import { KnifeCard } from '@/components/product/KnifeCard'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { ArrowDown, Plane, ShieldCheck, Truck, MessageSquare } from 'lucide-react'
-import { ScrollToTop } from '@/components/ScrollToTop'
-import { PageVersion } from '@/components/PageVersion'
+import { ScrollToTop } from '@/components/ui/ScrollToTop'
+import { PageVersion } from '@/components/ui/PageVersion'
 import dynamic from 'next/dynamic'
 
-const ReviewsMarquee = dynamic(() => import('@/components/ReviewsMarquee').then(mod => mod.ReviewsMarquee), {
+const ReviewsMarquee = dynamic(() => import('@/components/common/ReviewsMarquee').then(mod => mod.ReviewsMarquee), {
   ssr: true,
 })
 
-const ManufacturerCard = dynamic(() => import('@/components/ManufacturerCard').then(mod => mod.ManufacturerCard), {
+const ManufacturerCard = dynamic(() => import('@/components/product/ManufacturerCard').then(mod => mod.ManufacturerCard), {
   ssr: true,
 })
 
