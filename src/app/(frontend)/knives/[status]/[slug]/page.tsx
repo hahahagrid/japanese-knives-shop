@@ -2,7 +2,7 @@ export const revalidate = 86400
 
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/AnimatedSection'
 import { KnifeGallery } from '@/components/KnifeGallery'
@@ -122,7 +122,6 @@ export default async function KnifePage({
       const correctStatus = Object.entries(statusMap).find(([_, v]) => v === correctKnife.status)?.[0]
       
       if (correctStatus) {
-        const { redirect } = await import('next/navigation')
         redirect(`/knives/${correctStatus}/${slug}?moved=1`)
       }
     }
@@ -178,17 +177,6 @@ export default async function KnifePage({
 
   return (
     <div className="relative">
-      {moved === '1' && (
-        <div className="bg-[#f2f2ee] border-b border-black/5 py-4 px-4 sm:px-6 lg:px-8">
-          <div className="container mx-auto max-w-7xl">
-            <p className="text-[11px] md:text-xs uppercase tracking-widest text-[#B4B4B0] font-bold text-center">
-              {knife.status === 'in_stock' 
-                ? 'Цей товар знову з&apos;явився в наявності' 
-                : 'Цей товар було продано, але ми можемо виготовити його під замовлення'}
-            </p>
-          </div>
-        </div>
-      )}
       <StickyProductBar 
         knife={{
           id: String(knife.id),
@@ -203,6 +191,15 @@ export default async function KnifePage({
       />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
+        {moved === '1' && (
+          <div className="mb-8 p-6 bg-stone-50 border border-black/5 text-center">
+            <p className="text-xs md:text-sm uppercase tracking-widest text-black/60 font-serif italic">
+              {knife.status === 'in_stock' 
+                ? 'Цей товар знову з&apos;явився в наявності' 
+                : 'Цей товар було продано, але ми можемо виготовити його під замовлення'}
+            </p>
+          </div>
+        )}
         <PageVersion />
         <ProductSchema 
           id={String(knife.id)}
