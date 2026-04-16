@@ -8,10 +8,12 @@ import { PageVersion } from '@/components/ui/PageVersion'
 
 export const metadata = {
   title: 'Аксесуари для японських ножів | Чохли, камені та догляд',
-  description: 'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати. Все для ідеальної гостроти у магазині Japanese Kitchen Knives.',
+  description:
+    'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати. Все для ідеальної гостроти у магазині Japanese Kitchen Knives.',
   openGraph: {
     title: 'Аксесуари для японських ножів | Japanese Kitchen Knives',
-    description: 'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати.',
+    description:
+      'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати.',
     url: 'https://japanese-kitchen-knives.com.ua/accessories',
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
@@ -33,10 +35,10 @@ export default async function AccessoriesPage() {
   })
 
   const sortedProducts = [...products].sort((a, b) => {
-    const order: Record<string, number> = { 'available': 0, 'unavailable': 1 };
-    const aOrder = order[(a as any).availability as string] ?? 0;
-    const bOrder = order[(b as any).availability as string] ?? 0;
-    return aOrder - bOrder;
+    const order: Record<string, number> = { available: 0, unavailable: 1 }
+    const aOrder = order[(a as any).availability as string] ?? 0
+    const bOrder = order[(b as any).availability as string] ?? 0
+    return aOrder - bOrder
   })
 
   return (
@@ -52,7 +54,7 @@ export default async function AccessoriesPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
           <AnimatedSection>
             <p className="text-[10px] tracking-[0.5em] uppercase text-neutral-500 mb-4 font-bold">
-              Догляд та Мастерність
+              Догляд та Майстерність
             </p>
             <h1 className="heading-display text-5xl md:text-6xl lg:text-8xl mb-6">Аксесуари</h1>
             <p className="text-lg md:text-xl text-neutral-400 max-w-2xl leading-relaxed font-light italic font-serif">
@@ -87,13 +89,17 @@ export default async function AccessoriesPage() {
               const secondImage = product.images?.[1]
               const imgUrl =
                 typeof firstImage === 'object' && firstImage !== null
-                  ? (firstImage.sizes?.thumbnail?.url || firstImage.sizes?.card?.url || firstImage.url)
+                  ? firstImage.sizes?.thumbnail?.url ||
+                    firstImage.sizes?.card?.url ||
+                    firstImage.url
                   : null
               const hoverImgUrl =
                 typeof secondImage === 'object' && secondImage !== null
-                  ? (secondImage.sizes?.thumbnail?.url || secondImage.sizes?.card?.url || secondImage.url)
+                  ? secondImage.sizes?.thumbnail?.url ||
+                    secondImage.sizes?.card?.url ||
+                    secondImage.url
                   : null
-              
+
               // Note: using /accessories for accessories slug
               return (
                 <div key={product.id} className="animate-fade-up">
