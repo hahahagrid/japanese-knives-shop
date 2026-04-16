@@ -63,3 +63,16 @@ test-payload.ts
 dev.log
 dev.pid
 DEV_CHECKLIST.md
+
+# MCP / AI Agents Configuration
+mcp_config.json
+
+# IDE / Editor folders
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.cursor/*
+!.cursor/rules/
+*.code-workspace
