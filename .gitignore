@@ -75,3 +75,4 @@ mcp_config.json
 !.vscode/extensions.json
 .cursor/*
 !.cursor/rules/
+*.code-workspace
