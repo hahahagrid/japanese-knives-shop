@@ -11,6 +11,7 @@ import { FreshnessHandler } from '@/components/ui/FreshnessHandler'
 import { ScrollToTopFab } from '@/components/ui/ScrollToTopFab'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
+import { SITE_URL, GTM_ID } from '@/lib/config'
 import './styles.css'
 
 const CartDrawer = dynamic(() => import('@/components/Cart/CartDrawer').then(mod => mod.CartDrawer))
@@ -23,7 +24,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'),
+  metadataBase: new URL(SITE_URL),
   title: 'Japanese Kitchen Knives | Преміальні японські ножі в Україні',
   description: 'Купити преміальні японські ножі ручної роботи в Україні. Великий асортимент кухонних ножів від майстрів Sakai, Sanjo та Echizen. В наявності та під замовлення. Швидка доставка та гарантія якості.',
   alternates: {
@@ -79,7 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                  })(window,document,'script','dataLayer','GTM-5BK9W2PZ');
+                  })(window,document,'script','dataLayer','${GTM_ID}');
                 }
                 
                 // Load GTM on interaction
@@ -133,7 +134,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5BK9W2PZ"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}

@@ -16,6 +16,7 @@ import { RelatedProducts } from '@/components/product/RelatedProducts'
 import { LatestPosts } from '@/components/common/LatestPosts'
 
 import { generateProductDescription } from '@/utils/seo'
+import { SITE_URL } from '@/lib/config'
 
 // Map UI status to DB status
 const statusMap: Record<string, string> = {
@@ -42,13 +43,12 @@ export async function generateMetadata({
   if (!docs.length) return { title: 'Not Found' }
   const knife = docs[0]
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
-  const pageUrl = `${siteUrl}/knives/${status}/${slug}`
+  const pageUrl = `${SITE_URL}/knives/${status}/${slug}`
   const firstImage = (knife.images as any[])?.[0]
   const ogImageUrl =
     typeof firstImage === 'object' && firstImage?.url
       ? firstImage.url
-      : `${siteUrl}/images/hero_knife-1920.webp`
+      : `${SITE_URL}/images/hero_knife-1920.webp`
 
   const finalDescription = generateProductDescription(knife as any, 'knife')
 
@@ -210,11 +210,7 @@ export default async function KnifePage({
           description={finalDescription}
           image={galleryImages[0]?.image?.url}
           price={knife.price || 0}
-          url={
-            process.env.NEXT_PUBLIC_SITE_URL
-              ? `${process.env.NEXT_PUBLIC_SITE_URL}/knives/${status}/${slug}`
-              : `./`
-          }
+          url={`${SITE_URL}/knives/${status}/${slug}`}
           availability={
             isUnavailable ? 'OutOfStock' : knife.status === 'in_stock' ? 'InStock' : 'PreOrder'
           }

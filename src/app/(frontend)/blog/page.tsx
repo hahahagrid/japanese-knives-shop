@@ -6,6 +6,7 @@ import Link from 'next/link'
 import NextImage from 'next/image'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { PageVersion } from '@/components/ui/PageVersion'
+import { SITE_URL } from '@/lib/config'
 
 export const metadata = {
   title: 'Блог | Japanese Kitchen Knives',
@@ -13,7 +14,7 @@ export const metadata = {
   openGraph: {
     title: 'Блог | Japanese Kitchen Knives',
     description: 'Статті про японські кухонні ножі: вибір, догляд, загострення та філософія японської майстерності.',
-    url: 'https://japanese-kitchen-knives.com.ua/blog',
+    url: `${SITE_URL}/blog`,
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',

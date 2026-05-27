@@ -9,6 +9,7 @@ import Link from 'next/link'
 import NextImage from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { PageVersion } from '@/components/ui/PageVersion'
+import { SITE_URL } from '@/lib/config'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -20,8 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   })
   if (!docs.length) return { title: 'Not Found' }
   const post = docs[0]
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
-  const pageUrl = `${siteUrl}/blog/${slug}`
+  const pageUrl = `${SITE_URL}/blog/${slug}`
 
   // SEO plugin fields take priority, fallback to coverImage / default text
   const meta = post.meta as any
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const metaImage = meta?.image as any
   const coverImage = post.coverImage as any
-  const ogImageUrl = metaImage?.url ?? coverImage?.url ?? `${siteUrl}/images/hero_knife-1920.webp`
+  const ogImageUrl = metaImage?.url ?? coverImage?.url ?? `${SITE_URL}/images/hero_knife-1920.webp`
 
   return {
     title: metaTitle,

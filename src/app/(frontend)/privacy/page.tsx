@@ -1,5 +1,6 @@
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import Link from 'next/link'
+import { SITE_URL } from '@/lib/config'
 
 export const metadata = {
   title: 'Політика конфіденційності | Japanese Kitchen Knives',
@@ -7,7 +8,7 @@ export const metadata = {
   openGraph: {
     title: 'Політика конфіденційності | Japanese Kitchen Knives',
     description: 'Прозорі правила обробки ваших даних для безпечного замовлення японських ножів.',
-    url: 'https://japanese-kitchen-knives.com.ua/privacy',
+    url: `${SITE_URL}/privacy`,
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',

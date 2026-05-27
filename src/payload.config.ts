@@ -16,6 +16,7 @@ import { SiteSettings } from './globals/SiteSettings'
 import { HomepageReviews } from './globals/HomepageReviews'
 
 import { seoPlugin } from '@payloadcms/plugin-seo'
+import { getLexicalPlainText as extractLexicalText } from './utils/seo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,8 +51,20 @@ export default buildConfig({
     seoPlugin({
       collections: ['posts'],
       uploadsCollection: 'media',
-      generateTitle: ({ doc }: any) => (doc?.title ? `${doc.title} | Japanese Kitchen Knives` : 'Japanese Kitchen Knives'),
-      generateDescription: ({ doc }: any) => (doc?.content ? 'Стаття про догляд та вибір японських ножів' : 'Japanese Kitchen Knives'),
+      generateTitle: ({ doc }) => {
+        const title = (doc as { title?: string })?.title
+        return title ? `${title} | Japanese Kitchen Knives` : 'Japanese Kitchen Knives'
+      },
+      generateDescription: ({ doc }) => {
+        const post = doc as { title?: string; content?: unknown }
+        const plain = extractLexicalText(post?.content)
+        if (plain) {
+          return plain.length > 160 ? `${plain.substring(0, 157)}...` : plain
+        }
+        return post?.title
+          ? `Стаття «${post.title}» — поради про вибір, догляд та використання японських кухонних ножів.`
+          : 'Japanese Kitchen Knives — японські кухонні ножі ручної роботи.'
+      },
     }),
   ],
 })

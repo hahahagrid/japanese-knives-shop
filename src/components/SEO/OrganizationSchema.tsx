@@ -1,10 +1,12 @@
+import { SITE_URL } from '@/lib/config'
+
 export function OrganizationSchema({ phone, email }: { phone?: string | null; email?: string | null }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     'name': 'Japanese Kitchen Knives | Преміальні японські ножі',
-    'url': 'https://japanese-kitchen-knives.com.ua',
-    'logo': 'https://japanese-kitchen-knives.com.ua/favicon.svg',
+    'url': SITE_URL,
+    'logo': `${SITE_URL}/favicon.svg`,
     'contactPoint': [
       {
         '@type': 'ContactPoint',

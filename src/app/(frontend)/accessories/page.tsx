@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { KnifeCard } from '@/components/product/KnifeCard'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { PageVersion } from '@/components/ui/PageVersion'
+import { SITE_URL } from '@/lib/config'
 
 export const metadata = {
   title: 'Аксесуари для японських ножів | Чохли, камені та догляд',
@@ -14,7 +15,7 @@ export const metadata = {
     title: 'Аксесуари для японських ножів | Japanese Kitchen Knives',
     description:
       'Професійні аксесуари для догляду за японськими кухонними ножами. Водяні камені, шкіряні чохли (саї), мусати.',
-    url: 'https://japanese-kitchen-knives.com.ua/accessories',
+    url: `${SITE_URL}/accessories`,
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { KnifeCard } from '@/components/product/KnifeCard'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { PageVersion } from '@/components/ui/PageVersion'
+import { SITE_URL } from '@/lib/config'
 
 export const metadata = {
   title: 'Японські ножі під замовлення | Есклюзивні клинки з Японії',
@@ -15,7 +16,7 @@ export const metadata = {
     title: 'Японські ножі під замовлення | Japanese Kitchen Knives',
     description:
       'Замовлення ексклюзивних японських ножів безпосередньо від майстрів. Індивідуальний підбір сталі, довжини та руків’я.',
-    url: 'https://japanese-kitchen-knives.com.ua/knives/custom-order',
+    url: `${SITE_URL}/knives/custom-order`,
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',
