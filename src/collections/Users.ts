@@ -11,7 +11,7 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   access: {
-    read: () => true,
+    read: ({ req: { user } }) => Boolean(user),
     create: ({ req: { user } }) => user?.roles?.includes('admin') || false,
     update: ({ req: { user } }) => user?.roles?.includes('admin') || false,
     delete: ({ req: { user } }) => user?.roles?.includes('admin') || false,

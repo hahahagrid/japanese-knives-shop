@@ -151,19 +151,25 @@ export const Orders: CollectionConfig = {
           }
 
           // 2. Metadata: collect IP and User Agent
-          const headers = req.headers as any
-          
-          // Helper to get from headers (works for Vercel/proxies)
-          const getHeader = (key: string) => {
-             if (typeof headers.get === 'function') return headers.get(key)
-             return headers[key.toLowerCase()]
+          const headers = req.headers as Headers | Record<string, string | undefined>
+
+          const getHeader = (key: string): string => {
+            if (typeof (headers as Headers).get === 'function') {
+              return (headers as Headers).get(key) ?? ''
+            }
+            return (headers as Record<string, string | undefined>)[key.toLowerCase()] ?? ''
           }
 
+          // Prefer x-forwarded-for (set by Railway/most proxies and harder to spoof
+          // since the proxy overrides client-supplied value). Fall back to cf-* headers
+          // only when actually behind Cloudflare.
+          const forwardedFor = getHeader('x-forwarded-for').split(',')[0]?.trim()
+
           data.metadata = {
-            ip: getHeader('cf-connecting-ip') || getHeader('x-forwarded-for')?.split(',')[0]?.trim() || '',
-            userAgent: getHeader('user-agent') || '',
-            city: getHeader('cf-ipcity') || '',
-            country: getHeader('cf-ipcountry') || '',
+            ip: forwardedFor || getHeader('cf-connecting-ip') || getHeader('x-real-ip') || '',
+            userAgent: getHeader('user-agent'),
+            city: getHeader('cf-ipcity'),
+            country: getHeader('cf-ipcountry'),
           }
 
           // 3. Generate Order Number

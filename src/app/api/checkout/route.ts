@@ -1,9 +1,21 @@
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { checkRateLimit, getClientKey } from '@/lib/rateLimit'
 
 export async function POST(req: Request) {
   try {
+    const rl = checkRateLimit(`checkout:${getClientKey(req)}`, {
+      limit: 5,
+      windowMs: 60_000,
+    })
+    if (!rl.success) {
+      return NextResponse.json(
+        { error: 'Забагато запитів. Спробуйте через хвилину.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil(rl.resetInMs / 1000)) } },
+      )
+    }
+
     const data = await req.json()
     const { name, phone, email, deliveryInfo, message, items, total, honeypot } = data
 
