@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Sword, Gem, ShieldCheck, Zap, Mail, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
 import { PageVersion } from '@/components/ui/PageVersion'
+import { SITE_URL } from '@/lib/config'
 
 export const metadata = {
   title: 'Про нас | Japanese Kitchen Knives',
@@ -15,7 +16,7 @@ export const metadata = {
     title: 'Про нас | Japanese Kitchen Knives',
     description:
       'З 2020 року ми привозимо оригінальні японські кухонні ножі від майстрів Sakai, Sanjo, Echizen та Tosa. Гарантія автентичності кожного виробу.',
-    url: 'https://japanese-kitchen-knives.com.ua/about',
+    url: `${SITE_URL}/about`,
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',

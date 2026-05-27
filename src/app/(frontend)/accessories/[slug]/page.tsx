@@ -16,6 +16,7 @@ import { RelatedProducts } from '@/components/product/RelatedProducts'
 import { LatestPosts } from '@/components/common/LatestPosts'
 
 import { generateProductDescription } from '@/utils/seo'
+import { SITE_URL } from '@/lib/config'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -35,10 +36,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!docs.length) return { title: 'Not Found' }
   const product = docs[0]
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
-  const pageUrl = `${siteUrl}/accessories/${slug}`
+  const pageUrl = `${SITE_URL}/accessories/${slug}`
   const firstImage = (product.images as any[])?.[0]
-  const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${siteUrl}/images/hero_knife-1920.webp`
+  const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${SITE_URL}/images/hero_knife-1920.webp`
 
   const finalDescription = generateProductDescription(product as any, 'accessory')
 
@@ -130,7 +130,7 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
           description={finalDescription}
           image={galleryImages[0]?.image?.url}
           price={product.price || 0}
-          url={process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/accessories/${slug}` : `./`}
+          url={`${SITE_URL}/accessories/${slug}`}
           availability={isUnavailable ? 'OutOfStock' : 'InStock'}
         />
 

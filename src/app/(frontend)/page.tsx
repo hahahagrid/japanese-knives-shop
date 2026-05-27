@@ -1,3 +1,5 @@
+import { SITE_URL } from '@/lib/config'
+
 export const revalidate = 86400
 
 export const metadata = {
@@ -8,7 +10,7 @@ export const metadata = {
     title: 'Japanese Kitchen Knives | Оригінальні японські кухонні ножі',
     description:
       'Найкращі японські кухонні ножі ручної роботи від майстрів Sakai, Sanjo та Echizen. 100% оригінал, прямі поставки з Японії.',
-    url: 'https://japanese-kitchen-knives.com.ua',
+    url: SITE_URL,
     siteName: 'Japanese Kitchen Knives',
     images: [
       {

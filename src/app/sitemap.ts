@@ -1,12 +1,10 @@
 import { MetadataRoute } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { SITE_URL as siteUrl } from '@/lib/config'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayload({ config })
-  
-  // Try to determine base URL from env or fallback
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://japanese-kitchen-knives.com.ua'
 
   // 1. Static Routes
   const staticRoutes: MetadataRoute.Sitemap = [

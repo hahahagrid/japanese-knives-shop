@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { KnifeCard } from '@/components/product/KnifeCard'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { PageVersion } from '@/components/ui/PageVersion'
+import { SITE_URL } from '@/lib/config'
 
 export const metadata = {
   title: 'Купити японські ножі в наявності | Преміум клинки в Україні',
@@ -14,7 +15,7 @@ export const metadata = {
     title: 'Купити японські ножі в наявності | Japanese Kitchen Knives',
     description:
       'Каталог автентичних японських ножів у наявності. Шедеври від Sakai, Sanjo та Echizen. Ручна робота, професійна сталь.',
-    url: 'https://japanese-kitchen-knives.com.ua/knives/in-stock',
+    url: `${SITE_URL}/knives/in-stock`,
     siteName: 'Japanese Kitchen Knives',
     images: [{ url: '/images/logo.png', width: 1200, height: 630, alt: 'Japanese Kitchen Knives' }],
     locale: 'uk_UA',

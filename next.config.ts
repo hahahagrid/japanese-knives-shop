@@ -6,6 +6,23 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
+const ContentSecurityPolicy = [
+  "default-src 'self'",
+  // GTM and inline boot scripts in layout.tsx need 'unsafe-inline' and 'unsafe-eval'
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.google-analytics.com https://*.googletagmanager.com",
+  // Tailwind, framer-motion and Payload admin inject inline styles
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
+  "img-src 'self' data: blob: https:",
+  "connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://*.analytics.google.com",
+  "frame-src 'self' https://www.googletagmanager.com",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+  'upgrade-insecure-requests',
+].join('; ')
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   async headers() {
@@ -22,12 +39,20 @@ const nextConfig: NextConfig = {
             value: 'SAMEORIGIN',
           },
           {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: ContentSecurityPolicy,
           },
         ],
       },

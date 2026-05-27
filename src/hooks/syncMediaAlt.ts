@@ -1,57 +1,58 @@
 import type { CollectionAfterChangeHook } from 'payload'
 
+type ImageRef = string | number | { id: string | number }
+
+type LexicalUploadNode = {
+  type: string
+  relationTo?: string
+  value?: ImageRef
+  children?: LexicalUploadNode[]
+  root?: { children?: LexicalUploadNode[] }
+}
+
+const extractId = (ref: ImageRef | undefined | null): string | number | null => {
+  if (ref == null) return null
+  if (typeof ref === 'object') return ref.id ?? null
+  return ref
+}
+
 /**
  * Хук для автоматичної синхронізації ALT-текстів зображень з назвою товару.
  * Спрацьовує після створення або оновлення товару.
  */
-export const syncMediaAlt: CollectionAfterChangeHook = async ({
-  doc, // Новий документ товару
-  req, // Об'єкт запиту
-}) => {
-  // Якщо немає назви - нічого не робимо
-  if (!doc.title) {
-    return doc
-  }
+export const syncMediaAlt: CollectionAfterChangeHook = async ({ doc, req }) => {
+  if (!doc.title) return doc
 
   const { payload } = req
-  const altText = doc.title
-  const imageIds = new Set<string>()
+  const altText: string = doc.title
+  const imageIds = new Set<string | number>()
 
-  // 1. Прямий масив зображень (Gallery)
-  if (doc.images && Array.isArray(doc.images)) {
-    doc.images.forEach((image: any) => {
-      const id = typeof image === 'object' && image !== null ? image.id : image
-      if (id) imageIds.add(id)
-    })
-  }
-
-  // 2. Зображення з Опису (Rich Text / Lexical)
-  if (doc.description) {
-    const traverse = (node: any) => {
-      if (!node) return
-      if (node.type === 'upload' && node.relationTo === 'media' && node.value) {
-        const id = typeof node.value === 'object' && node.value !== null ? node.value.id : node.value
-        if (id) imageIds.add(id)
-      }
-      if (node.children && Array.isArray(node.children)) {
-        node.children.forEach(traverse)
-      }
-      if (node.root && node.root.children && Array.isArray(node.root.children)) {
-        node.root.children.forEach(traverse)
-      }
+  if (Array.isArray(doc.images)) {
+    for (const image of doc.images as ImageRef[]) {
+      const id = extractId(image)
+      if (id != null) imageIds.add(id)
     }
-    traverse(doc.description)
   }
 
-  // Оновлюємо всі знайдені зображення
+  if (doc.description) {
+    const traverse = (node: LexicalUploadNode | undefined | null) => {
+      if (!node) return
+      if (node.type === 'upload' && node.relationTo === 'media') {
+        const id = extractId(node.value)
+        if (id != null) imageIds.add(id)
+      }
+      node.children?.forEach(traverse)
+      node.root?.children?.forEach(traverse)
+    }
+    traverse(doc.description as LexicalUploadNode)
+  }
+
   for (const id of imageIds) {
     try {
       await payload.update({
         collection: 'media',
         id,
-        data: {
-          alt: altText,
-        },
+        data: { alt: altText },
         req,
       })
     } catch (error) {
