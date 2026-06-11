@@ -48,7 +48,7 @@ export default function AboutPage() {
         </p>
       </>
     ),
-    image: '/images/about-hero.jpg',
+    image: '/images/about-hero-1920.webp',
   }
 
   const offerings = [

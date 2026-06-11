@@ -7,6 +7,7 @@ import { KnifeCard } from '@/components/product/KnifeCard'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { PageVersion } from '@/components/ui/PageVersion'
 import { SITE_URL } from '@/lib/config'
+import { getCardUrl, getBlurDataUrl } from '@/lib/media'
 
 export const metadata = {
   title: 'Японські ножі під замовлення | Есклюзивні клинки з Японії',
@@ -96,18 +97,6 @@ export default async function CustomOrderPage() {
             {sortedKnives.map((knife, index) => {
               const firstImage = knife.images?.[0]
               const secondImage = knife.images?.[1]
-              const imgUrl =
-                typeof firstImage === 'object' && firstImage !== null
-                  ? firstImage.sizes?.thumbnail?.url ||
-                    firstImage.sizes?.card?.url ||
-                    firstImage.url
-                  : null
-              const hoverImgUrl =
-                typeof secondImage === 'object' && secondImage !== null
-                  ? secondImage.sizes?.thumbnail?.url ||
-                    secondImage.sizes?.card?.url ||
-                    secondImage.url
-                  : null
               return (
                 <div key={knife.id} className="animate-fade-up">
                   <KnifeCard
@@ -116,8 +105,9 @@ export default async function CustomOrderPage() {
                     price={knife.price}
                     status={knife.status ?? 'custom_order'}
                     availability={(knife as any).availability ?? 'available'}
-                    imageUrl={imgUrl}
-                    hoverImageUrl={hoverImgUrl}
+                    imageUrl={getCardUrl(firstImage)}
+                    hoverImageUrl={getCardUrl(secondImage)}
+                    blurDataUrl={getBlurDataUrl(firstImage)}
                     priority={index < 4}
                   />
                 </div>

@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { KnifeCard } from './KnifeCard'
+import { getCardUrl, getBlurDataUrl } from '@/lib/media'
 import { AnimatedSection } from '../ui/AnimatedSection'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
@@ -53,13 +54,6 @@ export async function RelatedProducts({ type }: RelatedProductsProps) {
         {shuffled.map((product) => {
           const firstImage = product.images?.[0]
           const secondImage = product.images?.[1]
-          const imgUrl = typeof firstImage === 'object' && firstImage !== null
-            ? (firstImage.sizes?.thumbnail?.url || firstImage.sizes?.card?.url || firstImage.url)
-            : null
-          const hoverImgUrl = typeof secondImage === 'object' && secondImage !== null
-            ? (secondImage.sizes?.thumbnail?.url || secondImage.sizes?.card?.url || secondImage.url)
-            : null
-          
           return (
             <div key={product.id}>
               <KnifeCard
@@ -68,8 +62,9 @@ export async function RelatedProducts({ type }: RelatedProductsProps) {
                 price={product.price}
                 status={product.status ?? 'in_stock'}
                 availability={(product as any).availability ?? 'available'}
-                imageUrl={imgUrl}
-                hoverImageUrl={hoverImgUrl}
+                imageUrl={getCardUrl(firstImage)}
+                hoverImageUrl={getCardUrl(secondImage)}
+                blurDataUrl={getBlurDataUrl(firstImage)}
                 pathPrefix={product.type === 'accessory' ? '/accessories' : undefined}
               />
             </div>

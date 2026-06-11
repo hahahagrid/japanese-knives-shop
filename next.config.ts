@@ -65,6 +65,10 @@ const nextConfig: NextConfig = {
   images: {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 192, 256, 384],
+    // Next 16 only serves qualities from this list — any other `quality` prop value
+    // gets clamped by the loader and 400s when requested directly
+    qualities: [65, 75, 85],
+    formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 2592000, // 30 days — safe because Payload uses unique filenames
     remotePatterns: [
       {

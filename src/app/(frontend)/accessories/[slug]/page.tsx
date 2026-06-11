@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { KnifeGallery } from '@/components/product/KnifeGallery'
+import { getCardUrl, getThumbUrl } from '@/lib/media'
 import { RichText } from '@/components/ui/RichText'
 import { AddToCartButton } from '@/components/Cart/AddToCartButton'
 import { ProductSchema } from '@/components/SEO/ProductSchema'
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   const pageUrl = `${SITE_URL}/accessories/${slug}`
   const firstImage = (product.images as any[])?.[0]
-  const ogImageUrl = typeof firstImage === 'object' && firstImage?.url ? firstImage.url : `${SITE_URL}/images/hero_knife-1920.webp`
+  const ogImageUrl = getCardUrl(firstImage) ?? `${SITE_URL}/images/hero_knife-1920.webp`
 
   const finalDescription = generateProductDescription(product as any, 'accessory')
 
@@ -118,7 +119,7 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
           status: product.status as string,
           availability: (product as any).availability as string,
           type: 'accessory',
-          imageUrl: galleryImages[0]?.image?.url as string | null,
+          imageUrl: getThumbUrl(galleryImages[0]?.image) as string | null,
         }}
       />
 
@@ -186,7 +187,7 @@ export default async function AccessoryPage({ params }: { params: Promise<{ slug
                     status: product.status as string,
                     availability: (product as any).availability as string,
                     type: 'accessory',
-                    imageUrl: galleryImages[0]?.image?.url as string | null,
+                    imageUrl: getThumbUrl(galleryImages[0]?.image) as string | null,
                   }} 
                 />
                 <Link

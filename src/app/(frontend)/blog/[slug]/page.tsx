@@ -8,6 +8,7 @@ import { RichText } from '@/components/ui/RichText'
 import Link from 'next/link'
 import NextImage from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { pickMediaUrl } from '@/lib/media'
 import { PageVersion } from '@/components/ui/PageVersion'
 import { SITE_URL } from '@/lib/config'
 
@@ -29,8 +30,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = meta?.description || `Читайте статтю «${post.title}» у блозі Japanese Kitchen Knives. Все про японські кухонні ножі, догляд, вибір та використання.`
 
   const metaImage = meta?.image as any
-  const coverImage = post.coverImage as any
-  const ogImageUrl = metaImage?.url ?? coverImage?.url ?? `${SITE_URL}/images/hero_knife-1920.webp`
+  const ogImageUrl =
+    metaImage?.url ??
+    pickMediaUrl(post.coverImage, ['tablet', 'card']) ??
+    `${SITE_URL}/images/hero_knife-1920.webp`
 
   return {
     title: metaTitle,
@@ -115,7 +118,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {post.coverImage && typeof post.coverImage === 'object' ? (
               <div className="relative aspect-video w-full">
                 <NextImage
-                  src={(post.coverImage as any).url}
+                  src={pickMediaUrl(post.coverImage, ['tablet']) as string}
                   alt={post.title}
                   fill
                   priority
