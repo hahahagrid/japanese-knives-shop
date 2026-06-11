@@ -30,6 +30,7 @@ import config from '@payload-config'
 import Image from 'next/image'
 import Link from 'next/link'
 import { KnifeCard } from '@/components/product/KnifeCard'
+import { getCardUrl, getBlurDataUrl, pickMediaUrl } from '@/lib/media'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { ArrowDown, Plane, ShieldCheck, Truck, MessageSquare } from 'lucide-react'
 import { ScrollToTop } from '@/components/ui/ScrollToTop'
@@ -124,8 +125,10 @@ export default async function HomePage() {
   })
 
   const rawReviews = homepageReviews?.images || []
+  // tablet keeps the screenshot proportions (no crop) while avoiding the
+  // full-resolution original as the optimizer source
   const reviewUrls = rawReviews
-    .map((img: any) => (typeof img === 'object' && img?.url ? img.url : null))
+    .map((img: any) => pickMediaUrl(img, ['tablet']))
     .filter(Boolean) as string[]
 
   return (
@@ -147,7 +150,7 @@ export default async function HomePage() {
             className="object-cover opacity-55"
             style={{ objectPosition: 'center 40%' }}
             sizes="100vw"
-            quality={50}
+            quality={65}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/10" />
         </div>
@@ -249,18 +252,6 @@ export default async function HomePage() {
               {inStockKnives.map((knife, index) => {
                 const firstImage = knife.images?.[0]
                 const secondImage = knife.images?.[1]
-                const imgUrl =
-                  typeof firstImage === 'object' && firstImage !== null
-                    ? firstImage.sizes?.thumbnail?.url ||
-                      firstImage.sizes?.card?.url ||
-                      firstImage.url
-                    : null
-                const hoverImgUrl =
-                  typeof secondImage === 'object' && secondImage !== null
-                    ? secondImage.sizes?.thumbnail?.url ||
-                      secondImage.sizes?.card?.url ||
-                      secondImage.url
-                    : null
                 return (
                   <div key={knife.id}>
                     <KnifeCard
@@ -269,8 +260,9 @@ export default async function HomePage() {
                       price={knife.price}
                       status={knife.status ?? 'in_stock'}
                       availability={(knife as any).availability ?? 'available'}
-                      imageUrl={imgUrl}
-                      hoverImageUrl={hoverImgUrl}
+                      imageUrl={getCardUrl(firstImage)}
+                      hoverImageUrl={getCardUrl(secondImage)}
+                      blurDataUrl={getBlurDataUrl(firstImage)}
                     />
                   </div>
                 )
@@ -301,18 +293,6 @@ export default async function HomePage() {
               {customKnives.map((knife, index) => {
                 const firstImage = knife.images?.[0]
                 const secondImage = knife.images?.[1]
-                const imgUrl =
-                  typeof firstImage === 'object' && firstImage !== null
-                    ? firstImage.sizes?.thumbnail?.url ||
-                      firstImage.sizes?.card?.url ||
-                      firstImage.url
-                    : null
-                const hoverImgUrl =
-                  typeof secondImage === 'object' && secondImage !== null
-                    ? secondImage.sizes?.thumbnail?.url ||
-                      secondImage.sizes?.card?.url ||
-                      secondImage.url
-                    : null
                 return (
                   <div key={knife.id}>
                     <KnifeCard
@@ -321,8 +301,9 @@ export default async function HomePage() {
                       price={knife.price}
                       status={knife.status ?? 'custom_order'}
                       availability={(knife as any).availability ?? 'available'}
-                      imageUrl={imgUrl}
-                      hoverImageUrl={hoverImgUrl}
+                      imageUrl={getCardUrl(firstImage)}
+                      hoverImageUrl={getCardUrl(secondImage)}
+                      blurDataUrl={getBlurDataUrl(firstImage)}
                     />
                   </div>
                 )

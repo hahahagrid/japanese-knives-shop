@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { AnimatedSection } from '../ui/AnimatedSection'
 import { ArrowRight } from 'lucide-react'
+import { pickMediaUrl } from '@/lib/media'
 
 export async function LatestPosts() {
   const payload = await getPayload({ config })
@@ -37,7 +38,7 @@ export async function LatestPosts() {
             <div className="aspect-[16/10] overflow-hidden relative mb-3 bg-neutral-100">
               {post.coverImage && typeof post.coverImage === 'object' && (
                 <Image
-                  src={(post.coverImage as any).url}
+                  src={pickMediaUrl(post.coverImage, ['tablet', 'card']) as string}
                   alt={post.title}
                   fill
                   className="object-cover lg:group-hover:scale-[1.05] transition-transform duration-1000 ease-out-expo"

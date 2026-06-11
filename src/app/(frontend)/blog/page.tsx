@@ -7,6 +7,7 @@ import NextImage from 'next/image'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { PageVersion } from '@/components/ui/PageVersion'
 import { SITE_URL } from '@/lib/config'
+import { pickMediaUrl } from '@/lib/media'
 
 export const metadata = {
   title: 'Блог | Japanese Kitchen Knives',
@@ -124,7 +125,7 @@ export default async function BlogPage() {
                   <div className="relative w-full h-[250px] sm:h-[300px] md:h-auto md:aspect-[16/10] overflow-hidden border border-[var(--border)] shadow-sm">
                     {post.coverImage && typeof post.coverImage === 'object' ? (
                       <NextImage
-                        src={(post.coverImage as any).url}
+                        src={pickMediaUrl(post.coverImage, ['tablet']) as string}
                         alt={post.title}
                         fill
                         className="object-cover transition-transform duration-1000 group-hover:scale-105"

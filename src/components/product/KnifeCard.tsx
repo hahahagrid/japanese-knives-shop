@@ -12,11 +12,12 @@ interface KnifeCardProps {
   availability?: string
   imageUrl?: string | null
   hoverImageUrl?: string | null
+  blurDataUrl?: string | null
   pathPrefix?: string
   priority?: boolean
 }
 
-export function KnifeCard({ slug, title, price, status, availability, imageUrl, hoverImageUrl, pathPrefix, priority }: KnifeCardProps) {
+export function KnifeCard({ slug, title, price, status, availability, imageUrl, hoverImageUrl, blurDataUrl, pathPrefix, priority }: KnifeCardProps) {
   const [canHover, setCanHover] = useState(false)
   
   useEffect(() => {
@@ -51,7 +52,8 @@ export function KnifeCard({ slug, title, price, status, availability, imageUrl, 
                 canHover && hoverImageUrl && !isUnavailable ? 'lg:group-hover:opacity-0' : 'opacity-100'
               } ${isUnavailable ? 'opacity-70' : ''}`}
               sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
-              quality={45}
+              quality={65}
+              {...(blurDataUrl ? { placeholder: 'blur' as const, blurDataURL: blurDataUrl } : {})}
             />
             {/* Only render hover image for desktop to save mobile bandwidth */}
             {canHover && hoverImageUrl && !isUnavailable && (
@@ -61,7 +63,7 @@ export function KnifeCard({ slug, title, price, status, availability, imageUrl, 
                 fill
                 className="hidden lg:block object-cover transition-all duration-1000 ease-out-expo opacity-0 lg:group-hover:opacity-100 lg:group-hover:scale-[1.05] will-change-transform"
                 sizes="(max-width: 767px) calc((100vw - 48px) / 2), (max-width: 1024px) 33vw, 25vw"
-                quality={45}
+                quality={65}
               />
             )}
             

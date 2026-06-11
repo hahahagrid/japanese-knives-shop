@@ -11,6 +11,7 @@ interface MediaFile {
   width?: number
   height?: number
   alt?: string
+  blurDataUrl?: string | null
   sizes?: {
     thumbnail?: { url: string }
     card?: { url: string }
@@ -30,51 +31,69 @@ interface KnifeGalleryProps {
 export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
-    const [canPrefetchUrgent, setCanPrefetchUrgent] = useState(false)
-    const [canPrefetchIdle, setCanPrefetchIdle] = useState(false)
-    const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const mainViewRef = React.useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-      setMounted(true)
-    }, [])
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-    useEffect(() => {
-      let idleHandle: number | undefined
-      let urgentTimeout: number | undefined
+  // Warm the browser cache with the EXACT /_next/image URLs the gallery will
+  // request: take the rendered image's currentSrc (which already reflects the
+  // viewport, DPR and quality) and only swap the source file. Stage 1 fetches
+  // the next slide shortly after load, stage 2 fetches the rest when idle.
+  useEffect(() => {
+    if (images.length < 2) return
 
-      const doPrefetchUrgent = () => setCanPrefetchUrgent(true)
-      const doPrefetchIdle = () => setCanPrefetchIdle(true)
+    let cancelled = false
+    let idleHandle: number | undefined
+    let urgentTimeout: number | undefined
 
-      const scheduleAfterLoad = () => {
-        // Stage 1: Urgent prefetch for the NEXT image (index 1) after 500ms
-        urgentTimeout = window.setTimeout(doPrefetchUrgent, 500)
-
-        // Stage 2: Idle prefetch for everything else
-        if (typeof window.requestIdleCallback === 'function') {
-          idleHandle = window.requestIdleCallback(doPrefetchIdle, { timeout: 4000 })
-        } else {
-          idleHandle = window.setTimeout(doPrefetchIdle, 2000) as unknown as number
-        }
+    const prefetch = (indices: number[]) => {
+      if (cancelled) return
+      const template = mainViewRef.current?.querySelector('img')?.currentSrc
+      if (!template || !template.includes('/_next/image')) return
+      for (const index of indices) {
+        const image = images[index]?.image
+        const target = typeof image === 'object' ? image.url : null
+        if (!target) continue
+        const prefetchUrl = new URL(template, window.location.origin)
+        prefetchUrl.searchParams.set('url', target)
+        new window.Image().src = prefetchUrl.toString()
       }
+    }
 
-      if (document.readyState === 'complete') {
-        scheduleAfterLoad()
+    const scheduleAfterLoad = () => {
+      urgentTimeout = window.setTimeout(() => prefetch([1]), 500)
+
+      const rest = images.map((_, i) => i).filter((i) => i > 1)
+      if (rest.length === 0) return
+      if (typeof window.requestIdleCallback === 'function') {
+        idleHandle = window.requestIdleCallback(() => prefetch(rest), { timeout: 4000 })
       } else {
-        window.addEventListener('load', scheduleAfterLoad, { once: true })
+        idleHandle = window.setTimeout(() => prefetch(rest), 2000) as unknown as number
       }
+    }
 
-      return () => {
-        window.removeEventListener('load', scheduleAfterLoad)
-        if (urgentTimeout) window.clearTimeout(urgentTimeout)
-        if (idleHandle !== undefined) {
-          if (typeof window.cancelIdleCallback === 'function') {
-            window.cancelIdleCallback(idleHandle)
-          } else {
-            window.clearTimeout(idleHandle)
-          }
+    if (document.readyState === 'complete') {
+      scheduleAfterLoad()
+    } else {
+      window.addEventListener('load', scheduleAfterLoad, { once: true })
+    }
+
+    return () => {
+      cancelled = true
+      window.removeEventListener('load', scheduleAfterLoad)
+      if (urgentTimeout) window.clearTimeout(urgentTimeout)
+      if (idleHandle !== undefined) {
+        if (typeof window.cancelIdleCallback === 'function') {
+          window.cancelIdleCallback(idleHandle)
+        } else {
+          window.clearTimeout(idleHandle)
         }
       }
-    }, [images])
+    }
+  }, [images])
 
   // Scroll Lock when zoomed
   useEffect(() => {
@@ -96,6 +115,7 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
   const activeImage = images[activeIndex]?.image
   const activeUrl = typeof activeImage === 'object' ? activeImage.url : null
   const activeAlt = typeof activeImage === 'object' ? activeImage.alt : title
+  const activeBlur = typeof activeImage === 'object' ? activeImage.blurDataUrl : null
 
   const nextImage = () => setActiveIndex((prev) => (prev + 1) % images.length)
   const prevImage = () => setActiveIndex((prev) => (prev - 1 + images.length) % images.length)
@@ -103,11 +123,15 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
   return (
     <div className="flex flex-col gap-4">
       {/* Main Image View */}
-      <div 
+      <div
+        ref={mainViewRef}
         className="relative aspect-[4/5] overflow-hidden group cursor-zoom-in bg-neutral-100"
         onClick={() => setIsZoomed(true)}
       >
-        <AnimatePresence mode="wait">
+        {/* No mode="wait": the layers are absolutely positioned, so the new
+            image crossfades over the old one instead of flashing the empty
+            background between slides */}
+        <AnimatePresence>
           <motion.div
             key={activeIndex}
             initial={{ opacity: 0 }}
@@ -125,7 +149,8 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
                   priority={activeIndex === 0}
                   {...(activeIndex === 0 ? { fetchPriority: "high" } : {})}
                   sizes="(max-width: 1023px) calc(100vw - 32px), 750px"
-                  quality={activeIndex === 0 ? 60 : 65}
+                  quality={75}
+                  {...(activeBlur ? { placeholder: 'blur' as const, blurDataURL: activeBlur } : {})}
                 />
               )}
           </motion.div>
@@ -154,7 +179,10 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
       {images.length > 1 && (
         <div className="flex flex-wrap gap-2 md:gap-3">
           {images.map((img, i) => {
-            const thumbUrl = typeof img.image === 'object' ? img.image.url : img.image
+            const thumbUrl =
+              typeof img.image === 'object'
+                ? img.image.sizes?.thumbnail?.url || img.image.url
+                : img.image
             return (
               <button
                 key={img.id || i}
@@ -172,7 +200,7 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
                     fill
                     className="object-cover"
                     sizes="120px"
-                    quality={50}
+                    quality={65}
                   />
                 )}
               </button>
@@ -216,7 +244,7 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
                         loading="lazy"
                         className="object-contain pointer-events-auto"
                         sizes="100vw"
-                        quality={typeof window !== 'undefined' && window.innerWidth < 768 ? 75 : 85}
+                        quality={85}
                       />
                     </motion.div>
                   </AnimatePresence>
@@ -258,59 +286,6 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
         document.body
       )}
 
-      {/* Background Prefetch Layer - URGEANT (Index 1) */}
-      {canPrefetchUrgent && images[1] && (
-        <div className="hidden pointer-events-none opacity-0" aria-hidden="true">
-          {(() => {
-            const url = typeof images[1].image === 'object' ? images[1].image.url : null
-            if (!url) return null
-            return (
-              <Image
-                src={url}
-                alt="prefetch-urgent"
-                width={750}
-                height={938}
-                priority={false}
-                quality={50}
-              />
-            )
-          })()}
-        </div>
-      )}
-
-      {/* Background Prefetch Layer - IDLE (Index 2+ and Zoom) */}
-      {canPrefetchIdle && (
-        <div className="hidden pointer-events-none opacity-0" aria-hidden="true">
-          {images.map((img, i) => {
-            const url = typeof img.image === 'object' ? img.image.url : null
-            if (!url) return null 
-            return (
-              <React.Fragment key={i}>
-                {/* Prefetch for Gallery View (excluding the ones already handled) */}
-                {i > 1 && (
-                  <Image
-                    src={url}
-                    alt="prefetch"
-                    width={750}
-                    height={938}
-                    priority={false}
-                    quality={50}
-                  />
-                )}
-                {/* Prefetch for Zoom View (all images) */}
-                <Image
-                  src={url}
-                  alt="prefetch-zoom"
-                  width={1200}
-                  height={1500}
-                  priority={false}
-                  quality={70}
-                />
-              </React.Fragment>
-            )
-          })}
-        </div>
-      )}
     </div>
   )
 }
