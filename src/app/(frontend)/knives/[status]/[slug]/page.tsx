@@ -1,5 +1,6 @@
 export const revalidate = 86400
 
+import { cache, Suspense } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound, redirect } from 'next/navigation'
@@ -11,6 +12,7 @@ import { AddToCartButton } from '@/components/Cart/AddToCartButton'
 import { ProductSchema } from '@/components/SEO/ProductSchema'
 import { PageVersion } from '@/components/ui/PageVersion'
 import { StickyProductBar } from '@/components/product/StickyProductBar'
+import { MovedNotice } from '@/components/product/MovedNotice'
 import { ProductTabs } from '@/components/product/ProductTabs'
 import { RelatedProducts } from '@/components/product/RelatedProducts'
 import { LatestPosts } from '@/components/common/LatestPosts'
@@ -25,6 +27,44 @@ const statusMap: Record<string, string> = {
   'custom-order': 'custom_order',
 }
 
+// Prebuild every knife page at build time; new slugs are generated on first
+// request and cached (ISR). Without this, Next renders the route dynamically
+// on every visit and Link prefetch returns an empty shell.
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'products',
+      where: { type: { equals: 'knife' } },
+      depth: 0,
+      limit: 1000,
+    })
+    return docs
+      .filter((knife) => knife.slug)
+      .map((knife) => ({
+        status: knife.status === 'custom_order' ? 'custom-order' : 'in-stock',
+        slug: knife.slug as string,
+      }))
+  } catch {
+    // DB unreachable at build — fall back to on-demand generation
+    return []
+  }
+}
+
+// Deduped between generateMetadata and the page render
+const getKnife = cache(async (slug: string) => {
+  const payload = await getPayload({ config })
+  const { docs } = await payload.find({
+    collection: 'products',
+    where: {
+      and: [{ slug: { equals: slug } }, { type: { equals: 'knife' } }],
+    },
+    overrideAccess: false,
+    depth: 1,
+  })
+  return docs[0] ?? null
+})
+
 export async function generateMetadata({
   params,
 }: {
@@ -32,17 +72,9 @@ export async function generateMetadata({
 }) {
   const { status, slug } = await params
   const decodedSlug = decodeURIComponent(slug)
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'products',
-    where: {
-      and: [{ slug: { equals: decodedSlug } }, { type: { equals: 'knife' } }],
-    },
-    depth: 1,
-  })
+  const knife = await getKnife(decodedSlug)
 
-  if (!docs.length) return { title: 'Not Found' }
-  const knife = docs[0]
+  if (!knife) return { title: 'Not Found' }
 
   const pageUrl = `${SITE_URL}/knives/${status}/${slug}`
   const firstImage = (knife.images as any[])?.[0]
@@ -76,15 +108,11 @@ export async function generateMetadata({
 
 export default async function KnifePage({
   params,
-  searchParams,
 }: {
   params: Promise<{ status: string; slug: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const { status, slug } = await params
-  const { moved } = await searchParams
   const decodedSlug = decodeURIComponent(slug)
-  const payload = await getPayload({ config })
 
   const dbStatus = statusMap[status]
 
@@ -92,46 +120,22 @@ export default async function KnifePage({
     notFound()
   }
 
-  // 1. Try to find the knife with the requested status
-  let { docs } = await payload.find({
-    collection: 'products',
-    where: {
-      and: [
-        { slug: { equals: decodedSlug } },
-        { status: { equals: dbStatus } },
-        { type: { equals: 'knife' } },
-      ],
-    },
-    overrideAccess: false,
-    depth: 1,
-  })
+  const knife = await getKnife(decodedSlug)
 
-  // 2. Smart Redirect Logic: If not found, look for it in ANY status
-  if (docs.length === 0) {
-    const { docs: foundElsewhere } = await payload.find({
-      collection: 'products',
-      where: {
-        and: [{ slug: { equals: decodedSlug } }, { type: { equals: 'knife' } }],
-      },
-      overrideAccess: false,
-      depth: 0,
-    })
+  if (!knife) {
+    notFound()
+  }
 
-    if (foundElsewhere.length > 0) {
-      const correctKnife = foundElsewhere[0]
-      const correctStatus = Object.entries(statusMap).find(
-        ([_, v]) => v === correctKnife.status,
-      )?.[0]
+  // Smart Redirect Logic: knife exists but under the other status segment
+  if (knife.status !== dbStatus) {
+    const correctStatus = Object.entries(statusMap).find(([_, v]) => v === knife.status)?.[0]
 
-      if (correctStatus) {
-        redirect(`/knives/${correctStatus}/${slug}?moved=1`)
-      }
+    if (correctStatus) {
+      redirect(`/knives/${correctStatus}/${slug}?moved=1`)
     }
 
     notFound()
   }
-
-  const knife = docs[0]
 
   // Check description
   const hasDescription = (() => {
@@ -193,15 +197,9 @@ export default async function KnifePage({
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl pt-24 pb-16 md:pt-32 md:pb-32">
-        {moved === '1' && (
-          <div className="mb-8 p-6 bg-stone-50 border border-black/5 text-center">
-            <p className="text-xs md:text-sm uppercase tracking-widest text-black/60 font-serif italic">
-              {knife.status === 'in_stock'
-                ? 'Цей товар знову є в наявності, у нас на складі'
-                : 'Цей товар було продано, але ми можемо доставити його вам під замовлення'}
-            </p>
-          </div>
-        )}
+        <Suspense fallback={null}>
+          <MovedNotice inStock={knife.status === 'in_stock'} />
+        </Suspense>
         <PageVersion />
         <ProductSchema
           id={String(knife.id)}

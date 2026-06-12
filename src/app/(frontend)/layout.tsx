@@ -5,8 +5,7 @@ import { BrandFooter as Footer } from '@/components/layout/BrandFooter'
 import { LoadingScreen } from '@/components/layout/LoadingScreen'
 import { ViewportHandler } from '@/components/ui/ViewportHandler'
 import { OrganizationSchema } from '@/components/SEO/OrganizationSchema'
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import { getSiteSettings } from '@/lib/queries'
 import { FreshnessHandler } from '@/components/ui/FreshnessHandler'
 import { ScrollToTopFab } from '@/components/ui/ScrollToTopFab'
 import Script from 'next/script'
@@ -54,8 +53,7 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const payload = await getPayload({ config })
-  const settings = await payload.findGlobal({ slug: 'site-settings', overrideAccess: false })
+  const settings = await getSiteSettings()
 
   return (
     <html lang="uk" className={`${inter.variable} ${playfair.variable} light`} suppressHydrationWarning>

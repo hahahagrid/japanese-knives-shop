@@ -1,22 +1,16 @@
-import { getPayload } from 'payload'
-import config from '@payload-config'
+import { getSiteSettings } from '@/lib/queries'
 
 // Marker for content freshness detection
 export async function PageVersion() {
-  const payload = await getPayload({ config })
-  const settings = await payload.findGlobal({
-    slug: 'site-settings',
-    depth: 0,
-    draft: false,
-  })
+  const settings = await getSiteSettings()
 
   // This renders a hidden div that the FreshnessHandler in layout can read
   return (
-    <div 
-      id="page-version-marker" 
-      data-version={settings.contentVersion || 'init'} 
+    <div
+      id="page-version-marker"
+      data-version={settings.contentVersion || 'init'}
       style={{ display: 'none' }}
-      aria-hidden="true" 
+      aria-hidden="true"
     />
   )
 }
