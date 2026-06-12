@@ -1,5 +1,6 @@
 export const revalidate = 86400
 
+import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
@@ -19,23 +20,46 @@ import { LatestPosts } from '@/components/common/LatestPosts'
 import { generateProductDescription } from '@/utils/seo'
 import { SITE_URL } from '@/lib/config'
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const decodedSlug = decodeURIComponent(slug)
+// Prebuild accessory pages so the route stays static (ISR) instead of
+// rendering dynamically on every request.
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'products',
+      where: { type: { equals: 'accessory' } },
+      depth: 0,
+      limit: 1000,
+    })
+    return docs
+      .filter((product) => product.slug)
+      .map((product) => ({ slug: product.slug as string }))
+  } catch {
+    // DB unreachable at build — fall back to on-demand generation
+    return []
+  }
+}
+
+// Deduped between generateMetadata and the page render
+const getAccessory = cache(async (slug: string) => {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'products',
-    where: { 
-      and: [
-        { slug: { equals: decodedSlug } },
-        { type: { equals: 'accessory' } }
-      ]
+    where: {
+      and: [{ slug: { equals: slug } }, { type: { equals: 'accessory' } }],
     },
+    overrideAccess: false,
     depth: 1,
   })
+  return docs[0] ?? null
+})
 
-  if (!docs.length) return { title: 'Not Found' }
-  const product = docs[0]
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const decodedSlug = decodeURIComponent(slug)
+  const product = await getAccessory(decodedSlug)
+
+  if (!product) return { title: 'Not Found' }
 
   const pageUrl = `${SITE_URL}/accessories/${slug}`
   const firstImage = (product.images as any[])?.[0]
@@ -61,25 +85,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function AccessoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const decodedSlug = decodeURIComponent(slug)
-  const payload = await getPayload({ config })
-  
-  const { docs } = await payload.find({
-    collection: 'products',
-    where: { 
-      and: [
-        { slug: { equals: decodedSlug } },
-        { type: { equals: 'accessory' } }
-      ]
-    },
-    overrideAccess: false,
-    depth: 1,
-  })
 
-  if (!docs.length) {
+  const product = await getAccessory(decodedSlug)
+
+  if (!product) {
     notFound()
   }
-
-  const product = docs[0]
 
   // Check description
   const hasDescription = (() => {
