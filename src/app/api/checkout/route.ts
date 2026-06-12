@@ -17,13 +17,50 @@ export async function POST(req: Request) {
     }
 
     const data = await req.json()
-    const { name, phone, email, deliveryInfo, message, items, total, honeypot } = data
+    const { name, phone, email, deliveryInfo, message, items, honeypot } = data
 
-    if (!name || !phone || !items || !items.length) {
+    if (!name || !phone || !Array.isArray(items) || !items.length) {
       return NextResponse.json({ error: 'Будь ласка, заповніть усі обов’язкові поля' }, { status: 400 })
     }
 
     const payload = await getPayload({ config })
+
+    // Never trust client-supplied prices/totals: look every product up by id and
+    // rebuild the order from server-side prices. A tampered request (e.g. total: 1)
+    // can no longer reach the admin as if it were a real quote.
+    const requestedQty = new Map<string, number>()
+    for (const item of items) {
+      const id = String(item?.productId ?? '').trim()
+      if (!id) continue
+      // 1..99, integer — guards against negative/huge/fractional quantities
+      const qty = Math.min(99, Math.max(1, Math.floor(Number(item?.quantity) || 1)))
+      requestedQty.set(id, (requestedQty.get(id) ?? 0) + qty)
+    }
+
+    if (requestedQty.size === 0) {
+      return NextResponse.json({ error: 'Кошик порожній або пошкоджений' }, { status: 400 })
+    }
+
+    const { docs: products } = await payload.find({
+      collection: 'products',
+      where: { id: { in: [...requestedQty.keys()] } },
+      depth: 0,
+      limit: requestedQty.size,
+      overrideAccess: false,
+    })
+
+    const verifiedItems = products.map((product) => ({
+      productId: String(product.id),
+      title: product.title,
+      price: product.price ?? 0, // null = "ціна за запитом", менеджер уточнює вручну
+      quantity: requestedQty.get(String(product.id)) ?? 1,
+    }))
+
+    if (verifiedItems.length === 0) {
+      return NextResponse.json({ error: 'Товари не знайдено' }, { status: 400 })
+    }
+
+    const total = verifiedItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
     // Build data object, carefully omitting empty email to avoid CMS validation errors
     const orderData: any = {
@@ -31,8 +68,8 @@ export async function POST(req: Request) {
       phone,
       deliveryInfo,
       message: message || '',
-      items,
-      total: Number(total),
+      items: verifiedItems,
+      total,
       status: 'new',
       source: 'checkout',
       honeypot,
