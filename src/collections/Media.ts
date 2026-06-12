@@ -45,10 +45,18 @@ export const Media: CollectionConfig = {
       },
     ],
     beforeChange: [
-      async ({ req, operation, data }) => {
-        if (operation === 'create') {
-          if (req.file) {
-            await processImage(req, req.file)
+      // beforeOperation has already converted the upload to WebP at this point;
+      // here we only derive the tiny blur placeholder from the final file data.
+      async ({ req, data }) => {
+        if (req.file?.data) {
+          try {
+            const blurBuffer = await sharp(req.file.data)
+              .resize(16)
+              .webp({ quality: 40 })
+              .toBuffer()
+            data.blurDataUrl = `data:image/webp;base64,${blurBuffer.toString('base64')}`
+          } catch (e) {
+            // A missing placeholder must never block the upload itself
           }
         }
         return data
@@ -61,6 +69,13 @@ export const Media: CollectionConfig = {
       label: 'Альтернативний текст',
       type: 'text',
       required: true,
+    },
+    {
+      name: 'blurDataUrl',
+      type: 'text',
+      admin: {
+        hidden: true,
+      },
     },
   ],
   upload: {

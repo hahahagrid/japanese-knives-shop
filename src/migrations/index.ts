@@ -9,6 +9,7 @@ import * as migration_20260403_221734_add_seo_image from './20260403_221734_add_
 import * as migration_20260404_143507_add_orders_metadata_and_honeypot from './20260404_143507_add_orders_metadata_and_honeypot';
 import * as migration_20260408_081612_drop_excerpt_from_posts from './20260408_081612_drop_excerpt_from_posts';
 import * as migration_20260413_153000_add_availability_field from './20260413_153000_add_availability_field';
+import * as migration_20260611_144401_add_media_blur_data_url from './20260611_144401_add_media_blur_data_url';
 
 export const migrations = [
   {
@@ -59,11 +60,16 @@ export const migrations = [
   {
     up: migration_20260408_081612_drop_excerpt_from_posts.up,
     down: migration_20260408_081612_drop_excerpt_from_posts.down,
-    name: '20260408_081612_drop_excerpt_from_posts'
+    name: '20260408_081612_drop_excerpt_from_posts',
   },
   {
     up: migration_20260413_153000_add_availability_field.up,
     down: migration_20260413_153000_add_availability_field.down,
-    name: '20260413_153000_add_availability_field'
+    name: '20260413_153000_add_availability_field',
+  },
+  {
+    up: migration_20260611_144401_add_media_blur_data_url.up,
+    down: migration_20260611_144401_add_media_blur_data_url.down,
+    name: '20260611_144401_add_media_blur_data_url'
   },
 ];

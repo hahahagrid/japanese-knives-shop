@@ -6,6 +6,7 @@ import { KnifeCard } from '@/components/product/KnifeCard'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { PageVersion } from '@/components/ui/PageVersion'
 import { SITE_URL } from '@/lib/config'
+import { getCardUrl, getBlurDataUrl } from '@/lib/media'
 
 export const metadata = {
   title: 'Аксесуари для японських ножів | Чохли, камені та догляд',
@@ -88,20 +89,6 @@ export default async function AccessoriesPage() {
             {sortedProducts.map((product, index) => {
               const firstImage = product.images?.[0]
               const secondImage = product.images?.[1]
-              const imgUrl =
-                typeof firstImage === 'object' && firstImage !== null
-                  ? firstImage.sizes?.thumbnail?.url ||
-                    firstImage.sizes?.card?.url ||
-                    firstImage.url
-                  : null
-              const hoverImgUrl =
-                typeof secondImage === 'object' && secondImage !== null
-                  ? secondImage.sizes?.thumbnail?.url ||
-                    secondImage.sizes?.card?.url ||
-                    secondImage.url
-                  : null
-
-              // Note: using /accessories for accessories slug
               return (
                 <div key={product.id} className="animate-fade-up">
                   <KnifeCard
@@ -110,8 +97,9 @@ export default async function AccessoriesPage() {
                     price={product.price}
                     status={product.status ?? 'in_stock'}
                     availability={(product as any).availability ?? 'available'}
-                    imageUrl={imgUrl}
-                    hoverImageUrl={hoverImgUrl}
+                    imageUrl={getCardUrl(firstImage)}
+                    hoverImageUrl={getCardUrl(secondImage)}
+                    blurDataUrl={getBlurDataUrl(firstImage)}
                     pathPrefix="/accessories"
                     priority={index < 4}
                   />

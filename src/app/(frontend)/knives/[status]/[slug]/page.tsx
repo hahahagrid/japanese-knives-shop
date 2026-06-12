@@ -17,6 +17,7 @@ import { LatestPosts } from '@/components/common/LatestPosts'
 
 import { generateProductDescription } from '@/utils/seo'
 import { SITE_URL } from '@/lib/config'
+import { getCardUrl, getThumbUrl } from '@/lib/media'
 
 // Map UI status to DB status
 const statusMap: Record<string, string> = {
@@ -45,10 +46,8 @@ export async function generateMetadata({
 
   const pageUrl = `${SITE_URL}/knives/${status}/${slug}`
   const firstImage = (knife.images as any[])?.[0]
-  const ogImageUrl =
-    typeof firstImage === 'object' && firstImage?.url
-      ? firstImage.url
-      : `${SITE_URL}/images/hero_knife-1920.webp`
+  // card (800×1000) instead of the original — some legacy originals are raw 4+ MB JPGs
+  const ogImageUrl = getCardUrl(firstImage) ?? `${SITE_URL}/images/hero_knife-1920.webp`
 
   const finalDescription = generateProductDescription(knife as any, 'knife')
 
@@ -189,7 +188,7 @@ export default async function KnifePage({
           status: knife.status as string,
           availability: (knife as any).availability as string,
           type: 'knife',
-          imageUrl: galleryImages[0]?.image?.url as string | null,
+          imageUrl: getThumbUrl(galleryImages[0]?.image) as string | null,
         }}
       />
 
@@ -278,7 +277,7 @@ export default async function KnifePage({
                     status: knife.status as string,
                     availability: (knife as any).availability as string,
                     type: 'knife',
-                    imageUrl: galleryImages[0]?.image?.url as string | null,
+                    imageUrl: getThumbUrl(galleryImages[0]?.image) as string | null,
                   }}
                 />
                 <Link
