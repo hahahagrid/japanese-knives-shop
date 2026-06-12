@@ -116,7 +116,7 @@ export const RichText: React.FC<{ content: RichTextContent; className?: string }
                   height={value.height || 800}
                   className="w-full h-auto block"
                   sizes="(max-width: 1024px) 100vw, 850px"
-                  quality={85}
+                  quality={75}
                 />
                 {value.caption && (
                   <figcaption className="p-4 text-xs italic text-[var(--muted)] border-t border-[var(--border)]">

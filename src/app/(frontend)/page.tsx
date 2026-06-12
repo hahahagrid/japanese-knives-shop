@@ -392,11 +392,12 @@ export default async function HomePage() {
               <AnimatedSection variant="fade-in" delay={0.4} className="h-full">
                 <div className="relative aspect-[4/5] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
                   <Image
-                    src="/images/master1.JPG"
+                    src="/images/master1-1920.webp"
                     alt="Japanese Master Blacksmith at work"
                     fill
                     className="object-cover transition-transform duration-1000"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    quality={65}
                   />
                   {/* Internal Editorial Border */}
                   <div className="absolute inset-0 border-[1px] border-white/20 m-6 pointer-events-none z-20" />
@@ -429,11 +430,12 @@ export default async function HomePage() {
               <AnimatedSection variant="fade-in" className="h-full">
                 <div className="relative aspect-[4/5] h-full min-h-[420px] grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl bg-[#F6F5F2] w-full overflow-hidden border border-black/6 group">
                   <Image
-                    src="/images/master2.JPG"
+                    src="/images/master2-1920.webp"
                     alt="Japanese Master examining quality"
                     fill
                     className="object-cover transition-transform duration-1000"
                     sizes="(max-width: 768px) 100vw, 50vw"
+                    quality={65}
                   />
                   {/* Internal Editorial Border */}
                   <div className="absolute inset-0 border-[1px] border-white/20 m-6 pointer-events-none z-20" />
