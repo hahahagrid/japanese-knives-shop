@@ -33,6 +33,7 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
   const [isZoomed, setIsZoomed] = useState(false)
   const [mounted, setMounted] = useState(false)
   const mainViewRef = React.useRef<HTMLDivElement>(null)
+  const modalViewRef = React.useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setMounted(true)
@@ -94,6 +95,32 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
       }
     }
   }, [images])
+
+  // The zoom modal renders at 100vw, so it resolves to a different /_next/image
+  // variant than the inline gallery — warm those variants for every slide as
+  // soon as the modal opens, otherwise each arrow click hits a cold generation.
+  useEffect(() => {
+    if (!isZoomed || images.length < 2) return
+
+    let cancelled = false
+    const timer = window.setTimeout(() => {
+      if (cancelled) return
+      const template = modalViewRef.current?.querySelector('img')?.currentSrc
+      if (!template || !template.includes('/_next/image')) return
+      for (const { image } of images) {
+        const target = typeof image === 'object' ? image.url : null
+        if (!target) continue
+        const prefetchUrl = new URL(template, window.location.origin)
+        prefetchUrl.searchParams.set('url', target)
+        new window.Image().src = prefetchUrl.toString()
+      }
+    }, 600)
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(timer)
+    }
+  }, [isZoomed, images])
 
   // Scroll Lock when zoomed
   useEffect(() => {
@@ -227,24 +254,26 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
                 transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                 className="relative w-full h-full p-4 md:p-12 flex items-center justify-center pointer-events-none"
               >
-                <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center">
-                  <AnimatePresence mode="wait">
+                <div ref={modalViewRef} className="relative w-full h-full max-w-[90vw] max-h-[90vh]">
+                  {/* No mode="wait" — slides are absolutely positioned and
+                      crossfade, same as the inline gallery, instead of
+                      flashing the backdrop between them */}
+                  <AnimatePresence>
                     <motion.div
                       key={activeIndex}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.3 }}
-                      className="relative w-full h-full flex items-center justify-center p-4"
+                      className="absolute inset-0 flex items-center justify-center p-4"
                     >
                       <Image
                         src={activeUrl as string}
                         alt={activeAlt || title}
                         fill
-                        loading="lazy"
                         className="object-contain pointer-events-auto"
                         sizes="100vw"
-                        quality={85}
+                        quality={75}
                       />
                     </motion.div>
                   </AnimatePresence>
