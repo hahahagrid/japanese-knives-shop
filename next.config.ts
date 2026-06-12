@@ -68,7 +68,10 @@ const nextConfig: NextConfig = {
     // Next 16 only serves qualities from this list — any other `quality` prop value
     // gets clamped by the loader and 400s when requested directly
     qualities: [65, 75, 85],
-    formats: ['image/avif', 'image/webp'],
+    // WebP only: Cloudflare's cache rule for /_next/image ignores `Vary: Accept`,
+    // so a cached AVIF response would be served to browsers without AVIF support.
+    // WebP also encodes ~5-10x faster, cutting cold-variant generation from ~3s to <0.5s.
+    formats: ['image/webp'],
     minimumCacheTTL: 2592000, // 30 days — safe because Payload uses unique filenames
     remotePatterns: [
       {
