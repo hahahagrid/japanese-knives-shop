@@ -103,7 +103,7 @@ export function MobileMenu() {
                   onClick={() => setOpen(false)}
                   className="block w-full bg-black text-white text-center py-5 font-bold uppercase tracking-[0.2em] text-[11px] mt-8 group/btn overflow-hidden relative"
                 >
-                  <span className="relative z-10">Зв'язатись з нами</span>
+                  <span className="relative z-10">Зв&apos;язатись з нами</span>
                   <div className="absolute inset-0 bg-[#BC002D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
                 </Link>
               </div>

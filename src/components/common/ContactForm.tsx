@@ -115,7 +115,7 @@ export function ContactForm() {
             htmlFor="email"
             className="block text-[10px] uppercase tracking-[0.3em] text-neutral-400 mb-2 font-bold transition-colors group-focus-within:text-[var(--accent)]"
           >
-            Email (необов'язково)
+            Email (необов&apos;язково)
           </label>
           <input
             type="email"

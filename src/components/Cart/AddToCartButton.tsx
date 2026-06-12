@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useCartStore } from '@/store/cartStore'
 import { ShoppingBag } from 'lucide-react'
 
@@ -24,7 +25,7 @@ export function AddToCartButton({ knife, className }: AddToCartButtonProps) {
 
   if (!knife.price) {
     return (
-      <a
+      <Link
         href="/contacts"
         id="btn-learn-price"
         data-product-name={knife.title}
@@ -32,7 +33,7 @@ export function AddToCartButton({ knife, className }: AddToCartButtonProps) {
       >
         <span className="relative z-10">Дізнатись ціну</span>
         <div className="absolute inset-0 bg-[#BC002D] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300" />
-      </a>
+      </Link>
     )
   }
 

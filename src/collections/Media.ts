@@ -6,7 +6,7 @@ const processImage = async (req: any, file: any) => {
   if (!file || !file.mimetype?.startsWith('image/')) return
 
   try {
-    let imageProcessor = sharp(file.data)
+    const imageProcessor = sharp(file.data)
       .rotate()
       .resize({ width: 2560, height: 2560, fit: 'inside', withoutEnlargement: true })
 
