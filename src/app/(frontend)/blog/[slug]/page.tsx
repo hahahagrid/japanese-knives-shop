@@ -1,5 +1,6 @@
 export const revalidate = 86400
 
+import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
@@ -11,17 +12,40 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { pickMediaUrl } from '@/lib/media'
 import { PageVersion } from '@/components/ui/PageVersion'
 import { SITE_URL } from '@/lib/config'
+import { getSiteSettings } from '@/lib/queries'
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+// Prebuild blog posts so the route stays static (ISR) instead of
+// rendering dynamically on every request.
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'posts',
+      depth: 0,
+      limit: 1000,
+    })
+    return docs.filter((post) => post.slug).map((post) => ({ slug: post.slug as string }))
+  } catch {
+    // DB unreachable at build — fall back to on-demand generation
+    return []
+  }
+}
+
+// Deduped between generateMetadata and the page render
+const getPost = cache(async (slug: string) => {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'posts',
     where: { slug: { equals: slug } },
-    depth: 1,
+    overrideAccess: false,
   })
-  if (!docs.length) return { title: 'Not Found' }
-  const post = docs[0]
+  return docs[0] ?? null
+})
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const post = await getPost(slug)
+  if (!post) return { title: 'Not Found' }
   const pageUrl = `${SITE_URL}/blog/${slug}`
 
   // SEO plugin fields take priority, fallback to coverImage / default text
@@ -55,20 +79,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const payload = await getPayload({ config })
-  
-  // 1. Find the current post
-  const { docs: currentDocs } = await payload.find({
-    collection: 'posts',
-    where: { slug: { equals: slug } },
-    overrideAccess: false,
-  })
 
-  if (!currentDocs.length) {
+  // 1. Find the current post
+  const post = await getPost(slug)
+
+  if (!post) {
     notFound()
   }
 
-  const post = currentDocs[0]
-  
   // 2. Fetch all posts in the SAME order as the blog list page (-publishedDate)
   const { docs: allPosts } = await payload.find({
     collection: 'posts',
@@ -91,10 +109,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const prevPost = newerPost; // Newer is Previous (back to top of list)
   const nextPost = olderPost; // Older is Next (further down the list)
 
-  const settings = await payload.findGlobal({
-    slug: 'site-settings',
-    overrideAccess: false,
-  })
+  const settings = await getSiteSettings()
 
   return (
     <article className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl pt-32 pb-20 md:pt-48 md:pb-32">

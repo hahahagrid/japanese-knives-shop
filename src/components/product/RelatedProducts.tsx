@@ -32,9 +32,6 @@ export async function RelatedProducts({ type }: RelatedProductsProps) {
 
   if (products.length === 0) return null
 
-  // Randomize a bit by shuffling
-  const shuffled = products.sort(() => 0.5 - Math.random())
-
   return (
     <section className="py-12 border-t border-[var(--border)]">
       <AnimatedSection className="flex justify-between items-end mb-8">
@@ -51,7 +48,7 @@ export async function RelatedProducts({ type }: RelatedProductsProps) {
       </AnimatedSection>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 sm:gap-x-8 gap-y-8">
-        {shuffled.map((product) => {
+        {products.map((product) => {
           const firstImage = product.images?.[0]
           const secondImage = product.images?.[1]
           return (
