@@ -1,0 +1,26 @@
+# Прогревает кеш картинок (/_next/image): origin пересоздаёт его при каждом
+# деплое, а новые фото из админки всегда холодные — первый посетитель без
+# прогрева ждёт каждое фото ~2-3 секунды.
+name: Warm image cache
+
+on:
+  schedule:
+    - cron: '23 */6 * * *' # каждые 6 часов — подхватывает новые фото из админки
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Wait for Railway deploy to settle
+        if: github.event_name == 'push'
+        run: sleep 360
+      - name: Warm image variants
+        run: node scripts/warm-images.mjs

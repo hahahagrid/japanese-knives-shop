@@ -175,7 +175,9 @@ export function KnifeGallery({ images, title, isUnavailable }: KnifeGalleryProps
                   className="object-cover transition-transform duration-1000 ease-out lg:hover:scale-105 will-change-transform"
                   priority={activeIndex === 0}
                   {...(activeIndex === 0 ? { fetchPriority: "high" } : {})}
-                  sizes="(max-width: 1023px) calc(100vw - 32px), 750px"
+                  // Десктопная колонка галереи ≤560px (max-w-7xl минус паддинги и gap):
+                  // sizes=750px заставлял ретину тянуть w=1920 (~530KB) вместо w=1200 (~225KB)
+                  sizes="(max-width: 1023px) calc(100vw - 32px), 560px"
                   quality={75}
                   {...(activeBlur ? { placeholder: 'blur' as const, blurDataURL: activeBlur } : {})}
                 />
